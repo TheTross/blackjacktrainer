@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full Access Trainer – The Blackjack Mindset</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg: #05070b;
+      --bg-soft: #080b13;
+      --bg-elevated: #0e1220;
+      --accent: #1dd1a1;
+      --accent-soft: rgba(29, 209, 161, 0.16);
+      --accent-warm: #feca57;
+      --text: #f7f8fc;
+      --muted: #a1a7bc;
+      --border-subtle: #252a39;
+      --border-strong: #343a4f;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.65);
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --max-width: 1040px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, #151b2f 0, #05070b 55%, #020308 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    a { color: inherit; }
+
+    .page-shell {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 24px 18px 32px;
+    }
+
+    header {
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -6px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      opacity: 0.9;
+    }
+
+    .breadcrumb {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .breadcrumb a {
+      text-decoration: none;
+      color: var(--muted);
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 2.6vw, 2.3rem);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 0.94rem;
+      color: var(--muted);
+      max-width: 660px;
+      line-height: 1.7;
+    }
+
+    .tagline-pill {
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: rgba(5, 7, 14, 0.94);
+    }
+
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(29, 209, 161, 0.9);
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.1fr);
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 920px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: rgba(7, 10, 20, 0.98);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 20px 18px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -40% -10%;
+      background:
+        radial-gradient(circle at top left, rgba(29, 209, 161, 0.09) 0, transparent 55%),
+        radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.08) 0, transparent 55%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .panel-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      font-size: 0.96rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+
+    p {
+      font-size: 0.94rem;
+      line-height: 1.7;
+      margin: 0 0 10px;
+      color: var(--text);
+    }
+
+    .trainer-layout {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 10px;
+    }
+
+    .hand-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: stretch;
+      flex-wrap: wrap;
+    }
+
+    .hand-card {
+      flex: 1 1 180px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      background: linear-gradient(135deg, rgba(12, 18, 30, 1), rgba(4, 10, 18, 0.96));
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .hand-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .hand-value {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .small-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .difficulty-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .diff-pill {
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      background: rgba(4, 8, 16, 0.96);
+      padding: 4px 8px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .diff-pill.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(9, 20, 18, 0.98);
+    }
+
+    .deal-button, .action-button {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(29, 209, 161, 0.8);
+      background: linear-gradient(135deg, #1dd1a1, #10ac84);
+      color: #020308;
+      font-size: 0.84rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 7px 10px;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.9);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .deal-button:hover, .action-button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 1);
+    }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 680px) {
+      .actions-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .action-button {
+      width: 100%;
+      padding: 7px 6px;
+      text-align: center;
+    }
+
+    .action-button.secondary {
+      border-color: var(--border-subtle);
+      background: rgba(5, 8, 16, 0.96);
+      color: var(--text);
+      box-shadow: none;
+    }
+
+    .action-button.secondary:hover {
+      border-color: var(--accent);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.9);
+    }
+
+    .feedback-line {
+      margin-top: 8px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .feedback-line span.result-correct {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .feedback-line span.result-wrong {
+      color: #ff7675;
+      font-weight: 600;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 720px) {
+      .stat-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stat-card {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      background: rgba(3, 5, 12, 0.98);
+      padding: 8px 10px;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 2px;
+    }
+
+    .stat-main {
+      font-size: 0.96rem;
+      font-weight: 600;
+    }
+
+    .stat-sub {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 22px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header>
+      <div class="breadcrumb">
+        <a href="full-access.html">← Back to Full Access Hub</a>
+      </div>
+      <h1>Full Access Trainer</h1>
+      <p>
+        Practice basic strategy decisions with a focused trainer built for members. Choose the type of hands you want
+        to see, answer without rushing, and track accuracy by category instead of just a single score.[web:270][web:271]
+      </p>
+      <div class="tagline-pill">
+        <span class="tag-dot"></span>
+        <span>Hard • Soft • Pairs • Mixed</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- LEFT: TRAINER -->
+      <section>
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Decision Drill</h2>
+            <div class="trainer-layout">
+              <div class="hand-row">
+                <div class="hand-card">
+                  <div class="hand-label">Your hand</div>
+                  <div class="hand-value" id="player-hand">–</div>
+                  <div class="small-note" id="hand-type-label">Choose “Deal new hand” to begin.</div>
+                </div>
+                <div class="hand-card">
+                  <div class="hand-label">Dealer upcard</div>
+                  <div class="hand-value" id="dealer-upcard">–</div>
+                  <div class="small-note">Assume standard multi‑deck rules with dealer standing on soft 17.</div>
+                </div>
+              </div>
+
+              <div class="controls-row">
+                <div class="difficulty-group" id="difficulty-group">
+                  <span style="font-size:0.8rem;color:var(--muted);margin-right:4px;">Focus:</span>
+                  <button class="diff-pill active" data-mode="mixed">Mixed</button>
+                  <button class="diff-pill" data-mode="hard">Hard totals</button>
+                  <button class="diff-pill" data-mode="soft">Soft hands</button>
+                  <button class="diff-pill" data-mode="pairs">Pairs</button>
+                </div>
+                <button class="deal-button" onclick="dealHand()">Deal new hand</button>
+              </div>
+
+              <div>
+                <div class="actions-grid">
+                  <button class="action-button secondary" onclick="submitMove('H')">Hit</button>
+                  <button class="action-button secondary" onclick="submitMove('S')">Stand</button>
+                  <button class="action-button secondary" onclick="submitMove('D')">Double</button>
+                  <button class="action-button secondary" onclick="submitMove('P')">Split</button>
+                </div>
+                <p class="small-note" style="margin-top:6px;">
+                  Focus on matching the recommended action, not on what happened last time a similar hand came up.[web:271][web:274]
+                </p>
+                <div class="feedback-line" id="feedback-line">
+                  No hand dealt yet. Click “Deal new hand” to start.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT: STATS & TIPS -->
+      <section>
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Session Stats</h2>
+            <p style="margin-bottom:6px;">
+              Accuracy is tracked separately for hard totals, soft hands, and pairs so you can see where to focus next.
+            </p>
+            <div class="stat-grid">
+              <div class="stat-card">
+                <div class="stat-label">Overall</div>
+                <div class="stat-main" id="stat-overall">0 / 0 (–%)</div>
+                <div class="stat-sub" id="stat-overall-note">Answer a few hands to see your pattern.</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Hard totals</div>
+                <div class="stat-main" id="stat-hard">0 / 0 (–%)</div>
+                <div class="stat-sub">Hands like 9, 13, 16 without Aces.</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Soft hands</div>
+                <div class="stat-main" id="stat-soft">0 / 0 (–%)</div>
+                <div class="stat-sub">Hands with an Ace counting as 11.</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Pairs</div>
+                <div class="stat-main" id="stat-pairs">0 / 0 (–%)</div>
+                <div class="stat-sub">Starting pairs that may be split.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>How to Use This Trainer</h2>
+            <p>
+              Treat this like a flash‑card machine for decisions. Aim for slow, accurate answers rather than speed,
+              then gradually reduce your reliance on any printed strategy chart.[web:270][web:272]
+            </p>
+            <ul>
+              <li>Start on “Mixed” to get a general sense of your accuracy, then drill your weakest category.</li>
+              <li>When you miss a hand, pause and think about why the correct action makes sense before moving on.</li>
+              <li>Pair this trainer with the Probability and Mistakes lessons to connect the logic behind each play.</li>
+            </ul>
+            <p>
+              The goal is to make correct decisions feel automatic so you have more bandwidth for table awareness and
+              responsible limits.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Important Notes</h2>
+            <ul>
+              <li>This trainer uses one fixed rule set and a built‑in strategy table; real casinos may have different rules.[web:271]</li>
+              <li>It ignores side bets and card counting and focuses only on basic strategy decisions.[web:266][web:270]</li>
+              <li>All practice here is for <strong>educational purposes only</strong> and does not guarantee any outcome in real play.[web:274]</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2026 The Blackjack Mindset. Educational content only. No financial advice or gambling recommendations.
+    </footer>
+  </div>
+
+  <script>
+    // Simple shoe & strategy model (demo-level, not a full rules engine)
+    const ranks = [2,3,4,5,6,7,8,9,10,10,10,10,11]; // 11 = Ace
+    let currentHand = null;
+    let currentMode = "mixed";
+
+    const stats = {
+      hard: { correct: 0, total: 0 },
+      soft: { correct: 0, total: 0 },
+      pairs: { correct: 0, total: 0 },
+      overall: { correct: 0, total: 0 }
+    };
+
+    function pickMode(mode) {
+      currentMode = mode;
+      const pills = document.querySelectorAll(".diff-pill");
+      pills.forEach(p => {
+        if (p.dataset.mode === mode) p.classList.add("active");
+        else p.classList.remove("active");
+      });
+      document.getElementById("feedback-line").textContent =
+        "Focus changed to \"" + mode + "\". Deal a new hand to continue.";
+    }
+
+    document.getElementById("difficulty-group").addEventListener("click", (e) => {
+      const btn = e.target.closest(".diff-pill");
+      if (!btn) return;
+      pickMode(btn.dataset.mode);
+    });
+
+    function randomRank() {
+      return ranks[Math.floor(Math.random() * ranks.length)];
+    }
+
+    function formatCardTotal(cards) {
+      const total = cards.reduce((a,c) => a + (c === 11 ? 1 : c), 0);
+      const hasAce = cards.includes(11);
+      if (hasAce && total + 10 <= 21) {
+        return (total + 10) + " (soft)";
+      }
+      return total.toString();
+    }
+
+    function classifyHand(cards) {
+      if (cards.length === 2 && cards[0] === cards[1]) return "pairs";
+      const totalLow = cards.reduce((a,c) => a + (c === 11 ? 1 : c), 0);
+      const hasAce = cards.includes(11);
+      if (hasAce && totalLow + 10 <= 21) return "soft";
+      return "hard";
+    }
+
+    function dealHand() {
+      let player = [];
+      let dealer = [];
+
+      function dealPair() {
+        const r = randomRank();
+        player = [r, r];
+      }
+
+      function dealSoft() {
+        const ace = 11;
+        const others = [2,3,4,5,6,7,8,9];
+        const r = others[Math.floor(Math.random() * others.length)];
+        player = [ace, r];
+      }
+
+      function dealHard() {
+        const a = randomRank();
+        const b = randomRank();
+        if (a === 11 || b === 11) {
+          // force a hard hand by making Ace count as 1 via extra card
+          const base = [a === 11 ? 1 : a, b === 11 ? 1 : b];
+          player = base;
+        } else {
+          player = [a, b];
+        }
+      }
+
+      if (currentMode === "pairs") dealPair();
+      else if (currentMode === "soft") dealSoft();
+      else if (currentMode === "hard") dealHard();
+      else {
+        const r = Math.random();
+        if (r < 0.33) dealHard();
+        else if (r < 0.66) dealSoft();
+        else dealPair();
+      }
+
+      dealer = [randomRank()];
+
+      currentHand = { player, dealerUp: dealer[0], type: classifyHand(player) };
+
+      document.getElementById("player-hand").textContent = formatCardTotal(player);
+      document.getElementById("dealer-upcard").textContent =
+        currentHand.dealerUp === 11 ? "A" : currentHand.dealerUp.toString();
+      document.getElementById("hand-type-label").textContent =
+        currentHand.type === "soft"
+          ? "Soft hand: at least one Ace counting as 11."
+          : currentHand.type === "pairs"
+          ? "Pair: consider whether splitting makes sense."
+          : "Hard total: no Ace counting as 11.";
+      document.getElementById("feedback-line").textContent =
+        "Choose Hit, Stand, Double, or Split. The trainer checks your decision against a basic strategy table.";
+    }
+
+    // Extremely compact basic-strategy lookup for demo purposes
+    function basicStrategy(playerCards, dealerUp) {
+      const type = classifyHand(playerCards);
+      const totalLow = playerCards.reduce((a,c) => a + (c === 11 ? 1 : c), 0);
+      const hasAce = playerCards.includes(11);
+      let total = totalLow;
+      if (hasAce && totalLow + 10 <= 21) total = totalLow + 10;
+
+      const d = dealerUp === 11 ? 11 : dealerUp;
+
+      if (type === "pairs") {
+        const v = playerCards[0] === 11 ? 11 : playerCards[0];
+        if (v === 11 || v === 8) return "P";
+        if (v === 10 || v === 5) return "S";
+        if (v === 9) return (d === 7 || d === 10 || d === 11) ? "S" : "P";
+        if (v === 7) return d <= 7 ? "P" : "H";
+        if (v === 6) return d <= 6 ? "P" : "H";
+        if (v === 4) return (d === 5 || d === 6) ? "P" : "H";
+        if (v === 3 || v === 2) return d <= 7 ? "P" : "H";
+      }
+
+      if (type === "soft") {
+        if (total >= 19) return "S";
+        if (total === 18) {
+          if (d >= 9 || d === 2) return "S";
+          if (d === 3 || d === 4 || d === 5 || d === 6) return "D";
+          return "H";
+        }
+        if (total === 17 || total === 16) {
+          if (d >= 3 && d <= 6) return "D";
+          return "H";
+        }
+        if (total === 15 || total === 14) {
+          if (d >= 4 && d <= 6) return "D";
+          return "H";
+        }
+        return "H";
+      }
+
+      // Hard totals
+      if (total >= 17) return "S";
+      if (total >= 13 && total <= 16) {
+        if (d >= 2 && d <= 6) return "S";
+        return "H";
+      }
+      if (total === 12) {
+        if (d >= 4 && d <= 6) return "S";
+        return "H";
+      }
+      if (total === 11) return "D";
+      if (total === 10) return d <= 9 ? "D" : "H";
+      if (total === 9) return d >= 3 && d <= 6 ? "D" : "H";
+      return "H";
+    }
+
+    function updateStats(type, correct) {
+      stats.overall.total += 1;
+      if (correct) stats.overall.correct += 1;
+
+      const bucket = stats[type];
+      bucket.total += 1;
+      if (correct) bucket.correct += 1;
+
+      function fmt(obj) {
+        if (obj.total === 0) return "0 / 0 (–%)";
+        const pct = Math.round((obj.correct / obj.total) * 100);
+        return obj.correct + " / " + obj.total + " (" + pct + "%)";
+      }
+
+      document.getElementById("stat-overall").textContent = fmt(stats.overall);
+      if (stats.overall.total === 0) {
+        document.getElementById("stat-overall-note").textContent =
+          "Answer a few hands to see your pattern.";
+      } else {
+        document.getElementById("stat-overall-note").textContent =
+          "Focus less on the score and more on understanding missed spots.";
+      }
+      document.getElementById("stat-hard").textContent = fmt(stats.hard);
+      document.getElementById("stat-soft").textContent = fmt(stats.soft);
+      document.getElementById("stat-pairs").textContent = fmt(stats.pairs);
+    }
+
+    function submitMove(move) {
+      if (!currentHand) {
+        document.getElementById("feedback-line").textContent =
+          "Deal a hand first, then choose an action.";
+        return;
+      }
+      const correct = basicStrategy(currentHand.player, currentHand.dealerUp);
+      const ok = move === correct;
+      updateStats(currentHand.type, ok);
+
+      const fb = document.getElementById("feedback-line");
+      fb.innerHTML =
+        "You chose <strong>" +
+        expandMove(move) +
+        "</strong>. Recommended play: <span class='" +
+        (ok ? "result-correct" : "result-wrong") +
+        "'>" + expandMove(correct) + "</span>. " +
+        (ok
+          ? "Nice. Deal another hand or switch focus to a different category."
+          : "Review why that action makes sense given the dealer’s upcard and your total, then try a few similar hands.");
+    }
+
+    function expandMove(m) {
+      if (m === "H") return "Hit";
+      if (m === "S") return "Stand";
+      if (m === "D") return "Double";
+      if (m === "P") return "Split";
+      return m;
+    }
+  </script>
+</body>
+</html>
