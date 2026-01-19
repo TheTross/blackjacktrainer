@@ -3,78 +3,244 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Blackjack Mindset – Understanding the Game of Decisions</title>
+  <title>The Blackjack Mindset – Interactive Trainer & Guide</title>
 </head>
 <body>
 
   <header>
     <h1>The Blackjack Mindset</h1>
-    <h2>Understand chance, choices, and the psychology behind the table</h2>
+    <h2>Learn the logic behind every hand, not how to chase outcomes</h2>
   </header>
 
-  <section>
+  <!-- Intro / Credibility -->
+  <section id="intro">
     <p>
-      This short guide was created after years of casual study—not as a path to “beat the house,” but to understand it. 
-      Blackjack fascinated me because it’s one of the fairest casino games mathematically, yet most players still lose for reasons that have little to do with math. 
-      <strong>The Blackjack Mindset</strong> breaks down those reasons in clear, practical language.
+      This project started from a simple curiosity: why do people who know the rules of blackjack still make
+      choices that increase their losses over time? Rather than promising shortcuts or secret systems,
+      <strong>The Blackjack Mindset</strong> focuses on understanding decisions, probabilities, and the emotions
+      that shape play.
+    </p>
+    <p>
+      The homepage below includes an interactive hand trainer and links to short lessons that explain the
+      underlying ideas: probability, psychology, common mistakes, and responsible play as entertainment.
     </p>
   </section>
 
-  <section>
-    <h3>What You’ll Learn</h3>
+  <!-- Navigation to Other Pages -->
+  <section id="navigation">
+    <h3>Explore the Lessons</h3>
+    <p>Select a topic to dive deeper. Each button can be linked to its own HTML page.</p>
     <ul>
-      <li><strong>Probability Without the Math Headache:</strong> An intuitive way to think about odds, variance, and why the “right” choice can still lose.</li>
-      <li><strong>The Psychology of Decision Fatigue:</strong> How emotions sneak into logical play and change our behavior over time.</li>
-      <li><strong>Common Pitfalls:</strong> The tiny judgment errors that add up to big losses—like “chasing” or overconfidence after a good run.</li>
-      <li><strong>Why Betting Systems Fail:</strong> A simple explanation of why doubling or streak-chasing doesn’t overcome mathematical reality.</li>
-      <li><strong>Inside the Casino Design:</strong> How the environment nudges players into riskier behavior, often without them noticing.</li>
-      <li><strong>Responsible Entertainment:</strong> How to enjoy the game for what it is—a test of patience and decision-making—not a source of income.</li>
+      <li><button onclick="location.href='probability.html'">Probability & Variance</button></li>
+      <li><button onclick="location.href='mistakes.html'">Common Player Mistakes</button></li>
+      <li><button onclick="location.href='psychology.html'">Psychology & Emotions</button></li>
+      <li><button onclick="location.href='betting-systems.html'">Why Betting Systems Fail</button></li>
+      <li><button onclick="location.href='casino-design.html'">How Casinos Shape Decisions</button></li>
+      <li><button onclick="location.href='responsible-play.html'">Responsible, Disciplined Play</button></li>
     </ul>
   </section>
 
-  <section>
-    <h3>Try the Decision Simulator</h3>
+  <!-- Interactive Trainer Overview -->
+  <section id="trainer-overview">
+    <h3>Interactive Decision Trainer</h3>
     <p>
-      The guide includes a small, interactive simulator that lets you experience the real consequences of common player decisions—
-      like hitting on a bad hand, raising when emotional, or adjusting bet sizes impulsively. 
-      No money is ever involved; instead, the simulator provides instant feedback on how emotions and probabilities collide over time.
+      The interactive trainer below presents a simple blackjack hand, asks what you would do, and then
+      compares your choice with a basic strategy recommendation for that situation. This is not about
+      “perfect play” or guarantees; it is about seeing how small edges and disciplined decisions look in practice.
     </p>
-  </section>
-
-  <section>
-    <h3>Who It’s For</h3>
     <p>
-      This guide is for anyone curious about the balance between strategy, randomness, and human psychology—whether you enjoy blackjack casually 
-      or want to better understand how the casino experience influences decision-making. 
-      It’s a tool for learning, not gambling.
+      After each hand, you will see:
     </p>
-  </section>
-
-  <section>
-    <h3>Important Notes</h3>
     <ul>
-      <li>This guide is for <strong>educational purposes only</strong>.</li>
-      <li>There are <strong>no guaranteed outcomes or strategies</strong> to win money.</li>
-      <li>You must be of <strong>legal gambling age</strong> in your region to access related materials responsibly.</li>
-      <li>The material encourages <strong>discipline and awareness</strong>, not wagering.</li>
+      <li>Your decision and the recommended action for that hand.</li>
+      <li>A short explanation of <strong>why</strong> that recommendation exists (e.g., bust risk, dealer bust risk, long-run expectation).</li>
+      <li>A running summary of how often you match the recommended strategy.</li>
     </ul>
   </section>
 
-  <section>
-    <h3>Get the Guide</h3>
+  <!-- Interactive Trainer v1 (Simple Prototype) -->
+  <section id="trainer">
+    <h3>Try a Hand</h3>
     <p>
-      Download <strong>The Blackjack Mindset</strong> for $17 on Gumroad and start exploring how decision-making, probability, and emotion intertwine at the table.
+      This v1 trainer is simplified to focus on core concepts. It uses a small set of common hands to illustrate
+      why certain decisions are recommended over others. No real money is used, tracked, or implied.
+    </p>
+
+    <!-- Hand Display -->
+    <div id="hand-display">
+      <p><strong>Your Hand:</strong> <span id="player-hand">–</span></p>
+      <p><strong>Dealer Upcard:</strong> <span id="dealer-card">–</span></p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div id="actions">
+      <p>What would you do?</p>
+      <button onclick="chooseAction('hit')">Hit</button>
+      <button onclick="chooseAction('stand')">Stand</button>
+      <button onclick="chooseAction('double')">Double</button>
+      <button onclick="chooseAction('split')">Split</button>
+    </div>
+
+    <!-- Feedback -->
+    <div id="feedback">
+      <h4>Feedback</h4>
+      <p id="result-text">Click “Deal a Hand” to begin.</p>
+      <p id="explanation-text"></p>
+      <p id="accuracy-text"></p>
+    </div>
+
+    <!-- Controls -->
+    <div id="controls">
+      <button onclick="dealHand()">Deal a Hand</button>
+      <button onclick="resetStats()">Reset Progress</button>
+    </div>
+  </section>
+
+  <!-- How the Trainer Works -->
+  <section id="how-it-works">
+    <h3>How the Trainer Teaches Strategy</h3>
+    <p>
+      Instead of memorizing a full chart, you learn through patterns. The trainer focuses on a few key ideas:
+    </p>
+    <ul>
+      <li>When your total is high, the main risk is busting yourself.</li>
+      <li>When the dealer shows a strong card, the risk is letting them outdraw you by standing too soon.</li>
+      <li>Certain hands (like pairs of 8s or Aces) are structurally better when split, even if it feels uncomfortable.</li>
+      <li>Doubling is recommended when the odds of improving are strong and the dealer is more likely to be in a weak position.</li>
+    </ul>
+    <p>
+      Each explanation is written in plain language so you can connect the recommendation to an underlying reason,
+      not just a rule.
+    </p>
+  </section>
+
+  <!-- Disclaimers -->
+  <section id="disclaimers">
+    <h3>Important Disclaimers</h3>
+    <ul>
+      <li>This tool and guide are for <strong>educational purposes only</strong>.</li>
+      <li>There is no promise of specific outcomes, income, or any form of advantage over casinos.</li>
+      <li>The examples and recommendations are simplified and do not cover every table rule or variation.</li>
+      <li>You must be of <strong>legal gambling age</strong> in your jurisdiction to participate in real-money play, if you choose to do so.</li>
+      <li>If gambling is not enjoyable, controlled, and affordable for you, seek help and avoid participation.</li>
+    </ul>
+  </section>
+
+  <!-- Call to Action -->
+  <section id="cta">
+    <h3>Get the Full Guide & Lessons</h3>
+    <p>
+      If you find the trainer helpful and want a deeper explanation of the logic, psychology, and responsible-play
+      framework behind it, you can access the full digital guide and lesson pages.
     </p>
     <p>
-      <a href="https://gumroad.com/" target="_blank">→ Get the Guide for $17</a>
+      The complete guide, including structured lessons and the interactive trainer, is available for <strong>$17</strong> on Gumroad.
+    </p>
+    <p>
+      <a href="https://gumroad.com/" target="_blank">→ Access the Full Blackjack Mindset Guide for $17</a>
     </p>
   </section>
 
   <footer>
-    <p>
-      © 2026 The Blackjack Mindset. Educational content only. No financial advice or gambling recommendations.
-    </p>
+    <p>© 2026 The Blackjack Mindset. Educational content only. No financial advice or gambling recommendations.</p>
   </footer>
+
+  <!-- Basic JS for v1 Trainer -->
+  <script>
+    // Simple dataset of example hands for teaching concepts (not full rules, just educational patterns)
+    const hands = [
+      {
+        player: "16 (10 + 6)",
+        dealer: "10",
+        recommended: "hit",
+        explanation: "With 16 against a strong dealer 10, standing leaves you losing too often. Hitting may bust sometimes, but in the long run it loses less."
+      },
+      {
+        player: "12 (10 + 2)",
+        dealer: "4",
+        recommended: "stand",
+        explanation: "The dealer is more likely to bust with a 4. If you hit, you risk busting yourself on many cards. Standing keeps the dealer under pressure."
+      },
+      {
+        player: "11 (5 + 6)",
+        dealer: "6",
+        recommended: "double",
+        explanation: "With 11 against a weak dealer 6, you have many ways to improve to a strong total. Doubling increases your exposure when the odds are in your favour."
+      },
+      {
+        player: "A,7 (soft 18)",
+        dealer: "9",
+        recommended: "hit",
+        explanation: "Soft 18 against a 9 is not as strong as it looks. Hitting can improve your total, and the Ace protects you from busting immediately."
+      },
+      {
+        player: "8,8 (pair of 8s)",
+        dealer: "10",
+        recommended: "split",
+        explanation: "16 is a difficult total to play. Splitting 8s lets you start two new hands from a stronger starting point instead of playing one weak 16."
+      },
+      {
+        player: "A,6 (soft 17)",
+        dealer: "3",
+        recommended: "double",
+        explanation: "Soft 17 can improve on many cards without busting, and the dealer 3 is relatively weak. Doubling makes sense when you can press a good situation."
+      }
+    ];
+
+    let currentHandIndex = null;
+    let totalHands = 0;
+    let correctDecisions = 0;
+
+    function dealHand() {
+      const index = Math.floor(Math.random() * hands.length);
+      currentHandIndex = index;
+      const hand = hands[index];
+
+      document.getElementById("player-hand").textContent = hand.player;
+      document.getElementById("dealer-card").textContent = hand.dealer;
+      document.getElementById("result-text").textContent = "Make your decision for this hand.";
+      document.getElementById("explanation-text").textContent = "";
+    }
+
+    function chooseAction(action) {
+      if (currentHandIndex === null) {
+        document.getElementById("result-text").textContent = "Please click “Deal a Hand” first.";
+        return;
+      }
+
+      const hand = hands[currentHandIndex];
+      totalHands += 1;
+
+      if (action === hand.recommended) {
+        correctDecisions += 1;
+        document.getElementById("result-text").textContent =
+          "Your choice matches the recommended strategy for this hand.";
+      } else {
+        document.getElementById("result-text").textContent =
+          "Your choice differs from the recommended strategy for this hand.";
+      }
+
+      document.getElementById("explanation-text").textContent =
+        "Recommended action: " + hand.recommended.toUpperCase() + ". " + hand.explanation;
+
+      const accuracy = totalHands > 0
+        ? Math.round((correctDecisions / totalHands) * 100)
+        : 0;
+      document.getElementById("accuracy-text").textContent =
+        "You have matched the recommended decision on " + accuracy + "% of hands so far.";
+    }
+
+    function resetStats() {
+      totalHands = 0;
+      correctDecisions = 0;
+      currentHandIndex = null;
+      document.getElementById("player-hand").textContent = "–";
+      document.getElementById("dealer-card").textContent = "–";
+      document.getElementById("result-text").textContent = "Click “Deal a Hand” to begin.";
+      document.getElementById("explanation-text").textContent = "";
+      document.getElementById("accuracy-text").textContent = "";
+    }
+  </script>
 
 </body>
 </html>
