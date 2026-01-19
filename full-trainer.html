@@ -49,12 +49,27 @@
       font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    a { color: inherit; }
+    a { color: inherit; text-decoration: none; }
+
+    a:hover { text-decoration: underline; }
 
     .page-shell {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 24px 18px 32px;
+      padding: 20px 18px 32px;
+    }
+
+    .back-link {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .back-link span.arrow {
+      font-size: 0.9rem;
     }
 
     header {
@@ -78,15 +93,6 @@
       font-size: 0.8rem;
       color: var(--muted);
       margin-bottom: 4px;
-    }
-
-    .breadcrumb a {
-      text-decoration: none;
-      color: var(--muted);
-    }
-
-    .breadcrumb a:hover {
-      text-decoration: underline;
     }
 
     h1 {
@@ -429,6 +435,11 @@
 </head>
 <body>
   <div class="page-shell">
+    <a href="full-access.html" class="back-link">
+      <span class="arrow">←</span>
+      <span>Back to Full Access Hub</span>
+    </a>
+
     <header>
       <div class="breadcrumb">
         <span>Member Area • Trainer</span>
@@ -437,10 +448,6 @@
       <p>
         Practice basic strategy decisions with a focused trainer built for members. Choose the type of hands you want
         to see, answer without rushing, and track accuracy by category instead of just a single score.
-      </p>
-      <p>
-        Want the separate, full version with all options unlocked?
-        <a href="full-access.html">Open full-access trainer</a>.
       </p>
       <div class="tagline-pill">
         <span class="tag-dot"></span>
