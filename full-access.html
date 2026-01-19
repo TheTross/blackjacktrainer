@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Blackjack Mindset – Full Access</title>
+  <title>The Blackjack Mindset – Full Access Hub</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,6 +30,7 @@
       --radius-lg: 16px;
       --radius-md: 12px;
       --radius-pill: 999px;
+      --max-width: 1080px;
     }
 
     * { box-sizing: border-box; }
@@ -50,7 +51,7 @@
     a { color: inherit; }
 
     .page-shell {
-      max-width: 1080px;
+      max-width: var(--max-width);
       margin: 0 auto;
       padding: 22px 18px 30px;
     }
@@ -59,43 +60,53 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 18px;
+      gap: 14px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -6px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      opacity: 0.9;
     }
 
     .header-left {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       align-items: center;
     }
 
     .logo-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 12px;
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
       border: 1px solid rgba(37, 42, 57, 0.9);
       background: radial-gradient(circle at top, #1dd1a1 0, #0da37b 55%, #045b44 100%);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.85);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: #020308;
     }
 
     .title-wrap h1 {
-      font-size: clamp(1.6rem, 2vw, 1.9rem);
-      letter-spacing: 0.12em;
+      font-size: clamp(1.7rem, 2.4vw, 2rem);
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       margin: 0;
     }
 
     .title-wrap p {
-      margin: 2px 0 0;
-      font-size: 0.9rem;
+      margin: 4px 0 0;
+      font-size: 0.92rem;
       color: var(--muted);
-      max-width: 520px;
+      max-width: 540px;
     }
 
     .header-right {
@@ -106,20 +117,6 @@
       justify-content: center;
     }
 
-    .crumb {
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-
-    .crumb a {
-      text-decoration: none;
-      color: var(--muted);
-    }
-
-    .crumb a:hover {
-      text-decoration: underline;
-    }
-
     .license-pill {
       font-size: 0.78rem;
       border-radius: var(--radius-pill);
@@ -127,6 +124,15 @@
       padding: 5px 10px;
       color: var(--muted);
       background: rgba(5, 7, 14, 0.9);
+    }
+
+    .status-pill {
+      font-size: 0.78rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(29, 209, 161, 0.7);
+      padding: 5px 10px;
+      color: var(--accent);
+      background: rgba(29, 209, 161, 0.08);
     }
 
     main {
@@ -152,11 +158,29 @@
       box-shadow: var(--shadow-soft);
       padding: 18px 20px 18px;
       margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -40% -10%;
+      background:
+        radial-gradient(circle at top left, rgba(29, 209, 161, 0.09) 0, transparent 55%),
+        radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.08) 0, transparent 55%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .panel-inner {
+      position: relative;
+      z-index: 1;
     }
 
     h2 {
       font-size: 0.96rem;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--muted);
       margin: 0 0 10px;
@@ -198,9 +222,9 @@
     }
 
     .lesson-link {
-      border-radius: 12px;
+      border-radius: 14px;
       border: 1px solid var(--border-subtle);
-      padding: 9px 10px;
+      padding: 10px 11px;
       background: rgba(8, 10, 20, 0.96);
       display: flex;
       justify-content: space-between;
@@ -219,14 +243,14 @@
 
     .lesson-main {
       display: flex;
-      gap: 8px;
+      gap: 9px;
       align-items: center;
     }
 
     .lesson-icon {
-      width: 22px;
-      height: 22px;
-      border-radius: 9px;
+      width: 24px;
+      height: 24px;
+      border-radius: 10px;
       background: radial-gradient(circle at top, rgba(29, 209, 161, 0.2) 0, rgba(5, 7, 14, 0.96) 65%);
       border: 1px solid rgba(52, 58, 79, 0.9);
       display: flex;
@@ -238,11 +262,11 @@
     .lesson-text {
       display: flex;
       flex-direction: column;
-      gap: 1px;
+      gap: 2px;
     }
 
     .lesson-title {
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-weight: 500;
     }
 
@@ -266,7 +290,17 @@
       font-size: 0.78rem;
       color: var(--accent-warm);
       background: rgba(252, 202, 87, 0.08);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+    }
+
+    .callout {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      background: rgba(5, 7, 14, 0.96);
+      padding: 8px 10px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 6px;
     }
 
     footer {
@@ -284,218 +318,216 @@
       <div class="header-left">
         <div class="logo-mark">BJ</div>
         <div class="title-wrap">
-          <h1>Full Access</h1>
+          <h1>Member Hub</h1>
           <p>
-            Central hub for the complete version of The Blackjack Mindset. Use this page to open lessons, tools,
-            and the trainer in one place.
+            Everything unlocked: lessons, tools, and the full trainer in one place. Move through in order or jump
+            straight to whatever matches the situations you are seeing at the table.
           </p>
         </div>
       </div>
       <div class="header-right">
-        <div class="crumb">
-          <a href="index.html">← Back to public overview</a>
+        <div class="status-pill">
+          Full access • Private link for you only
         </div>
         <div class="license-pill">
-          Purchased access • Single user • Educational content only
+          Single user • Educational content only
         </div>
       </div>
     </header>
 
     <main>
-      <!-- LEFT: LESSON LINKS -->
+      <!-- LEFT: LESSONS & TOOLS -->
       <section>
         <div class="panel">
-          <h2>Lessons & Tools</h2>
-          <p>
-            Start with probability and variance, then move through psychology, betting systems, casino design, and
-            responsible play. Each lesson is short and focused.
-          </p>
+          <div class="panel-inner">
+            <h2>Lessons & Tools</h2>
+            <p>
+              Start with probability to understand the math, then use the trainer and budgeting tools to turn those
+              ideas into decisions and clear limits.
+            </p>
 
-          <div class="lesson-list">
-            <a href="lesson-probability.html" class="lesson-link">
-              <div class="lesson-main">
-                <div class="lesson-icon">
-                  <!-- dice / probability icon -->
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <rect x="4" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.6"/>
-                    <rect x="13" y="13" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.6" opacity="0.9"/>
-                    <circle cx="7.5" cy="7.5" r="1" fill="currentColor"/>
-                    <circle cx="16.5" cy="16.5" r="1" fill="currentColor"/>
-                    <circle cx="19" cy="14" r="0.9" fill="currentColor" opacity="0.7"/>
-                  </svg>
+            <div class="lesson-list">
+              <a href="lesson-probability.html" class="lesson-link">
+                <div class="lesson-main">
+                  <div class="lesson-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <rect x="4" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.6"/>
+                      <rect x="13" y="13" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.6" opacity="0.9"/>
+                      <circle cx="7.5" cy="7.5" r="1" fill="currentColor"/>
+                      <circle cx="16.5" cy="16.5" r="1" fill="currentColor"/>
+                      <circle cx="19" cy="14" r="0.9" fill="currentColor" opacity="0.7"/>
+                    </svg>
+                  </div>
+                  <div class="lesson-text">
+                    <span class="lesson-title">Probability & Variance</span>
+                    <span class="lesson-sub">Win rates, house edge, and why streaks happen.</span>
+                  </div>
                 </div>
-                <div class="lesson-text">
-                  <span class="lesson-title">Probability & Variance</span>
-                  <span class="lesson-sub">How often you win, lose, and why streaks happen even with solid play.</span>
-                </div>
-              </div>
-              <span class="lesson-arrow">Open →</span>
-            </a>
+                <span class="lesson-arrow">Open →</span>
+              </a>
 
-            <a href="lesson-mistakes.html" class="lesson-link">
-              <div class="lesson-main">
-                <div class="lesson-icon">
-                  <!-- exclamation icon -->
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 4L4 20H20L12 4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                    <path d="M12 10V14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                    <circle cx="12" cy="17" r="0.9" fill="currentColor"/>
-                  </svg>
+              <a href="lesson-mistakes.html" class="lesson-link">
+                <div class="lesson-main">
+                  <div class="lesson-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 4L4 20H20L12 4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                      <path d="M12 10V14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                      <circle cx="12" cy="17" r="0.9" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <div class="lesson-text">
+                    <span class="lesson-title">Common Player Mistakes</span>
+                    <span class="lesson-sub">Strategy leaks, chasing, and side‑bet traps.</span>
+                  </div>
                 </div>
-                <div class="lesson-text">
-                  <span class="lesson-title">Common Player Mistakes</span>
-                  <span class="lesson-sub">Frequent judgment errors and what they cost over time.</span>
-                </div>
-              </div>
-              <span class="lesson-arrow">Open →</span>
-            </a>
+                <span class="lesson-arrow">Open →</span>
+              </a>
 
-            <a href="lesson-psychology.html" class="lesson-link">
-              <div class="lesson-main">
-                <div class="lesson-icon">
-                  <!-- brain icon -->
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 4C7.5 4 6.3 5.2 6.3 6.7C5.1 7 4.2 8.2 4.2 9.5C4.2 10.4 4.6 11.1 5.2 11.6C4.8 12.1 4.5 12.8 4.5 13.5C4.5 15.2 5.8 16.5 7.5 16.5H9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                    <path d="M15 4C16.5 4 17.7 5.2 17.7 6.7C18.9 7 19.8 8.2 19.8 9.5C19.8 10.4 19.4 11.1 18.8 11.6C19.2 12.1 19.5 12.8 19.5 13.5C19.5 15.2 18.2 16.5 16.5 16.5H15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                    <path d="M12 6V18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                  </svg>
+              <a href="lesson-psychology.html" class="lesson-link">
+                <div class="lesson-main">
+                  <div class="lesson-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9 4C7.5 4 6.3 5.2 6.3 6.7C5.1 7 4.2 8.2 4.2 9.5C4.2 10.4 4.6 11.1 5.2 11.6C4.8 12.1 4.5 12.8 4.5 13.5C4.5 15.2 5.8 16.5 7.5 16.5H9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                      <path d="M15 4C16.5 4 17.7 5.2 17.7 6.7C18.9 7 19.8 8.2 19.8 9.5C19.8 10.4 19.4 11.1 18.8 11.6C19.2 12.1 19.5 12.8 19.5 13.5C19.5 15.2 18.2 16.5 16.5 16.5H15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                      <path d="M12 6V18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <div class="lesson-text">
+                    <span class="lesson-title">Psychology & Emotions</span>
+                    <span class="lesson-sub">Tilt, triggers, and staying level during swings.</span>
+                  </div>
                 </div>
-                <div class="lesson-text">
-                  <span class="lesson-title">Psychology & Emotions</span>
-                  <span class="lesson-sub">How moods and beliefs shape decisions under pressure.</span>
-                </div>
-              </div>
-              <span class="lesson-arrow">Open →</span>
-            </a>
+                <span class="lesson-arrow">Open →</span>
+              </a>
 
-            <a href="lesson-betting-systems.html" class="lesson-link">
-              <div class="lesson-main">
-                <div class="lesson-icon">
-                  <!-- steps icon -->
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 17H11V13H17V7H19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
+              <a href="lesson-betting-systems.html" class="lesson-link">
+                <div class="lesson-main">
+                  <div class="lesson-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5 17H11V13H17V7H19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div class="lesson-text">
+                    <span class="lesson-title">Why Betting Systems Fail</span>
+                    <span class="lesson-sub">Progressions, limits, and the house edge.</span>
+                  </div>
                 </div>
-                <div class="lesson-text">
-                  <span class="lesson-title">Why Betting Systems Fail</span>
-                  <span class="lesson-sub">Why changing bet sizes cannot remove the house edge.</span>
-                </div>
-              </div>
-              <span class="lesson-arrow">Open →</span>
-            </a>
+                <span class="lesson-arrow">Open →</span>
+              </a>
 
-            <a href="lesson-casino-design.html" class="lesson-link">
-              <div class="lesson-main">
-                <div class="lesson-icon">
-                  <!-- building icon -->
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <rect x="5" y="4" width="14" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
-                    <path d="M9 9H11M13 9H15M9 13H11M13 13H15" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-                  </svg>
+              <a href="lesson-casino-design.html" class="lesson-link">
+                <div class="lesson-main">
+                  <div class="lesson-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <rect x="5" y="4" width="14" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
+                      <path d="M9 9H11M13 9H15M9 13H11M13 13H15" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <div class="lesson-text">
+                    <span class="lesson-title">How Casinos Shape Decisions</span>
+                    <span class="lesson-sub">Layout, sound, and subtle nudges on the floor.</span>
+                  </div>
                 </div>
-                <div class="lesson-text">
-                  <span class="lesson-title">How Casinos Shape Decisions</span>
-                  <span class="lesson-sub">Layout, light, and sound as subtle nudges to keep playing.</span>
-                </div>
-              </div>
-              <span class="lesson-arrow">Open →</span>
-            </a>
+                <span class="lesson-arrow">Open →</span>
+              </a>
 
-            <a href="lesson-responsible-play.html" class="lesson-link">
-              <div class="lesson-main">
-                <div class="lesson-icon">
-                  <!-- shield icon -->
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 4L6 6V12C6 15.3 8.1 18 12 20C15.9 18 18 15.3 18 12V6L12 4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                  </svg>
+              <a href="lesson-responsible-play.html" class="lesson-link">
+                <div class="lesson-main">
+                  <div class="lesson-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 4L6 6V12C6 15.3 8.1 18 12 20C15.9 18 18 15.3 18 12V6L12 4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div class="lesson-text">
+                    <span class="lesson-title">Responsible, Disciplined Play</span>
+                    <span class="lesson-sub">Time, money, and emotional safety rails.</span>
+                  </div>
                 </div>
-                <div class="lesson-text">
-                  <span class="lesson-title">Responsible, Disciplined Play</span>
-                  <span class="lesson-sub">Time, money, and emotional limits that keep blackjack in bounds.</span>
-                </div>
-              </div>
-              <span class="lesson-arrow">Open →</span>
-            </a>
+                <span class="lesson-arrow">Open →</span>
+              </a>
 
-            <a href="budgeting.html" class="lesson-link">
-              <div class="lesson-main">
-                <div class="lesson-icon">
-                  <!-- calculator icon -->
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/>
-                    <rect x="8" y="7" width="8" height="2" fill="currentColor"/>
-                    <circle cx="9" cy="13" r="1" fill="currentColor"/>
-                    <circle cx="13" cy="13" r="1" fill="currentColor"/>
-                    <circle cx="9" cy="17" r="1" fill="currentColor"/>
-                    <circle cx="13" cy="17" r="1" fill="currentColor"/>
-                  </svg>
+              <a href="budgeting.html" class="lesson-link">
+                <div class="lesson-main">
+                  <div class="lesson-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/>
+                      <rect x="8" y="7" width="8" height="2" fill="currentColor"/>
+                      <circle cx="9" cy="13" r="1" fill="currentColor"/>
+                      <circle cx="13" cy="13" r="1" fill="currentColor"/>
+                      <circle cx="9" cy="17" r="1" fill="currentColor"/>
+                      <circle cx="13" cy="17" r="1" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <div class="lesson-text">
+                    <span class="lesson-title">Session Budgeting Tool</span>
+                    <span class="lesson-sub">Turn your bankroll into concrete session plans.</span>
+                  </div>
                 </div>
-                <div class="lesson-text">
-                  <span class="lesson-title">Session Budgeting Tool</span>
-                  <span class="lesson-sub">Turn your bankroll into a clear plan before you sit down.</span>
-                </div>
-              </div>
-              <span class="lesson-arrow">Open →</span>
-            </a>
+                <span class="lesson-arrow">Open →</span>
+              </a>
 
-            <a href="index.html#trainer" class="lesson-link">
-              <div class="lesson-main">
-                <div class="lesson-icon">
-                  <!-- cards icon -->
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <rect x="4" y="5" width="8" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/>
-                    <rect x="10" y="3" width="8" height="13" rx="2" stroke="currentColor" stroke-width="1.6" opacity="0.9"/>
-                  </svg>
+              <a href="full-trainer.html" class="lesson-link">
+                <div class="lesson-main">
+                  <div class="lesson-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <rect x="4" y="5" width="8" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/>
+                      <rect x="10" y="3" width="8" height="13" rx="2" stroke="currentColor" stroke-width="1.6" opacity="0.9"/>
+                    </svg>
+                  </div>
+                  <div class="lesson-text">
+                    <span class="lesson-title">Full Access Trainer</span>
+                    <span class="lesson-sub">Drill hard, soft, and pair decisions with feedback.</span>
+                  </div>
                 </div>
-                <div class="lesson-text">
-                  <span class="lesson-title">Interactive Decision Trainer</span>
-                  <span class="lesson-sub">Use the shuffled‑deck simulator to practice decisions.</span>
-                </div>
-              </div>
-              <span class="lesson-arrow">Open →</span>
-            </a>
+                <span class="lesson-arrow">Open →</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- RIGHT: HOW TO USE / DISCLAIMERS -->
+      <!-- RIGHT: HOW TO USE & DISCLAIMERS -->
       <section>
         <div class="panel">
-          <div class="badge">
-            <span>Full Access Notes</span>
+          <div class="panel-inner">
+            <div class="badge">
+              <span>Start Here</span>
+            </div>
+            <h2>How to Use This Hub</h2>
+            <p>
+              Move through the lessons once from top to bottom to get the full picture, then bounce between modules
+              and the trainer based on what you are seeing in your own sessions.
+            </p>
+            <ul>
+              <li>Use the probability lesson to understand long‑run tendencies, not to predict tonight’s short run.</li>
+              <li>Fix technical leaks with the trainer and mistakes module before worrying about small edge cases.</li>
+              <li>Keep the responsible‑play and budgeting tools in view so time, money, and emotion stay inside clear limits.</li>
+            </ul>
+            <div class="callout">
+              The aim is a realistic, grounded understanding of blackjack and your own behaviour—something you can
+              carry into and out of the casino without relying on charts at the table.
+            </div>
           </div>
-          <h2>How to Use This Version</h2>
-          <p>
-            The public page introduces the project. This full‑access hub is for study and practice. Work through the
-            lessons in order or jump directly to the one that matches what you are seeing in the trainer.
-          </p>
-          <ul>
-            <li>Use the probability lesson to understand win rates, house edge, and variance over time.</li>
-            <li>Return to the trainer after each section to see how the ideas feel in actual card sequences.</li>
-            <li>Keep the responsible‑play module in mind as the overall frame for how you use the information.</li>
-          </ul>
-          <p>
-            Feel free to move back and forth between this hub, the lessons, and the trainer. The goal is a realistic,
-            grounded understanding of blackjack rather than memorizing charts.
-          </p>
         </div>
 
         <div class="panel">
-          <h2>Important Disclaimers</h2>
-          <ul>
-            <li>All material is for <strong>educational purposes only</strong>.</li>
-            <li>No strategy in this guide removes the house edge or guarantees profit.</li>
-            <li>Examples and numbers are simplified and may not match every rule set or casino.</li>
-            <li>You must be of <strong>legal gambling age</strong> in your jurisdiction for any real‑money play.</li>
-          </ul>
+          <div class="panel-inner">
+            <h2>Important Disclaimers</h2>
+            <ul>
+              <li>All material in this hub is for <strong>educational purposes only</strong>.</li>
+              <li>No strategy, tool, or trainer here removes the house edge or guarantees profit.</li>
+              <li>Examples and numbers are simplified and may not match every rule set, casino, or jurisdiction.</li>
+              <li>You are responsible for following local laws and must be of legal gambling age for any real‑money play.</li>
+            </ul>
+          </div>
         </div>
       </section>
     </main>
