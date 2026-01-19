@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Blackjack Trainer v1</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #0b3b24 0, #02140b 45%, #000 100%);
+      color: #f9fafb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .table {
+      width: 100%;
+      max-width: 900px;
+      background: rgba(8, 47, 35, 0.95);
+      border-radius: 18px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      padding: 18px 18px 10px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .title {
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 13px;
+      color: #a5f3fc;
+    }
+    .chips {
+      font-size: 13px;
+      color: #e5e7eb;
+    }
+    .chips span {
+      font-weight: 600;
+      color: #facc15;
+    }
+    .row {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .col {
+      flex: 1;
+      min-width: 260px;
+      background: rgba(15, 118, 110, 0.65);
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      padding: 10px 12px;
+    }
+    .label {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #bfdbfe;
+      margin-bottom: 6px;
+    }
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 5px;
+    }
+    .card {
+      width: 38px;
+      height: 54px;
+      border-radius: 6px;
+      background: linear-gradient(145deg, #111827, #020617);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 3px;
+      font-size: 12px;
+    }
+    .card.red { color: #f87171; }
+    .card.black { color: #e5e7eb; }
+    .card .top,
+    .card .bottom {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+    }
+    .card .center {
+      font-size: 13px;
+    }
+    .score {
+      font-size: 13px;
+      color: #e5e7eb;
+      margin-bottom: 4px;
+    }
+    .score span {
+      font-weight: 600;
+      color: #f9fafb;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    button:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #022c22;
+      box-shadow: 0 8px 20px rgba(22, 163, 74, 0.6);
+    }
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(22, 163, 74, 0.8);
+    }
+    .btn-secondary {
+      background: rgba(15, 23, 42, 0.9);
+      color: #e5e7eb;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+    }
+    .btn-secondary:hover:not(:disabled) {
+      background: rgba(15, 23, 42, 1);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: #9ca3af;
+      border: 1px dashed rgba(148, 163, 184, 0.5);
+    }
+    .btn-ghost:hover:not(:disabled) {
+      color: #e5e7eb;
+      border-style: solid;
+    }
+    .log {
+      background: rgba(15, 23, 42, 0.92);
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      padding: 9px 10px;
+      font-size: 12px;
+      color: #e5e7eb;
+      min-height: 42px;
+    }
+    .log strong { color: #fbbf24; }
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 11px;
+      color: #d1d5db;
+      margin-top: 6px;
+    }
+    .stats span {
+      font-weight: 600;
+      color: #e5e7eb;
+    }
+    .pill {
+      border-radius: 999px;
+      padding: 3px 8px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+    }
+    @media (max-width: 640px) {
+      .table { padding: 14px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="table">
+    <div class="header">
+      <div class="title">Blackjack Trainer · v1</div>
+      <div class="chips">Bankroll: <span id="bankroll">1000</span> chips · Bet: <span id="bet">10</span></div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="label">Dealer</div>
+        <div class="cards" id="dealer-cards"></div>
+        <div class="score" id="dealer-score">Total: -</div>
+      </div>
+
+      <div class="col">
+        <div class="label">You</div>
+        <div class="cards" id="player-cards"></div>
+        <div class="score" id="player-score">Total: -</div>
+        <div class="controls">
+          <button id="btn-deal" class="btn-primary">Deal</button>
+          <button id="btn-hit" class="btn-secondary" disabled>Hit</button>
+          <button id="btn-stand" class="btn-secondary" disabled>Stand</button>
+          <button id="btn-newshoe" class="btn-ghost">New Shoe</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-bottom:6px;">
+      <div class="col">
+        <div class="label">Trainer Feedback</div>
+        <div class="log" id="log">
+          Tap <strong>Deal</strong> to start a hand. Play like a casino table, with fake chips. The trainer will tell you if your move matches basic strategy.
+        </div>
+        <div class="stats">
+          <span class="pill">Hands: <span id="hands-played">0</span></span>
+          <span class="pill">Correct moves: <span id="correct-moves">0</span></span>
+          <span class="pill">Accuracy: <span id="accuracy">-</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SUITS = ["♠", "♥", "♦", "♣"];
+    const RANKS = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
+
+    function createShoe(decks = 4) {
+      const shoe = [];
+      for (let d = 0; d < decks; d++) {
+        for (const s of SUITS) {
+          for (const r of RANKS) {
+            shoe.push({ rank: r, suit: s });
+          }
+        }
+      }
+      for (let i = shoe.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shoe[i], shoe[j]] = [shoe[j], shoe[i]];
+      }
+      return shoe;
+    }
+
+    function cardValue(card) {
+      if (card.rank === "A") return 11;
+      if (["K","Q","J"].includes(card.rank)) return 10;
+      return parseInt(card.rank, 10);
+    }
+
+    function handValue(hand) {
+      let total = 0;
+      let aces = 0;
+      for (const c of hand) {
+        total += cardValue(c);
+        if (c.rank === "A") aces++;
+      }
+      while (total > 21 && aces > 0) {
+        total -= 10;
+        aces--;
+      }
+      const soft = aces > 0 && total <= 21;
+      return { total, soft };
+    }
+
+    function isBlackjack(hand) {
+      return hand.length === 2 && handValue(hand).total === 21;
+    }
+
+    function basicStrategyMove(player, dealerUp) {
+      const { total, soft } = handValue(player);
+      const dealerVal = cardValue(dealerUp);
+      const isPair = player.length === 2 && player[0].rank === player[1].rank;
+
+      if (isPair && player[0].rank === "A") return "S";
+      if (isPair && player[0].rank === "8") return "S";
+
+      if (soft) {
+        if (total <= 17) return "H";
+        if (total === 18) {
+          if (dealerVal >= 9) return "H";
+          return "S";
+        }
+        return "S";
+      } else {
+        if (total <= 8) return "H";
+        if (total === 9) return dealerVal >= 3 && dealerVal <= 6 ? "H" : "H";
+        if (total === 10) return dealerVal <= 9 ? "H" : "H";
+        if (total === 11) return "H";
+        if (total === 12) {
+          if (dealerVal >= 4 && dealerVal <= 6) return "S";
+          return "H";
+        }
+        if (total >= 13 && total <= 16) {
+          if (dealerVal >= 2 && dealerVal <= 6) return "S";
+          return "H";
+        }
+        return "S";
+      }
+    }
+
+    function describeMove(code) {
+      if (code === "H") return "Hit";
+      if (code === "S") return "Stand";
+      if (code === "D") return "Double";
+      if (code === "P") return "Split";
+      return "";
+    }
+
+    const dealerCardsEl = document.getElementById("dealer-cards");
+    const playerCardsEl = document.getElementById("player-cards");
+    const dealerScoreEl = document.getElementById("dealer-score");
+    const playerScoreEl = document.getElementById("player-score");
+    const logEl = document.getElementById("log");
+    const bankrollEl = document.getElementById("bankroll");
+    const betEl = document.getElementById("bet");
+    const handsPlayedEl = document.getElementById("hands-played");
+    const correctMovesEl = document.getElementById("correct-moves");
+    const accuracyEl = document.getElementById("accuracy");
+    const btnDeal = document.getElementById("btn-deal");
+    const btnHit = document.getElementById("btn-hit");
+    const btnStand = document.getElementById("btn-stand");
+    const btnNewShoe = document.getElementById("btn-newshoe");
+
+    let shoe = createShoe();
+    let playerHand = [];
+    let dealerHand = [];
+    let bankroll = 1000;
+    let bet = 10;
+    let inHand = false;
+    let handsPlayed = 0;
+    let correctMoves = 0;
+
+    function renderCard(card, hidden=false) {
+      const div = document.createElement("div");
+      div.className = "card " + ((card.suit === "♥" || card.suit === "♦") ? "red" : "black");
+      if (hidden) {
+        div.innerHTML = `
+          <div class="top"><span>?</span><span>?</span></div>
+          <div class="center">🂠</div>
+          <div class="bottom"><span>?</span><span>?</span></div>
+        `;
+        return div;
+      }
+      div.innerHTML = `
+        <div class="top"><span>${card.rank}</span><span>${card.suit}</span></div>
+        <div class="center">${card.suit}</div>
+        <div class="bottom"><span>${card.rank}</span><span>${card.suit}</span></div>
+      `;
+      return div;
+    }
+
+    function renderHands(revealDealer=false) {
+      dealerCardsEl.innerHTML = "";
+      playerCardsEl.innerHTML = "";
+      dealerHand.forEach((c, idx) => {
+        const hidden = idx === 1 && !revealDealer && inHand;
+        dealerCardsEl.appendChild(renderCard(c, hidden));
+      });
+      playerHand.forEach(c => playerCardsEl.appendChild(renderCard(c)));
+
+      const pv = handValue(playerHand);
+      playerScoreEl.textContent = `Total: ${pv.total}${pv.soft ? " (soft)" : ""}`;
+      if (revealDealer) {
+        const dv = handValue(dealerHand);
+        dealerScoreEl.textContent = `Total: ${dv.total}${dv.soft ? " (soft)" : ""}`;
+      } else {
+        if (dealerHand.length > 0) {
+          const dv = cardValue(dealerHand[0]);
+          dealerScoreEl.textContent = `Showing: ${dv}`;
+        } else {
+          dealerScoreEl.textContent = "Total: -";
+        }
+      }
+
+      bankrollEl.textContent = bankroll;
+      betEl.textContent = bet;
+      handsPlayedEl.textContent = handsPlayed;
+      correctMovesEl.textContent = correctMoves;
+      accuracyEl.textContent = handsPlayed ? Math.round((correctMoves / handsPlayed) * 100) + "%" : "-";
+    }
+
+    function drawCard() {
+      if (shoe.length < 20) {
+        shoe = createShoe();
+      }
+      return shoe.pop();
+    }
+
+    function setButtons(state) {
+      if (state === "idle") {
+        btnDeal.disabled = false;
+        btnHit.disabled = true;
+        btnStand.disabled = true;
+      } else if (state === "player") {
+        btnDeal.disabled = true;
+        btnHit.disabled = false;
+        btnStand.disabled = false;
+      } else if (state === "resolve") {
+        btnDeal.disabled = false;
+        btnHit.disabled = true;
+        btnStand.disabled = true;
+      }
+    }
+
+    function startHand() {
+      if (bankroll < bet) bankroll = 1000;
+      playerHand = [drawCard(), drawCard()];
+      dealerHand = [drawCard(), drawCard()];
+      inHand = true;
+      setButtons("player");
+      const pv = handValue(playerHand);
+      const dv = handValue(dealerHand);
+      if (isBlackjack(playerHand) && isBlackjack(dealerHand)) {
+        inHand = false;
+        handsPlayed++;
+        logEl.innerHTML = "Both you and the dealer have blackjack. Push. Trainer: there was no decision to make here.";
+        setButtons("resolve");
+        renderHands(true);
+        return;
+      } else if (isBlackjack(playerHand)) {
+        inHand = false;
+        handsPlayed++;
+        bankroll += Math.round(bet * 1.5);
+        logEl.innerHTML = "Blackjack! You would be paid 3:2 in most games. Trainer: no decision needed.";
+        setButtons("resolve");
+        renderHands(true);
+        return;
+      }
+      const dealerUp = dealerHand[0];
+      const recommended = basicStrategyMove(playerHand, dealerUp);
+      logEl.innerHTML = `New hand. Dealer shows <strong>${dealerUp.rank}${dealerUp.suit}</strong>. Your total is <strong>${pv.total}${pv.soft ? " (soft)" : ""}</strong>. Trainer suggests: <strong>${describeMove(recommended)}</strong>.`;
+      renderHands(false);
+    }
+
+    function endHand(resultText, playerMoveCode) {
+      inHand = false;
+      handsPlayed++;
+
+      const dealerUp = dealerHand[0];
+      const recommended = basicStrategyMove(playerHand, dealerUp);
+      const correct = playerMoveCode ? (playerMoveCode === recommended) : false;
+      if (correct) correctMoves++;
+
+      const feedback = playerMoveCode
+        ? `Trainer move: <strong>${describeMove(recommended)}</strong>. Your move: <strong>${describeMove(playerMoveCode)}</strong>. ${correct ? "✅ Correct decision." : "❌ Off basic strategy this time."}`
+        : "No decision recorded on this hand.";
+
+      logEl.innerHTML = resultText + "<br><br>" + feedback;
+      setButtons("resolve");
+      renderHands(true);
+    }
+
+    function dealerPlay() {
+      let dv = handValue(dealerHand);
+      while (dv.total < 17 || (dv.total === 17 && dv.soft)) {
+        dealerHand.push(drawCard());
+        dv = handValue(dealerHand);
+      }
+      return dv;
+    }
+
+    btnDeal.addEventListener("click", () => {
+      startHand();
+    });
+
+    btnHit.addEventListener("click", () => {
+      if (!inHand) return;
+      const moveCode = "H";
+      playerHand.push(drawCard());
+      const pv = handValue(playerHand);
+      renderHands(false);
+      if (pv.total > 21) {
+        bankroll -= bet;
+        endHand(`You bust with <strong>${pv.total}</strong>. Dealer wins this hand.`, moveCode);
+      } else {
+        const dealerUp = dealerHand[0];
+        const recommended = basicStrategyMove(playerHand, dealerUp);
+        logEl.innerHTML = `You hit. Your total is now <strong>${pv.total}${pv.soft ? " (soft)" : ""}</strong>. Trainer currently suggests: <strong>${describeMove(recommended)}</strong>.`;
+      }
+    });
+
+    btnStand.addEventListener("click", () => {
+      if (!inHand) return;
+      const moveCode = "S";
+      const pv = handValue(playerHand);
+      const dealerFinal = dealerPlay();
+      const playerTotal = pv.total;
+      const dealerTotal = dealerFinal.total;
+
+      let resultText;
+      if (dealerTotal > 21) {
+        bankroll += bet;
+        resultText = `Dealer busts with <strong>${dealerTotal}</strong>. You win this hand with <strong>${playerTotal}</strong>.`;
+      } else if (dealerTotal > playerTotal) {
+        bankroll -= bet;
+        resultText = `Dealer has <strong>${dealerTotal}</strong> vs your <strong>${playerTotal}</strong>. Dealer wins this hand.`;
+      } else if (dealerTotal < playerTotal) {
+        bankroll += bet;
+        resultText = `You have <strong>${playerTotal}</strong> vs dealer's <strong>${dealerTotal}</strong>. You win this hand.`;
+      } else {
+        resultText = `Both you and the dealer have <strong>${playerTotal}</strong>. Push.`;
+      }
+
+      endHand(resultText, moveCode);
+    });
+
+    btnNewShoe.addEventListener("click", () => {
+      shoe = createShoe();
+      bankroll = 1000;
+      bet = 10;
+      playerHand = [];
+      dealerHand = [];
+      inHand = false;
+      handsPlayed = 0;
+      correctMoves = 0;
+      setButtons("idle");
+      logEl.innerHTML = "New shoe loaded and bankroll reset to 1000 chips. Tap <strong>Deal</strong> to start training again.";
+      renderHands(false);
+    });
+
+    setButtons("idle");
+    renderHands(false);
+  </script>
+</body>
+</html>
