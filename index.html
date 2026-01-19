@@ -876,176 +876,406 @@
     </div>
   </div>
 
-  <script>
-    const hands = [
-      {
-        player: "16 (10 + 6)",
-        dealer: "10",
-        dealerUpcardLabel: "Upcard: 10",
-        playerTotalLabel: "Total: 16",
-        recommended: "hit",
-        explanation:
-          "With 16 against a strong dealer 10, standing tends to lose more over time. Hitting can be uncomfortable because of bust risk, but it typically loses less than standing in the long run."
-      },
-      {
-        player: "12 (10 + 2)",
-        dealer: "4",
-        dealerUpcardLabel: "Upcard: 4",
-        playerTotalLabel: "Total: 12",
-        recommended: "stand",
-        explanation:
-          "With 12 against a dealer 4, the dealer is more likely to run into trouble drawing cards. Hitting exposes you to busting on many outcomes, so standing is usually the stronger long-run decision."
-      },
-      {
-        player: "11 (5 + 6)",
-        dealer: "6",
-        dealerUpcardLabel: "Upcard: 6",
-        playerTotalLabel: "Total: 11",
-        recommended: "double",
-        explanation:
-          "An 11 against a weak dealer 6 gives you many ways to improve to a strong total. Doubling increases your exposure when the situation is structurally more favourable for you."
-      },
-      {
-        player: "A,7 (soft 18)",
-        dealer: "9",
-        dealerUpcardLabel: "Upcard: 9",
-        playerTotalLabel: "Total: Soft 18",
-        recommended: "hit",
-        explanation:
-          "Soft 18 against a dealer 9 is less secure than it appears. Hitting can improve your outcome, and the Ace allows flexibility without an immediate bust on the next card."
-      },
-      {
-        player: "8,8 (pair of 8s)",
-        dealer: "10",
-        dealerUpcardLabel: "Upcard: 10",
-        playerTotalLabel: "Total: 16 (8,8)",
-        recommended: "split",
-        explanation:
-          "A total of 16 is structurally difficult to play well. Splitting 8s allows you to restart with two new hands from stronger starting positions rather than committing to one weak 16."
-      },
-      {
-        player: "A,6 (soft 17)",
-        dealer: "3",
-        dealerUpcardLabel: "Upcard: 3",
-        playerTotalLabel: "Total: Soft 17",
-        recommended: "double",
-        explanation:
-          "Soft 17 can improve on many cards without immediately busting, and the dealer 3 is relatively weak. Doubling backs a spot that is more often favourable than not."
+ <script>
+  const SUITS = ["♠", "♥", "♦", "♣"];
+  const RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+
+  let deck = [];
+  let playerHand = [];
+  let dealerHand = [];
+  let totalHands = 0;
+  let correctDecisions = 0;
+
+  function createDeck() {
+    const newDeck = [];
+    for (const suit of SUITS) {
+      for (const rank of RANKS) {
+        newDeck.push({ rank, suit });
       }
-    ];
-
-    let currentHandIndex = null;
-    let totalHands = 0;
-    let correctDecisions = 0;
-
-    function applyHandToVisual(hand) {
-      document.getElementById("player-hand").textContent = "Your hand: " + hand.player;
-      document.getElementById("dealer-card").textContent = "Dealer upcard: " + hand.dealer;
-      document.getElementById("dealer-card-label").textContent = hand.dealerUpcardLabel;
-      document.getElementById("player-total-label").textContent = hand.playerTotalLabel;
-
-      const playerCard1 = document.getElementById("player-card-1");
-      const playerCard2 = document.getElementById("player-card-2");
-
-      if (hand.player.includes("8,8")) {
-        playerCard1.querySelector(".card-rank").textContent = "8";
-        playerCard1.querySelector(".card-center").textContent = "♥";
-        playerCard1.classList.add("red");
-        playerCard2.querySelector(".card-rank").textContent = "8";
-        playerCard2.querySelector(".card-center").textContent = "♣";
-        playerCard2.classList.remove("red");
-      } else if (hand.player.includes("A,7")) {
-        playerCard1.querySelector(".card-rank").textContent = "A";
-        playerCard1.querySelector(".card-center").textContent = "♠";
-        playerCard1.classList.remove("red");
-        playerCard2.querySelector(".card-rank").textContent = "7";
-        playerCard2.querySelector(".card-center").textContent = "♦";
-        playerCard2.classList.add("red");
-      } else if (hand.player.includes("A,6")) {
-        playerCard1.querySelector(".card-rank").textContent = "A";
-        playerCard1.querySelector(".card-center").textContent = "♣";
-        playerCard1.classList.remove("red");
-        playerCard2.querySelector(".card-rank").textContent = "6";
-        playerCard2.querySelector(".card-center").textContent = "♥";
-        playerCard2.classList.add("red");
-      } else if (hand.player.startsWith("16")) {
-        playerCard1.querySelector(".card-rank").textContent = "10";
-        playerCard1.querySelector(".card-center").textContent = "♠";
-        playerCard1.classList.remove("red");
-        playerCard2.querySelector(".card-rank").textContent = "6";
-        playerCard2.querySelector(".card-center").textContent = "♦";
-        playerCard2.classList.add("red");
-      } else if (hand.player.startsWith("12")) {
-        playerCard1.querySelector(".card-rank").textContent = "10";
-        playerCard1.querySelector(".card-center").textContent = "♣";
-        playerCard1.classList.remove("red");
-        playerCard2.querySelector(".card-rank").textContent = "2";
-        playerCard2.querySelector(".card-center").textContent = "♥";
-        playerCard2.classList.add("red");
-      } else if (hand.player.startsWith("11")) {
-        playerCard1.querySelector(".card-rank").textContent = "5";
-        playerCard1.querySelector(".card-center").textContent = "♦";
-        playerCard1.classList.add("red");
-        playerCard2.querySelector(".card-rank").textContent = "6";
-        playerCard2.querySelector(".card-center").textContent = "♠";
-        playerCard2.classList.remove("red");
-      }
-
-      const dealerCard1 = document.getElementById("dealer-card-1");
-      dealerCard1.querySelector(".card-rank").textContent = hand.dealer.replace(/\D/g, "") || hand.dealer;
-      dealerCard1.querySelector(".card-center").textContent = "♠";
     }
+    return newDeck;
+  }
 
-    function dealHand() {
-      const index = Math.floor(Math.random() * hands.length);
-      currentHandIndex = index;
-      const hand = hands[index];
-
-      applyHandToVisual(hand);
-
-      document.getElementById("result-text").textContent =
-        "Review the scenario and choose the action you believe is most appropriate.";
-      document.getElementById("explanation-text").textContent = "";
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
+    return array;
+  }
 
-    function chooseAction(action) {
-      if (currentHandIndex === null) {
-        document.getElementById("result-text").textContent = "Please click “Deal Scenario” to load a hand.";
-        return;
-      }
+  function drawCard() {
+    if (deck.length === 0) {
+      deck = shuffle(createDeck());
+    }
+    return deck.pop();
+  }
 
-      const hand = hands[currentHandIndex];
-      totalHands += 1;
+  function isRedSuit(suit) {
+    return suit === "♥" || suit === "♦"; // hearts and diamonds red, others black.[web:145][web:147][web:150]
+  }
 
-      if (action === hand.recommended) {
-        correctDecisions += 1;
-        document.getElementById("result-text").textContent =
-          "Your decision aligns with the commonly recommended approach for this scenario.";
+  function calculateHandValue(hand) {
+    let total = 0;
+    let aces = 0;
+
+    for (const card of hand) {
+      if (card.rank === "A") {
+        total += 11;
+        aces += 1;
+      } else if (["K", "Q", "J"].includes(card.rank)) {
+        total += 10;
       } else {
-        document.getElementById("result-text").textContent =
-          "Your decision differs from the commonly recommended approach for this scenario.";
+        total += parseInt(card.rank, 10);
       }
-
-      document.getElementById("explanation-text").textContent =
-        "Suggested action: " + hand.recommended.toUpperCase() + ". " + hand.explanation;
-
-      const accuracy = totalHands > 0 ? Math.round((correctDecisions / totalHands) * 100) : 0;
-      document.getElementById("accuracy-text").textContent =
-        "You have matched the suggested decision on " + accuracy + "% of the scenarios you have viewed.";
     }
 
-    function resetStats() {
-      totalHands = 0;
-      correctDecisions = 0;
-      currentHandIndex = null;
-      document.getElementById("player-hand").textContent = "Your hand will appear here.";
-      document.getElementById("dealer-card").textContent = "Dealer’s upcard will appear here.";
-      document.getElementById("dealer-card-label").textContent = "Upcard: 10";
-      document.getElementById("player-total-label").textContent = "Total: 16";
-      document.getElementById("result-text").textContent = "Click “Deal Scenario” to start.";
-      document.getElementById("explanation-text").textContent = "";
-      document.getElementById("accuracy-text").textContent = "";
+    while (total > 21 && aces > 0) {
+      total -= 10;
+      aces -= 1;
     }
-  </script>
+
+    return { total, isSoft: aces > 0 };
+  }
+
+  function getHandDescription(hand) {
+    const { total, isSoft } = calculateHandValue(hand);
+    const cards = hand.map(c => c.rank + c.suit).join(" ");
+    const label = isSoft ? "Soft " + total : "Total " + total;
+    return { label, cards, total, isSoft };
+  }
+
+  function rankToValueForHint(rank) {
+    if (rank === "A") return 11;
+    if (["K", "Q", "J"].includes(rank)) return 10;
+    return parseInt(rank, 10);
+  }
+
+  // ---------- Strategy explanation for every scenario ----------
+
+  function getSuggestedAction(player, dealerUpcard) {
+    const dealerVal = rankToValueForHint(dealerUpcard.rank);
+    const { total, isSoft } = calculateHandValue(player);
+    const isPair = player.length === 2 && player[0].rank === player[1].rank;
+
+    // Pairs – educational simplification based on common charts.[web:1][web:151]
+    if (isPair) {
+      const r = player[0].rank;
+      if (r === "A") {
+        return {
+          action: "split",
+          reason: "Pairs of Aces are usually split so each new hand starts with a strong, flexible card instead of one cramped soft total."
+        };
+      }
+      if (r === "8") {
+        return {
+          action: "split",
+          reason: "A pair of 8s totals 16, which is difficult to play; splitting lets you restart with two more promising hands."
+        };
+      }
+      if (r === "10" || r === "J" || r === "Q" || r === "K") {
+        return {
+          action: "stand",
+          reason: "Pairs of tens form a very strong total; breaking them up usually gives up a good position for weaker ones."
+        };
+      }
+      if (r === "9") {
+        if (dealerVal === 7 || dealerVal === 10 || dealerVal === 11) {
+          return {
+            action: "stand",
+            reason: "A total of 18 is solid against these dealer cards; splitting 9s here can waste a strong made hand."
+          };
+        }
+        return {
+          action: "split",
+          reason: "Splitting 9s against weaker or mid‑strength dealer cards can create two strong positions instead of one."
+        };
+      }
+      if (r === "2" || r === "3") {
+        if (dealerVal >= 4 && dealerVal <= 7) {
+          return {
+            action: "split",
+            reason: "Small pairs can be split against mid‑weak dealer cards to create more ways to build medium totals."
+          };
+        }
+        return {
+          action: "hit",
+          reason: "Without a clear edge from splitting, small pairs are often played as low hard totals and need another card."
+        };
+      }
+      if (r === "4") {
+        if (dealerVal === 5 || dealerVal === 6) {
+          return {
+            action: "split",
+            reason: "Splitting 4s against the weakest dealer cards can be reasonable; otherwise they are usually played as a hard total."
+          };
+        }
+        return {
+          action: "hit",
+          reason: "As a hard 8, a pair of 4s usually needs another card rather than a split in most situations."
+        };
+      }
+      if (r === "5") {
+        if (dealerVal <= 9) {
+          return {
+            action: "double",
+            reason: "A pair of 5s acts like a strong hard 10; doubling against many dealer cards can press a good opportunity."
+          };
+        }
+        return {
+          action: "hit",
+          reason: "Against stronger dealer cards, a simple hit keeps your exposure more controlled than doubling."
+        };
+      }
+      if (r === "6") {
+        if (dealerVal >= 2 && dealerVal <= 6) {
+          return {
+            action: "split",
+            reason: "Splitting 6s against weak or mid‑weak dealer cards can create two medium‑strength starting hands."
+          };
+        }
+        return {
+          action: "hit",
+          reason: "Played as a hard 12 against strong dealer cards, a pair of 6s often needs another card."
+        };
+      }
+      if (r === "7") {
+        if (dealerVal >= 2 && dealerVal <= 7) {
+          return {
+            action: "split",
+            reason: "Splitting 7s against weaker dealer cards creates two decent hands instead of one marginal one."
+          };
+        }
+        return {
+          action: "hit",
+          reason: "Against strong dealer cards, a total of 14 is often not enough and usually calls for a hit."
+        };
+      }
+    }
+
+    // Soft totals – one or more Aces counted as 11.[web:142][web:143][web:148]
+    if (isSoft) {
+      if (total <= 17) {
+        if (dealerVal >= 3 && dealerVal <= 6 && player.length === 2) {
+          return {
+            action: "double",
+            reason: "Soft hands in this range can improve without immediate busts, and the dealer’s card is relatively weak, so doubling can press a favourable spot."
+          };
+        }
+        return {
+          action: "hit",
+          reason: "Soft totals this low have room to improve, and the Ace gives protection against an immediate bust when you take another card."
+        };
+      }
+      if (total === 18) {
+        if (dealerVal >= 3 && dealerVal <= 6 && player.length === 2) {
+          return {
+            action: "double",
+            reason: "Soft 18 against a weak dealer card is strong; doubling with two cards increases your stake when the odds are more favourable."
+          };
+        }
+        if (dealerVal >= 9 || dealerVal === 11) {
+          return {
+            action: "hit",
+            reason: "Soft 18 can be vulnerable against strong dealer upcards; taking another card can improve your position."
+          };
+        }
+        return {
+          action: "stand",
+          reason: "Soft 18 against mid‑strength dealer cards is usually solid enough that more cards tend to add risk more than value."
+        };
+      }
+      if (total === 19) {
+        if ((dealerVal === 6 || dealerVal === 5) && player.length === 2) {
+          return {
+            action: "double",
+            reason: "Some strategies recommend doubling soft 19 against the very weakest dealer cards to press a particularly strong spot."
+          };
+        }
+        return {
+          action: "stand",
+          reason: "Soft 19 is typically strong; taking more cards is rarely necessary and usually just increases risk."
+        };
+      }
+      // Soft 20+ almost always stand.
+      return {
+        action: "stand",
+        reason: "Very strong soft totals are usually held; the extra flexibility from the Ace is not worth risking a weaker position."
+      };
+    }
+
+    // Hard totals – no Ace counted as 11.[web:1][web:143]
+    if (total <= 8) {
+      return {
+        action: "hit",
+        reason: "Very low hard totals almost always need another card; standing leaves you behind the dealer too often."
+      };
+    }
+
+    if (total === 9) {
+      if (dealerVal >= 3 && dealerVal <= 6 && player.length === 2) {
+        return {
+          action: "double",
+          reason: "A hard 9 against a weak dealer upcard has many ways to improve; doubling here can make good use of that edge."
+        };
+      }
+      return {
+        action: "hit",
+        reason: "Against stronger dealer cards, hard 9 typically needs another card to have a realistic chance."
+      };
+    }
+
+    if (total === 10) {
+      if (dealerVal <= 9 && player.length === 2) {
+        return {
+          action: "double",
+          reason: "Hard 10 against a dealer that is not showing a 10 or Ace is often strong enough to double, as many cards improve you."
+        };
+      }
+      return {
+        action: "hit",
+        reason: "When the dealer’s card is very strong, taking one more card without increasing your stake is often more controlled."
+      };
+    }
+
+    if (total === 11) {
+      if (player.length === 2) {
+        return {
+          action: "double",
+          reason: "Hard 11 is one of the best totals to double, as almost any added card creates a strong final total."
+        };
+      }
+      return {
+        action: "hit",
+        reason: "Once extra cards are involved, this hand is less flexible; a simple hit is a clearer option than doubling."
+      };
+    }
+
+    if (total === 12) {
+      if (dealerVal >= 4 && dealerVal <= 6) {
+        return {
+          action: "stand",
+          reason: "Against these dealer cards, the dealer is more likely to run into trouble drawing; standing avoids busting on many possible hits."
+        };
+      }
+      return {
+        action: "hit",
+        reason: "Against stronger dealer upcards, a hard 12 often needs to be improved, despite the risk of busting."
+      };
+    }
+
+    if (total >= 13 && total <= 16) {
+      if (dealerVal >= 2 && dealerVal <= 6) {
+        return {
+          action: "stand",
+          reason: "When the dealer shows a weaker card, standing forces them to draw and risk busting while you avoid extra risk."
+        };
+      }
+      return {
+        action: "hit",
+        reason: "Against strong dealer cards, these middling totals are often not enough; taking another card gives you more chances to compete, even with bust risk."
+      };
+    }
+
+    // 17+
+    return {
+      action: "stand",
+      reason: "Hard 17 or more is usually strong enough that extra cards add more risk than benefit in most rule sets."
+    };
+  }
+
+  // ---------- UI helpers ----------
+
+  function renderHand(containerId, hand, showHoleCardBack = false) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = "";
+    hand.forEach((card, index) => {
+      const cardDiv = document.createElement("div");
+      if (showHoleCardBack && index === 1) {
+        cardDiv.className = "card";
+        cardDiv.style.background = "radial-gradient(circle at top, #172033 0, #040712 70%, #010206 100%)";
+        cardDiv.innerHTML = `
+          <div class="card-center" style="font-size:0.9rem;color:rgba(255,255,255,0.75);">
+            ◆
+          </div>
+        `;
+      } else {
+        cardDiv.className = "card " + (isRedSuit(card.suit) ? "red" : "black");
+        cardDiv.innerHTML = `
+          <div class="card-rank">${card.rank}</div>
+          <div class="card-center">${card.suit}</div>
+          <div class="card-suit">${card.suit}</div>
+        `;
+      }
+      container.appendChild(cardDiv);
+    });
+  }
+
+  function dealScenario() {
+    deck = shuffle(createDeck());
+    playerHand = [drawCard(), drawCard()];
+    dealerHand = [drawCard(), drawCard()];
+
+    const playerDesc = getHandDescription(playerHand);
+    const dealerUp = dealerHand[0];
+
+    renderHand("player-card-stack", playerHand, false);
+    renderHand("dealer-card-stack", dealerHand, true);
+
+    document.getElementById("player-total-label").textContent = playerDesc.label;
+    document.getElementById("dealer-card-label").textContent = "Upcard: " + dealerUp.rank + dealerUp.suit;
+    document.getElementById("player-hand").textContent = "Your hand: " + playerDesc.cards + " (" + playerDesc.label + ")";
+    document.getElementById("dealer-card").textContent = "Dealer upcard: " + dealerUp.rank + dealerUp.suit;
+
+    document.getElementById("result-text").textContent =
+      "Review this situation and choose the action you believe is most appropriate.";
+    document.getElementById("explanation-text").textContent = "";
+  }
+
+  function chooseAction(action) {
+    if (!playerHand.length || !dealerHand.length) {
+      document.getElementById("result-text").textContent = "Please click “Deal Scenario” to load a hand.";
+      return;
+    }
+
+    const dealerUp = dealerHand[0];
+    const suggestion = getSuggestedAction(playerHand, dealerUp);
+
+    totalHands += 1;
+    if (action === suggestion.action) {
+      correctDecisions += 1;
+      document.getElementById("result-text").textContent =
+        "Your decision aligns with the suggested approach for this scenario.";
+    } else {
+      document.getElementById("result-text").textContent =
+        "Your decision differs from the suggested approach for this scenario.";
+    }
+
+    document.getElementById("explanation-text").textContent =
+      "Suggested action: " + suggestion.action.toUpperCase() + ". " + suggestion.reason;
+
+    const accuracy = totalHands > 0 ? Math.round((correctDecisions / totalHands) * 100) : 0;
+    document.getElementById("accuracy-text").textContent =
+      "You have matched the suggested decision on " + accuracy + "% of the scenarios you have viewed.";
+  }
+
+  function resetStats() {
+    totalHands = 0;
+    correctDecisions = 0;
+    playerHand = [];
+    dealerHand = [];
+
+    document.getElementById("player-card-stack").innerHTML = "";
+    document.getElementById("dealer-card-stack").innerHTML = "";
+    document.getElementById("player-total-label").textContent = "Total: –";
+    document.getElementById("dealer-card-label").textContent = "Upcard: –";
+    document.getElementById("player-hand").textContent = "Your hand will appear here.";
+    document.getElementById("dealer-card").textContent = "Dealer’s upcard will appear here.";
+    document.getElementById("result-text").textContent = "Click “Deal Scenario” to start.";
+    document.getElementById("explanation-text").textContent = "";
+    document.getElementById("accuracy-text").textContent = "";
+  }
+</script>
+
 </body>
 </html>
