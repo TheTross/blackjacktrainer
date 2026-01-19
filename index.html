@@ -4,186 +4,734 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Blackjack Mindset – Interactive Trainer & Guide</title>
+  <style>
+    :root {
+      --bg: #05070b;
+      --bg-elevated: #10141f;
+      --accent: #1dd1a1;
+      --accent-soft: rgba(29, 209, 161, 0.16);
+      --text: #f5f7fb;
+      --muted: #9aa0b5;
+      --border-subtle: #252a39;
+      --danger: #ff6b6b;
+      --warning: #feca57;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.55);
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --radius-pill: 999px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #182235 0, #05070b 55%, #020308 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      max-width: 1120px;
+      margin: 40px auto 24px;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 4vw, 3.2rem);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin: 0 0 8px;
+    }
+
+    header h2 {
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--muted);
+      max-width: 640px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto 40px;
+      padding: 0 20px 40px;
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.8fr);
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 880px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    section {
+      margin-bottom: 24px;
+    }
+
+    #intro,
+    #trainer,
+    #how-it-works,
+    #disclaimers,
+    #cta,
+    #navigation {
+      background: rgba(8, 10, 18, 0.96);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 22px 18px;
+    }
+
+    #intro {
+      border-left: 4px solid var(--accent);
+    }
+
+    #navigation {
+      margin-top: 12px;
+    }
+
+    h3 {
+      font-size: 0.98rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+
+    h4 {
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 18px 0 6px;
+    }
+
+    p {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      margin: 0 0 10px;
+      color: var(--text);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 6px 0 0;
+    }
+
+    li {
+      font-size: 0.93rem;
+      color: var(--muted);
+      margin: 4px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    li::before {
+      content: "•";
+      color: var(--accent);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    strong {
+      font-weight: 600;
+    }
+
+    /* Navigation buttons */
+    #navigation ul {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    #navigation button {
+      width: 100%;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      background: linear-gradient(135deg, #121827, #0b0f1a);
+      color: var(--text);
+      font-size: 0.9rem;
+      padding: 10px 12px;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.18s ease, transform 0.16s ease, box-shadow 0.16s ease,
+        background 0.16s ease;
+    }
+
+    #navigation button:hover {
+      border-color: var(--accent);
+      background: linear-gradient(135deg, #151c31, #101523);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Trainer layout */
+    #trainer {
+      margin-top: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #trainer::before {
+      content: "";
+      position: absolute;
+      inset: -30%;
+      background:
+        radial-gradient(circle at top left, rgba(29, 209, 161, 0.08) 0, transparent 55%),
+        radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.08) 0, transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    #trainer-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 880px) {
+      #trainer-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    #table-visual {
+      background: radial-gradient(circle at center, #064b38 0, #043428 62%, #021712 100%);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(0, 0, 0, 0.65);
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.7);
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #table-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 55%);
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+
+    #table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      color: rgba(245, 247, 251, 0.9);
+    }
+
+    #table-header span {
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    #deck-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid rgba(8, 10, 18, 0.6);
+      background: linear-gradient(135deg, #f5f7fb, #ced3e5);
+      box-shadow: 0 6px 14px rgba(2, 3, 8, 0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #020308;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    /* Cards */
+    .seat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(245, 247, 251, 0.8);
+      margin-bottom: 4px;
+    }
+
+    .hand-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .card-stack {
+      display: flex;
+      gap: 8px;
+    }
+
+    .card {
+      width: 48px;
+      height: 68px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.7);
+      background: radial-gradient(circle at top, #ffffff 0, #e2e4f0 65%, #c2c6d7 100%);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.75);
+      position: relative;
+      padding: 4px 5px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card.red {
+      color: #e55039;
+    }
+
+    .card.black {
+      color: #111827;
+    }
+
+    .card-rank {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .card-suit {
+      font-size: 0.7rem;
+    }
+
+    .card-center {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      opacity: 0.92;
+    }
+
+    .total-pill {
+      font-size: 0.8rem;
+      color: #f5f7fb;
+      background: rgba(0, 0, 0, 0.45);
+      border-radius: var(--radius-pill);
+      padding: 3px 8px;
+      border: 1px solid rgba(2, 3, 8, 0.7);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .total-pill span:last-child {
+      font-size: 0.7rem;
+      opacity: 0.9;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    #dealer-row {
+      margin-bottom: 14px;
+    }
+
+    #player-row {
+      margin-top: 10px;
+    }
+
+    #felt-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .felt-button {
+      flex: 1;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(0, 0, 0, 0.8);
+      padding: 7px 10px;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.4);
+      color: rgba(245, 247, 251, 0.92);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.7);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease,
+        border-color 0.12s ease;
+    }
+
+    .felt-button.primary {
+      background: radial-gradient(circle at top, #1dd1a1 0, #0da37b 60%, #06755a 100%);
+      color: #020308;
+      font-weight: 600;
+    }
+
+    .felt-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.8);
+      border-color: rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.55);
+    }
+
+    .felt-button.primary:hover {
+      background: radial-gradient(circle at top, #30e3b6 0, #13b588 60%, #077960 100%);
+    }
+
+    /* Trainer sidebar */
+    #trainer-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    #hand-display p {
+      margin: 0 0 4px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    #feedback {
+      background: rgba(3, 5, 12, 0.95);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(52, 58, 79, 0.9);
+      padding: 10px 11px;
+      margin-top: 8px;
+    }
+
+    #result-text {
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+    }
+
+    #explanation-text {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    #accuracy-text {
+      font-size: 0.82rem;
+      color: var(--accent);
+    }
+
+    #controls {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    #controls button {
+      flex: 1;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      background: rgba(10, 12, 20, 0.95);
+      color: var(--text);
+      font-size: 0.85rem;
+      padding: 8px 10px;
+      cursor: pointer;
+      transition: border-color 0.16s ease, background 0.16s ease, transform 0.12s ease;
+    }
+
+    #controls button:hover {
+      border-color: var(--accent);
+      background: rgba(16, 21, 36, 0.98);
+      transform: translateY(-1px);
+    }
+
+    /* Right column blocks */
+    #how-it-works ul,
+    #disclaimers ul {
+      margin-top: 8px;
+    }
+
+    #cta a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 6px;
+      padding: 10px 16px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, #1dd1a1, #10ac84);
+      color: #020308;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8);
+      transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
+    }
+
+    #cta a:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+      box-shadow: 0 20px 42px rgba(0, 0, 0, 0.9);
+    }
+
+    footer {
+      max-width: 1120px;
+      margin: 0 auto 32px;
+      padding: 0 20px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+  </style>
 </head>
 <body>
 
   <header>
     <h1>The Blackjack Mindset</h1>
-    <h2>Learn the logic behind every hand, not how to chase outcomes</h2>
+    <h2>Professional, interactive training that explains how decisions, probability, and psychology shape your time at the table.</h2>
   </header>
 
-  <!-- Intro / Credibility -->
-  <section id="intro">
-    <p>
-      This project started from a simple curiosity: why do people who know the rules of blackjack still make
-      choices that increase their losses over time? Rather than promising shortcuts or secret systems,
-      <strong>The Blackjack Mindset</strong> focuses on understanding decisions, probabilities, and the emotions
-      that shape play.
-    </p>
-    <p>
-      The homepage below includes an interactive hand trainer and links to short lessons that explain the
-      underlying ideas: probability, psychology, common mistakes, and responsible play as entertainment.
-    </p>
-  </section>
+  <main>
+    <!-- LEFT COLUMN -->
+    <div>
+      <!-- Intro / Credibility -->
+      <section id="intro">
+        <h3>Overview</h3>
+        <p>
+          This project grew out of a simple question: if blackjack is one of the more structured casino games,
+          why do thoughtful people still make choices that steadily work against them?
+        </p>
+        <p>
+          <strong>The Blackjack Mindset</strong> is not a promise of shortcuts. It is a compact, practical guide
+          and trainer that focuses on decision quality, realistic probability, and disciplined play as entertainment.
+        </p>
+      </section>
 
-  <!-- Navigation to Other Pages -->
-  <section id="navigation">
-    <h3>Explore the Lessons</h3>
-    <p>Select a topic to dive deeper. Each button can be linked to its own HTML page.</p>
-    <ul>
-      <li><button onclick="location.href='probability.html'">Probability & Variance</button></li>
-      <li><button onclick="location.href='mistakes.html'">Common Player Mistakes</button></li>
-      <li><button onclick="location.href='psychology.html'">Psychology & Emotions</button></li>
-      <li><button onclick="location.href='betting-systems.html'">Why Betting Systems Fail</button></li>
-      <li><button onclick="location.href='casino-design.html'">How Casinos Shape Decisions</button></li>
-      <li><button onclick="location.href='responsible-play.html'">Responsible, Disciplined Play</button></li>
-    </ul>
-  </section>
+      <!-- Navigation to Other Pages -->
+      <section id="navigation">
+        <h3>Lesson Modules</h3>
+        <p>Select a module to explore in more depth. Each button can link to its own HTML lesson page.</p>
+        <ul>
+          <li><button onclick="location.href='probability.html'">Probability & Variance</button></li>
+          <li><button onclick="location.href='mistakes.html'">Common Player Mistakes</button></li>
+          <li><button onclick="location.href='psychology.html'">Psychology & Emotions</button></li>
+          <li><button onclick="location.href='betting-systems.html'">Why Betting Systems Fail</button></li>
+          <li><button onclick="location.href='casino-design.html'">How Casinos Shape Decisions</button></li>
+          <li><button onclick="location.href='responsible-play.html'">Responsible, Disciplined Play</button></li>
+        </ul>
+      </section>
 
-  <!-- Interactive Trainer Overview -->
-  <section id="trainer-overview">
-    <h3>Interactive Decision Trainer</h3>
-    <p>
-      The interactive trainer below presents a simple blackjack hand, asks what you would do, and then
-      compares your choice with a basic strategy recommendation for that situation. This is not about
-      “perfect play” or guarantees; it is about seeing how small edges and disciplined decisions look in practice.
-    </p>
-    <p>
-      After each hand, you will see:
-    </p>
-    <ul>
-      <li>Your decision and the recommended action for that hand.</li>
-      <li>A short explanation of <strong>why</strong> that recommendation exists (e.g., bust risk, dealer bust risk, long-run expectation).</li>
-      <li>A running summary of how often you match the recommended strategy.</li>
-    </ul>
-  </section>
+      <!-- Interactive Trainer -->
+      <section id="trainer">
+        <h3>Interactive Decision Trainer</h3>
+        <div id="trainer-inner">
+          <!-- Table / Cards Visual -->
+          <div id="table-visual">
+            <div id="table-header">
+              <span>Education Mode</span>
+              <div id="deck-icon">
+                <span>21</span>
+              </div>
+            </div>
 
-  <!-- Interactive Trainer v1 (Simple Prototype) -->
-  <section id="trainer">
-    <h3>Try a Hand</h3>
-    <p>
-      This v1 trainer is simplified to focus on core concepts. It uses a small set of common hands to illustrate
-      why certain decisions are recommended over others. No real money is used, tracked, or implied.
-    </p>
+            <div id="dealer-row">
+              <div class="seat-label">Dealer</div>
+              <div class="hand-row">
+                <div class="card-stack">
+                  <!-- Dealer upcard (sample: 10♠) -->
+                  <div class="card black" id="dealer-card-1">
+                    <div class="card-rank">10</div>
+                    <div class="card-center">♠</div>
+                    <div class="card-suit">♠</div>
+                  </div>
+                  <!-- Hole card back -->
+                  <div class="card" style="background: radial-gradient(circle at top, #172033 0, #040712 70%, #010206 100%);">
+                    <div class="card-center" style="font-size:0.9rem; color:rgba(255,255,255,0.75);">
+                      ◆
+                    </div>
+                  </div>
+                </div>
+                <div class="total-pill">
+                  <span id="dealer-card-label">Upcard: 10</span>
+                  <span>Risk Anchor</span>
+                </div>
+              </div>
+            </div>
 
-    <!-- Hand Display -->
-    <div id="hand-display">
-      <p><strong>Your Hand:</strong> <span id="player-hand">–</span></p>
-      <p><strong>Dealer Upcard:</strong> <span id="dealer-card">–</span></p>
+            <div id="player-row">
+              <div class="seat-label">You</div>
+              <div class="hand-row">
+                <div class="card-stack" id="player-card-stack">
+                  <!-- player cards are illustrative; values are also shown in text on the right -->
+                  <div class="card red" id="player-card-1">
+                    <div class="card-rank">8</div>
+                    <div class="card-center">♥</div>
+                    <div class="card-suit">♥</div>
+                  </div>
+                  <div class="card black" id="player-card-2">
+                    <div class="card-rank">8</div>
+                    <div class="card-center">♣</div>
+                    <div class="card-suit">♣</div>
+                  </div>
+                </div>
+                <div class="total-pill">
+                  <span id="player-total-label">Total: 16</span>
+                  <span>Decision Point</span>
+                </div>
+              </div>
+            </div>
+
+            <div id="felt-actions">
+              <button class="felt-button primary" onclick="dealHand()">Deal a Hand</button>
+              <button class="felt-button" onclick="resetStats()">Reset</button>
+            </div>
+          </div>
+
+          <!-- Trainer Copy / Controls -->
+          <div id="trainer-copy">
+            <p>
+              The trainer presents a simplified hand, asks what you would do, and compares your choice to a
+              widely accepted basic strategy recommendation for that situation. The focus is on understanding
+              <strong>why</strong> a choice is recommended, not on chasing outcomes.
+            </p>
+
+            <section id="hand-display">
+              <p><strong>Current hand context</strong></p>
+              <p><span id="player-hand">Your hand will appear here.</span></p>
+              <p><span id="dealer-card">Dealer’s upcard will appear here.</span></p>
+            </section>
+
+            <section id="actions">
+              <h4>Your Decision</h4>
+              <p style="margin-bottom:6px;">Choose the action that feels correct to you for this hand.</p>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('hit')">Hit</button>
+                <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('stand')">Stand</button>
+                <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('double')">Double</button>
+                <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('split')">Split</button>
+              </div>
+            </section>
+
+            <div id="feedback">
+              <p id="result-text">Click “Deal a Hand” to begin a scenario.</p>
+              <p id="explanation-text"></p>
+              <p id="accuracy-text"></p>
+            </div>
+
+            <div id="controls">
+              <button onclick="dealHand()">Next Scenario</button>
+              <button onclick="resetStats()">Clear History</button>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
 
-    <!-- Action Buttons -->
-    <div id="actions">
-      <p>What would you do?</p>
-      <button onclick="chooseAction('hit')">Hit</button>
-      <button onclick="chooseAction('stand')">Stand</button>
-      <button onclick="chooseAction('double')">Double</button>
-      <button onclick="chooseAction('split')">Split</button>
+    <!-- RIGHT COLUMN -->
+    <div>
+      <!-- How the Trainer Works -->
+      <section id="how-it-works">
+        <h3>How the Trainer Teaches</h3>
+        <p>
+          Instead of asking you to memorize a full chart, the trainer rotates through a focused set of hands
+          that highlight recurring patterns in blackjack decisions.
+        </p>
+        <ul>
+          <li>Hands where the main risk is <strong>busting yourself</strong> by being too aggressive.</li>
+          <li>Hands where the main risk is <strong>letting the dealer outdraw you</strong> by being too passive.</li>
+          <li>Pairs and soft totals that behave differently from “normal” hard hands.</li>
+          <li>Structured opportunities to increase exposure when the situation is objectively stronger.</li>
+        </ul>
+        <p>
+          Each explanation is written in plain language, so you connect the recommendation to a clear reason,
+          not just a rule.
+        </p>
+      </section>
+
+      <!-- Disclaimers -->
+      <section id="disclaimers">
+        <h3>Important Disclaimers</h3>
+        <ul>
+          <li>This tool and guide are for <strong>educational purposes only</strong>.</li>
+          <li>There is no promise of specific outcomes, income, or any form of advantage over casinos.</li>
+          <li>Examples are simplified and do not capture every rule set, side bet, or table variation.</li>
+          <li>You must be of <strong>legal gambling age</strong> in your jurisdiction to participate in any real-money games, if you choose to do so.</li>
+          <li>If gambling is not enjoyable, controlled, and affordable for you, seek support and avoid participation.</li>
+        </ul>
+      </section>
+
+      <!-- Call to Action -->
+      <section id="cta">
+        <h3>Full Guide & Lesson Access</h3>
+        <p>
+          If you find the trainer helpful and want structured, written explanations of probability,
+          psychology, common mistakes, and responsible frameworks, the full digital guide expands each topic
+          in a concise, practical format.
+        </p>
+        <p>
+          Access the complete guide, lesson modules, and trainer for <strong>$17</strong> via Gumroad.
+        </p>
+        <p>
+          <a href="https://gumroad.com/" target="_blank" rel="noopener noreferrer">
+            Access The Blackjack Mindset – $17
+          </a>
+        </p>
+      </section>
     </div>
-
-    <!-- Feedback -->
-    <div id="feedback">
-      <h4>Feedback</h4>
-      <p id="result-text">Click “Deal a Hand” to begin.</p>
-      <p id="explanation-text"></p>
-      <p id="accuracy-text"></p>
-    </div>
-
-    <!-- Controls -->
-    <div id="controls">
-      <button onclick="dealHand()">Deal a Hand</button>
-      <button onclick="resetStats()">Reset Progress</button>
-    </div>
-  </section>
-
-  <!-- How the Trainer Works -->
-  <section id="how-it-works">
-    <h3>How the Trainer Teaches Strategy</h3>
-    <p>
-      Instead of memorizing a full chart, you learn through patterns. The trainer focuses on a few key ideas:
-    </p>
-    <ul>
-      <li>When your total is high, the main risk is busting yourself.</li>
-      <li>When the dealer shows a strong card, the risk is letting them outdraw you by standing too soon.</li>
-      <li>Certain hands (like pairs of 8s or Aces) are structurally better when split, even if it feels uncomfortable.</li>
-      <li>Doubling is recommended when the odds of improving are strong and the dealer is more likely to be in a weak position.</li>
-    </ul>
-    <p>
-      Each explanation is written in plain language so you can connect the recommendation to an underlying reason,
-      not just a rule.
-    </p>
-  </section>
-
-  <!-- Disclaimers -->
-  <section id="disclaimers">
-    <h3>Important Disclaimers</h3>
-    <ul>
-      <li>This tool and guide are for <strong>educational purposes only</strong>.</li>
-      <li>There is no promise of specific outcomes, income, or any form of advantage over casinos.</li>
-      <li>The examples and recommendations are simplified and do not cover every table rule or variation.</li>
-      <li>You must be of <strong>legal gambling age</strong> in your jurisdiction to participate in real-money play, if you choose to do so.</li>
-      <li>If gambling is not enjoyable, controlled, and affordable for you, seek help and avoid participation.</li>
-    </ul>
-  </section>
-
-  <!-- Call to Action -->
-  <section id="cta">
-    <h3>Get the Full Guide & Lessons</h3>
-    <p>
-      If you find the trainer helpful and want a deeper explanation of the logic, psychology, and responsible-play
-      framework behind it, you can access the full digital guide and lesson pages.
-    </p>
-    <p>
-      The complete guide, including structured lessons and the interactive trainer, is available for <strong>$17</strong> on Gumroad.
-    </p>
-    <p>
-      <a href="https://gumroad.com/" target="_blank">→ Access the Full Blackjack Mindset Guide for $17</a>
-    </p>
-  </section>
+  </main>
 
   <footer>
     <p>© 2026 The Blackjack Mindset. Educational content only. No financial advice or gambling recommendations.</p>
   </footer>
 
-  <!-- Basic JS for v1 Trainer -->
   <script>
-    // Simple dataset of example hands for teaching concepts (not full rules, just educational patterns)
     const hands = [
       {
         player: "16 (10 + 6)",
         dealer: "10",
+        dealerUpcardLabel: "Upcard: 10",
+        playerTotalLabel: "Total: 16",
         recommended: "hit",
-        explanation: "With 16 against a strong dealer 10, standing leaves you losing too often. Hitting may bust sometimes, but in the long run it loses less."
+        explanation: "With 16 against a strong dealer 10, standing loses too often over time. Hitting may occasionally bust, but it typically loses less in the long run compared with standing."
       },
       {
         player: "12 (10 + 2)",
         dealer: "4",
+        dealerUpcardLabel: "Upcard: 4",
+        playerTotalLabel: "Total: 12",
         recommended: "stand",
-        explanation: "The dealer is more likely to bust with a 4. If you hit, you risk busting yourself on many cards. Standing keeps the dealer under pressure."
+        explanation: "With 12 against a dealer 4, the dealer is more likely to bust drawing cards. Hitting exposes you to busting on many outcomes, so standing is usually the better long-run decision."
       },
       {
         player: "11 (5 + 6)",
         dealer: "6",
+        dealerUpcardLabel: "Upcard: 6",
+        playerTotalLabel: "Total: 11",
         recommended: "double",
-        explanation: "With 11 against a weak dealer 6, you have many ways to improve to a strong total. Doubling increases your exposure when the odds are in your favour."
+        explanation: "An 11 against a weak 6 gives you many ways to improve to a strong total. Doubling increases your stake when the odds of ending with a good hand are relatively favourable."
       },
       {
         player: "A,7 (soft 18)",
         dealer: "9",
+        dealerUpcardLabel: "Upcard: 9",
+        playerTotalLabel: "Total: Soft 18",
         recommended: "hit",
-        explanation: "Soft 18 against a 9 is not as strong as it looks. Hitting can improve your total, and the Ace protects you from busting immediately."
+        explanation: "Soft 18 against a dealer 9 is more vulnerable than it appears. Hitting allows you to improve while the Ace protects you from busting immediately on a single extra card."
       },
       {
         player: "8,8 (pair of 8s)",
         dealer: "10",
+        dealerUpcardLabel: "Upcard: 10",
+        playerTotalLabel: "Total: 16 (8,8)",
         recommended: "split",
-        explanation: "16 is a difficult total to play. Splitting 8s lets you start two new hands from a stronger starting point instead of playing one weak 16."
+        explanation: "A total of 16 is difficult to play well. Splitting 8s allows you to restart from stronger positions rather than committing to one weak 16 against a strong dealer card."
       },
       {
         player: "A,6 (soft 17)",
         dealer: "3",
+        dealerUpcardLabel: "Upcard: 3",
+        playerTotalLabel: "Total: Soft 17",
         recommended: "double",
-        explanation: "Soft 17 can improve on many cards without busting, and the dealer 3 is relatively weak. Doubling makes sense when you can press a good situation."
+        explanation: "Soft 17 has room to improve on many cards without immediately busting. Against a dealer 3, doubling backs a situation where the dealer is more likely to struggle to reach a strong total."
       }
     ];
 
@@ -191,20 +739,81 @@
     let totalHands = 0;
     let correctDecisions = 0;
 
+    function applyHandToVisual(hand) {
+      // Update text labels
+      document.getElementById("player-hand").textContent = "Your hand: " + hand.player;
+      document.getElementById("dealer-card").textContent = "Dealer upcard: " + hand.dealer;
+      document.getElementById("dealer-card-label").textContent = hand.dealerUpcardLabel;
+      document.getElementById("player-total-label").textContent = hand.playerTotalLabel;
+
+      // Update sample cards for a couple of key patterns (kept simple for v1)
+      const playerCard1 = document.getElementById("player-card-1");
+      const playerCard2 = document.getElementById("player-card-2");
+
+      if (hand.player.includes("8,8")) {
+        playerCard1.querySelector(".card-rank").textContent = "8";
+        playerCard1.querySelector(".card-center").textContent = "♥";
+        playerCard1.classList.add("red");
+        playerCard2.querySelector(".card-rank").textContent = "8";
+        playerCard2.querySelector(".card-center").textContent = "♣";
+        playerCard2.classList.remove("red");
+      } else if (hand.player.includes("A,7")) {
+        playerCard1.querySelector(".card-rank").textContent = "A";
+        playerCard1.querySelector(".card-center").textContent = "♠";
+        playerCard1.classList.remove("red");
+        playerCard2.querySelector(".card-rank").textContent = "7";
+        playerCard2.querySelector(".card-center").textContent = "♦";
+        playerCard2.classList.add("red");
+      } else if (hand.player.includes("A,6")) {
+        playerCard1.querySelector(".card-rank").textContent = "A";
+        playerCard1.querySelector(".card-center").textContent = "♣";
+        playerCard1.classList.remove("red");
+        playerCard2.querySelector(".card-rank").textContent = "6";
+        playerCard2.querySelector(".card-center").textContent = "♥";
+        playerCard2.classList.add("red");
+      } else if (hand.player.startsWith("16")) {
+        playerCard1.querySelector(".card-rank").textContent = "10";
+        playerCard1.querySelector(".card-center").textContent = "♠";
+        playerCard1.classList.remove("red");
+        playerCard2.querySelector(".card-rank").textContent = "6";
+        playerCard2.querySelector(".card-center").textContent = "♦";
+        playerCard2.classList.add("red");
+      } else if (hand.player.startsWith("12")) {
+        playerCard1.querySelector(".card-rank").textContent = "10";
+        playerCard1.querySelector(".card-center").textContent = "♣";
+        playerCard1.classList.remove("red");
+        playerCard2.querySelector(".card-rank").textContent = "2";
+        playerCard2.querySelector(".card-center").textContent = "♥";
+        playerCard2.classList.add("red");
+      } else if (hand.player.startsWith("11")) {
+        playerCard1.querySelector(".card-rank").textContent = "5";
+        playerCard1.querySelector(".card-center").textContent = "♦";
+        playerCard1.classList.add("red");
+        playerCard2.querySelector(".card-rank").textContent = "6";
+        playerCard2.querySelector(".card-center").textContent = "♠";
+        playerCard2.classList.remove("red");
+      }
+
+      // Dealer upcard visual
+      const dealerCard1 = document.getElementById("dealer-card-1");
+      dealerCard1.querySelector(".card-rank").textContent = hand.dealer.replace(/\D/g, "") || hand.dealer;
+      dealerCard1.querySelector(".card-center").textContent = "♠";
+    }
+
     function dealHand() {
       const index = Math.floor(Math.random() * hands.length);
       currentHandIndex = index;
       const hand = hands[index];
 
-      document.getElementById("player-hand").textContent = hand.player;
-      document.getElementById("dealer-card").textContent = hand.dealer;
-      document.getElementById("result-text").textContent = "Make your decision for this hand.";
+      applyHandToVisual(hand);
+
+      document.getElementById("result-text").textContent = "Consider this situation and make your decision.";
       document.getElementById("explanation-text").textContent = "";
     }
 
     function chooseAction(action) {
       if (currentHandIndex === null) {
-        document.getElementById("result-text").textContent = "Please click “Deal a Hand” first.";
+        document.getElementById("result-text").textContent = "Please click “Deal a Hand” to load a scenario.";
         return;
       }
 
@@ -214,29 +823,31 @@
       if (action === hand.recommended) {
         correctDecisions += 1;
         document.getElementById("result-text").textContent =
-          "Your choice matches the recommended strategy for this hand.";
+          "Your choice aligns with the recommended approach for this type of hand.";
       } else {
         document.getElementById("result-text").textContent =
-          "Your choice differs from the recommended strategy for this hand.";
+          "Your choice differs from the commonly recommended approach for this type of hand.";
       }
 
       document.getElementById("explanation-text").textContent =
-        "Recommended action: " + hand.recommended.toUpperCase() + ". " + hand.explanation;
+        "Suggested action: " + hand.recommended.toUpperCase() + ". " + hand.explanation;
 
       const accuracy = totalHands > 0
         ? Math.round((correctDecisions / totalHands) * 100)
         : 0;
       document.getElementById("accuracy-text").textContent =
-        "You have matched the recommended decision on " + accuracy + "% of hands so far.";
+        "You have matched the suggested decision on " + accuracy + "% of scenarios viewed so far.";
     }
 
     function resetStats() {
       totalHands = 0;
       correctDecisions = 0;
       currentHandIndex = null;
-      document.getElementById("player-hand").textContent = "–";
-      document.getElementById("dealer-card").textContent = "–";
-      document.getElementById("result-text").textContent = "Click “Deal a Hand” to begin.";
+      document.getElementById("player-hand").textContent = "Your hand will appear here.";
+      document.getElementById("dealer-card").textContent = "Dealer’s upcard will appear here.";
+      document.getElementById("dealer-card-label").textContent = "Upcard: –";
+      document.getElementById("player-total-label").textContent = "Total: –";
+      document.getElementById("result-text").textContent = "Click “Deal a Hand” to begin a scenario.";
       document.getElementById("explanation-text").textContent = "";
       document.getElementById("accuracy-text").textContent = "";
     }
