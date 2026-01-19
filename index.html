@@ -2,85 +2,138 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Blackjack Trainer – Hit · Stand · Double · Split</title>
+  <title>Blackjack Trainer – Clean v3</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
     * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif; }
+    :root {
+      color-scheme: dark;
+      --bg: #020617;
+      --bg-soft: #021720;
+      --surface: #06171a;
+      --surface-soft: #0b2427;
+      --border-soft: rgba(148,163,184,0.4);
+      --accent: #22c55e;
+      --accent-soft: rgba(34,197,94,0.12);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --text-soft: #6b7280;
+    }
     body {
       margin: 0;
       min-height: 100vh;
-      background: radial-gradient(circle at top, #020617 0, #000 55%, #020617 100%);
-      color: #f9fafb;
-      padding: 20px 12px 40px;
+      background:
+        radial-gradient(circle at top, #0f172a 0, #020617 40%, #000 100%);
+      color: var(--text-main);
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      padding: 16px;
     }
-    .table {
+    .shell {
       width: 100%;
-      max-width: 960px;
-      background: rgba(8, 47, 35, 0.96);
-      border-radius: 18px;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.6);
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      padding: 18px 18px 10px;
+      max-width: 920px;
+      background: linear-gradient(145deg, #020617, #020c10);
+      border-radius: 22px;
+      border: 1px solid rgba(15,23,42,0.9);
+      box-shadow:
+        0 24px 80px rgba(0,0,0,0.8),
+        0 0 0 1px rgba(15,23,42,0.7) inset;
+      padding: 16px 16px 14px;
     }
     .header {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 12px;
-      gap: 8px;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
     }
-    .title {
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .brand-title {
+      font-size: 14px;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      font-size: 13px;
       color: #a5f3fc;
     }
-    .chips {
-      font-size: 13px;
-      color: #e5e7eb;
+    .brand-sub {
+      font-size: 11px;
+      color: var(--text-soft);
     }
-    .chips span {
-      font-weight: 600;
-      color: #facc15;
-    }
-    .row {
+    .meta {
       display: flex;
-      gap: 14px;
-      margin-bottom: 12px;
       flex-wrap: wrap;
+      gap: 6px;
+      justify-content: flex-end;
+      font-size: 11px;
     }
-    .col {
-      flex: 1;
-      min-width: 260px;
-      background: rgba(15, 118, 110, 0.65);
-      border-radius: 14px;
-      border: 1px solid rgba(148, 163, 184, 0.55);
-      padding: 10px 12px;
+    .pill {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: rgba(15,23,42,0.9);
+      color: var(--text-muted);
+    }
+    .pill span {
+      color: #facc15;
+      font-weight: 600;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
+      gap: 10px;
+    }
+    @media (max-width: 720px) {
+      .shell { padding: 12px 10px 12px; border-radius: 18px; }
+      .layout { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    .table {
+      border-radius: 18px;
+      background: radial-gradient(circle at top, #042f2e 0, #022c22 55%, #01110f 100%);
+      border: 1px solid rgba(15,118,110,0.7);
+      box-shadow: 0 18px 44px rgba(0,0,0,0.75);
+      padding: 10px 12px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .table-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
     .label {
       font-size: 11px;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: #bfdbfe;
-      margin-bottom: 6px;
+      opacity: 0.9;
+    }
+    .cards-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      align-items: flex-start;
+      flex-wrap: wrap;
     }
     .cards {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 5px;
+      gap: 4px;
+      min-height: 58px;
     }
     .card {
-      width: 38px;
-      height: 54px;
-      border-radius: 6px;
-      background: linear-gradient(145deg, #111827, #020617);
-      border: 1px solid rgba(148, 163, 184, 0.7);
+      width: 40px;
+      height: 58px;
+      border-radius: 7px;
+      background: radial-gradient(circle at top, #111827 0, #020617 65%);
+      border: 1px solid rgba(148,163,184,0.65);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -88,11 +141,14 @@
       padding: 4px 3px;
       font-size: 12px;
       opacity: 0;
-      transform: translateY(10px) scale(0.98);
+      transform: translateY(8px) scale(0.98);
       animation: cardIn 180ms ease-out forwards;
       will-change: opacity, transform;
+      box-shadow:
+        0 5px 12px rgba(0,0,0,0.8),
+        0 0 0 1px rgba(15,23,42,0.6) inset;
     }
-    .card.red { color: #f87171; }
+    .card.red { color: #f97373; }
     .card.black { color: #e5e7eb; }
     .card .top,
     .card .bottom {
@@ -102,112 +158,199 @@
       font-size: 11px;
     }
     .card .center {
-      font-size: 13px;
+      font-size: 14px;
     }
     .score {
-      font-size: 13px;
+      font-size: 12px;
       color: #e5e7eb;
-      margin-bottom: 4px;
+      white-space: nowrap;
     }
+    .score span {
+      font-weight: 600;
+    }
+
     .controls {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
+      margin-top: 4px;
     }
     button {
       border: none;
       border-radius: 999px;
-      padding: 7px 14px;
-      font-size: 13px;
+      padding: 6px 13px;
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: all 0.16s ease;
     }
     button:disabled {
-      opacity: 0.35;
+      opacity: 0.3;
       cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
     }
     .btn-primary {
-      background: linear-gradient(135deg, #22c55e, #16a34a);
+      background: linear-gradient(135deg, var(--accent), #16a34a);
       color: #022c22;
-      box-shadow: 0 8px 20px rgba(22, 163, 74, 0.6);
+      box-shadow: 0 8px 18px rgba(34,197,94,0.65);
     }
     .btn-primary:hover:not(:disabled) {
       transform: translateY(-1px);
-      box-shadow: 0 10px 24px rgba(22, 163, 74, 0.8);
+      box-shadow: 0 11px 24px rgba(34,197,94,0.85);
     }
     .btn-secondary {
-      background: rgba(15, 23, 42, 0.9);
-      color: #e5e7eb;
-      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15,23,42,0.96);
+      color: var(--text-main);
+      border: 1px solid rgba(148,163,184,0.7);
     }
     .btn-secondary:hover:not(:disabled) {
-      background: rgba(15, 23, 42, 1);
+      background: rgba(15,23,42,1);
     }
     .btn-ghost {
       background: transparent;
-      color: #9ca3af;
-      border: 1px dashed rgba(148, 163, 184, 0.5);
+      color: var(--text-soft);
+      border: 1px dashed rgba(148,163,184,0.6);
     }
     .btn-ghost:hover:not(:disabled) {
-      color: #e5e7eb;
+      color: var(--text-main);
       border-style: solid;
     }
-    .log {
-      background: rgba(15, 23, 42, 0.92);
-      border-radius: 12px;
-      border: 1px solid rgba(148, 163, 184, 0.55);
-      padding: 9px 10px;
-      font-size: 12px;
-      color: #e5e7eb;
-      min-height: 42px;
+
+    .side-panel {
+      border-radius: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border-soft);
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
-    .stats {
+    .side-title {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+    .toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .switch {
+      position: relative;
+      width: 34px;
+      height: 18px;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: #0f172a;
+      border-radius: 999px;
+      transition: 0.18s;
+      border: 1px solid rgba(148,163,184,0.6);
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 12px;
+      width: 12px;
+      left: 2px;
+      bottom: 2px;
+      background-color: #e5e7eb;
+      border-radius: 50%;
+      transition: 0.18s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.8);
+    }
+    .switch input:checked + .slider {
+      background-color: var(--accent-soft);
+      border-color: var(--accent);
+    }
+    .switch input:checked + .slider:before {
+      transform: translateX(14px);
+      background-color: #bbf7d0;
+    }
+
+    .feedback {
+      border-radius: 14px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid var(--border-soft);
+      padding: 7px 8px;
+      font-size: 12px;
+      color: var(--text-main);
+    }
+    .feedback strong {
+      color: #facc15;
+    }
+    .feedback.hidden {
+      display: none;
+    }
+    .stats-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 6px;
       font-size: 11px;
-      color: #d1d5db;
-      margin-top: 6px;
+      color: var(--text-muted);
     }
-    .pill {
+    .stats-pill {
       border-radius: 999px;
-      padding: 3px 8px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.5);
+      padding: 2px 7px;
+      border: 1px solid rgba(148,163,184,0.5);
+      background: #020617;
     }
+    .stats-pill span {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
     @keyframes cardIn {
-      from { opacity: 0; transform: translateY(10px) scale(0.98); }
+      from { opacity: 0; transform: translateY(8px) scale(0.98); }
       to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    @media (max-width: 640px) {
-      .table { padding: 14px 12px 10px; }
     }
   </style>
 </head>
 <body>
-  <div class="table">
+  <div class="shell">
     <div class="header">
-      <div class="title">Blackjack Trainer · Hit · Stand · Double · Split</div>
-      <div class="chips">
-        Bankroll: <span id="bankroll">1000</span> · Bet: <span id="bet">10</span>
-        · Hand: <span id="hand-index">1</span>/<span id="hand-count">1</span>
+      <div class="brand">
+        <div class="brand-title">Cold Deck Blackjack</div>
+        <div class="brand-sub">Learn optimal play by drilling real hands with fake chips.</div>
+      </div>
+      <div class="meta">
+        <div class="pill">Bankroll: <span id="bankroll">1000</span></div>
+        <div class="pill">Bet: <span id="bet">10</span></div>
+        <div class="pill">Hands: <span id="hands-played">0</span></div>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col">
-        <div class="label">Dealer</div>
-        <div class="cards" id="dealer-cards"></div>
-        <div class="score" id="dealer-score">Total: -</div>
-      </div>
+    <div class="layout">
+      <div class="table">
+        <div class="table-row">
+          <div class="label">Dealer</div>
+          <div class="cards-row">
+            <div class="cards" id="dealer-cards"></div>
+            <div class="score" id="dealer-score">Total: -</div>
+          </div>
+        </div>
 
-      <div class="col">
-        <div class="label">You</div>
-        <div class="cards" id="player-cards"></div>
-        <div class="score" id="player-score">Total: -</div>
+        <div class="table-row">
+          <div class="label">You</div>
+          <div class="cards-row">
+            <div class="cards" id="player-cards"></div>
+            <div class="score" id="player-score">Total: -</div>
+          </div>
+        </div>
+
         <div class="controls">
           <button id="btn-deal" class="btn-primary">Deal</button>
           <button id="btn-hit" class="btn-secondary" disabled>Hit</button>
@@ -217,20 +360,25 @@
           <button id="btn-newshoe" class="btn-ghost">Reset Shoe</button>
         </div>
       </div>
-    </div>
 
-    <div class="row" style="margin-bottom:6px;">
-      <div class="col">
-        <div class="label">Trainer Feedback</div>
-        <div class="log" id="log">
-          Tap <strong>Deal</strong> to start. Make a move and see if you match basic strategy (including double and split).[web:26][web:57]
+      <aside class="side-panel">
+        <div class="side-title">Trainer Feedback</div>
+        <div class="toggle-row">
+          <span>Show basic strategy suggestions</span>
+          <label class="switch">
+            <input type="checkbox" id="toggle-feedback" checked />
+            <span class="slider"></span>
+          </label>
         </div>
-        <div class="stats">
-          <span class="pill">Hands: <span id="hands-played">0</span></span>
-          <span class="pill">Correct moves: <span id="correct-moves">0</span></span>
-          <span class="pill">Accuracy: <span id="accuracy">-</span></span>
+        <div id="feedback" class="feedback">
+          Tap <strong>Deal</strong> to start. Make a move and the trainer will tell you if it matches basic strategy (including double and split).
         </div>
-      </div>
+        <div class="stats-row">
+          <div class="stats-pill">Correct: <span id="correct-moves">0</span></div>
+          <div class="stats-pill">Accuracy: <span id="accuracy">-</span></div>
+          <div class="stats-pill">Hands with decisions: <span id="decision-hands">0</span></div>
+        </div>
+      </aside>
     </div>
   </div>
 
@@ -283,6 +431,7 @@
       return hand.length === 2 && handValue(hand).total === 21;
     }
 
+    // Simplified but decent basic strategy with split/double support.[web:26][web:57][web:128][web:131]
     function basicStrategyMove(player, dealerUp, canDouble, canSplit) {
       const { total, soft } = handValue(player);
       const dealerVal = cardValue(dealerUp);
@@ -290,7 +439,7 @@
       if (isPair(player) && canSplit) {
         const r = player[0].rank;
         if (r === "A" || r === "8") return "P";
-        if (r === "10" || r === "J" || r === "Q" || r === "K") return "S";
+        if (["10","J","Q","K"].includes(r)) return "S";
         if (r === "9") {
           if ([2,3,4,5,6,8,9].includes(dealerVal)) return "P"; else return "S";
         }
@@ -300,11 +449,11 @@
         if (r === "6") {
           if (dealerVal >= 3 && dealerVal <= 6) return "P"; else return "H";
         }
-        if (r === "3" || r === "2") {
-          if (dealerVal >= 4 && dealerVal <= 7) return "P"; else return "H";
-        }
         if (r === "4") {
           if (dealerVal === 5 || dealerVal === 6) return "P"; else return "H";
+        }
+        if (r === "3" || r === "2") {
+          if (dealerVal >= 4 && dealerVal <= 7) return "P"; else return "H";
         }
         if (r === "5") {
           if (canDouble && dealerVal >= 2 && dealerVal <= 9) return "D"; else return "H";
@@ -361,14 +510,14 @@
     const playerCardsEl = document.getElementById("player-cards");
     const dealerScoreEl = document.getElementById("dealer-score");
     const playerScoreEl = document.getElementById("player-score");
-    const logEl = document.getElementById("log");
+    const feedbackEl = document.getElementById("feedback");
     const bankrollEl = document.getElementById("bankroll");
     const betEl = document.getElementById("bet");
     const handsPlayedEl = document.getElementById("hands-played");
     const correctMovesEl = document.getElementById("correct-moves");
     const accuracyEl = document.getElementById("accuracy");
-    const handIndexEl = document.getElementById("hand-index");
-    const handCountEl = document.getElementById("hand-count");
+    const decisionHandsEl = document.getElementById("decision-hands");
+    const toggleFeedbackEl = document.getElementById("toggle-feedback");
 
     const btnDeal = document.getElementById("btn-deal");
     const btnHit = document.getElementById("btn-hit");
@@ -380,13 +529,14 @@
     let shoe = createShoe();
     let dealerHand = [];
     let playerHands = [];
+    let bets = [];
     let currentHandIndex = 0;
     let bankroll = 1000;
     let baseBet = 10;
-    let bets = [];
     let inHand = false;
     let handsPlayed = 0;
     let correctMoves = 0;
+    let decisionHands = 0;
 
     function staggeredCardDelay(index) {
       return index * 60;
@@ -396,7 +546,6 @@
       const div = document.createElement("div");
       div.className = "card " + ((card.suit === "♥" || card.suit === "♦") ? "red" : "black");
       div.style.animationDelay = staggeredCardDelay(index) + "ms";
-
       if (hidden) {
         div.innerHTML = `
           <div class="top"><span>?</span><span>?</span></div>
@@ -428,11 +577,15 @@
       });
 
       const pv = handValue(currentHand);
-      playerScoreEl.textContent = `Total: ${pv.total}${pv.soft ? " (soft)" : ""}`;
+      playerScoreEl.textContent = currentHand.length
+        ? `Total: ${pv.total}${pv.soft ? " (soft)" : ""}`
+        : "Total: -";
 
       if (revealDealer) {
         const dv = handValue(dealerHand);
-        dealerScoreEl.textContent = `Total: ${dv.total}${dv.soft ? " (soft)" : ""}`;
+        dealerScoreEl.textContent = dealerHand.length
+          ? `Total: ${dv.total}${dv.soft ? " (soft)" : ""}`
+          : "Total: -";
       } else {
         if (dealerHand.length > 0) {
           const dv = cardValue(dealerHand[0]);
@@ -446,9 +599,10 @@
       betEl.textContent = baseBet;
       handsPlayedEl.textContent = handsPlayed;
       correctMovesEl.textContent = correctMoves;
-      accuracyEl.textContent = handsPlayed ? Math.round((correctMoves / handsPlayed) * 100) + "%" : "-";
-      handIndexEl.textContent = currentHandIndex + 1;
-      handCountEl.textContent = playerHands.length;
+      decisionHandsEl.textContent = decisionHands;
+      accuracyEl.textContent = decisionHands
+        ? Math.round((correctMoves / decisionHands) * 100) + "%"
+        : "-";
     }
 
     function drawCard() {
@@ -458,7 +612,7 @@
       return shoe.pop();
     }
 
-    function setButtons(state, canDouble, canSplit) {
+    function setButtons(state, canDouble=false, canSplit=false) {
       if (state === "idle") {
         btnDeal.disabled = false;
         btnHit.disabled = true;
@@ -488,6 +642,7 @@
       bets = [baseBet];
       currentHandIndex = 0;
       inHand = true;
+      handsPlayed++;
 
       const currentHand = playerHands[0];
       const pv = handValue(currentHand);
@@ -502,7 +657,9 @@
       const canSplit = isPair(currentHand);
 
       const recommended = basicStrategyMove(currentHand, dealerUp, canDouble, canSplit);
-      logEl.innerHTML = `New hand. Dealer shows <strong>${dealerUp.rank}${dealerUp.suit}</strong>. Your total: <strong>${pv.total}${pv.soft ? " (soft)" : ""}</strong>. Trainer suggests: <strong>${describeMove(recommended)}</strong>.`;
+      if (toggleFeedbackEl.checked) {
+        feedbackEl.innerHTML = `Dealer shows <strong>${dealerUp.rank}${dealerUp.suit}</strong>. Your total: <strong>${pv.total}${pv.soft ? " (soft)" : ""}</strong>.<br>Trainer suggests: <strong>${describeMove(recommended)}</strong>.`;
+      }
       renderHands(false);
       setButtons("player", canDouble, canSplit);
     }
@@ -516,7 +673,7 @@
       return dv;
     }
 
-    function resolveAllHands(skipDecisions=false) {
+    function resolveAllHands(skipDecisionCount=false) {
       inHand = false;
       const dealerFinal = dealerPlay();
       const dealerTotal = handValue(dealerHand).total;
@@ -528,10 +685,10 @@
         let resultText;
         if (isBlackjack(hand) && !isBlackjack(dealerHand)) {
           bankroll += Math.round(bets[i] * 1.5);
-          resultText = `Hand ${i+1}: Blackjack!`;
+          resultText = `Hand ${i+1}: Blackjack (paid 3:2).`;
         } else if (pv.total > 21) {
           bankroll -= bets[i];
-          resultText = `Hand ${i+1}: You bust with ${pv.total}.`;
+          resultText = `Hand ${i+1}: Bust with ${pv.total}.`;
         } else if (dealerTotal > 21) {
           bankroll += bets[i];
           resultText = `Hand ${i+1}: Dealer busts with ${dealerTotal}, you win with ${pv.total}.`;
@@ -545,43 +702,43 @@
           resultText = `Hand ${i+1}: Push at ${pv.total}.`;
         }
         summary.push(resultText);
-        if (!skipDecisions) handsPlayed++;
       }
 
-      if (skipDecisions) {
-        handsPlayed++;
-      }
-
-      logEl.innerHTML = summary.join("<br>");
       renderHands(true);
+      if (toggleFeedbackEl.checked) {
+        feedbackEl.innerHTML = summary.join("<br>");
+      }
       setButtons("resolve");
     }
 
-    function evaluateMove(playerMoveCode) {
+    function evaluateMove(moveCode) {
       const currentHand = playerHands[currentHandIndex];
       const dealerUp = dealerHand[0];
       const canDouble = currentHand.length === 2;
       const canSplit = isPair(currentHand) && playerHands.length < 4;
       const recommended = basicStrategyMove(currentHand, dealerUp, canDouble, canSplit);
 
-      const correct = playerMoveCode === recommended;
+      decisionHands++;
+      const correct = moveCode === recommended;
       if (correct) correctMoves++;
-      handsPlayed++;
 
-      return {
-        recommended,
-        correct
-      };
+      if (toggleFeedbackEl.checked) {
+        feedbackEl.innerHTML = `
+          Trainer move: <strong>${describeMove(recommended)}</strong>.<br>
+          Your move: <strong>${describeMove(moveCode)}</strong>.<br>
+          ${correct ? "✅ Correct decision." : "❌ Off basic strategy this time."}
+        `;
+      }
+
+      return { correct, recommended };
     }
 
-    btnDeal.addEventListener("click", () => {
-      startHand();
-    });
+    btnDeal.addEventListener("click", startHand);
 
     btnHit.addEventListener("click", () => {
       if (!inHand) return;
       const moveCode = "H";
-      const moveEval = evaluateMove(moveCode);
+      evaluateMove(moveCode);
 
       const currentHand = playerHands[currentHandIndex];
       currentHand.push(drawCard());
@@ -590,16 +747,18 @@
 
       if (pv.total > 21) {
         bankroll -= bets[currentHandIndex];
-        logEl.innerHTML = `You hit and bust with <strong>${pv.total}</strong>.<br><br>Trainer move: <strong>${describeMove(moveEval.recommended)}</strong>. Your move: <strong>${describeMove(moveCode)}</strong>. ${moveEval.correct ? "✅ Correct." : "❌ Off basic strategy."}`;
+        if (toggleFeedbackEl.checked) {
+          feedbackEl.innerHTML += `<br>You hit and bust with <strong>${pv.total}</strong>.`;
+        }
         setButtons("resolve");
         inHand = false;
         renderHands(true);
       } else {
         const dealerUp = dealerHand[0];
-        const canDouble = false;
-        const canSplit = false;
-        const recommendedNext = basicStrategyMove(currentHand, dealerUp, canDouble, canSplit);
-        logEl.innerHTML = `You hit. Your total is now <strong>${pv.total}${pv.soft ? " (soft)" : ""}</strong>.<br><br>Trainer now suggests: <strong>${describeMove(recommendedNext)}</strong>.`;
+        const recommendedNext = basicStrategyMove(currentHand, dealerUp, false, false);
+        if (toggleFeedbackEl.checked) {
+          feedbackEl.innerHTML += `<br>Your total is now <strong>${pv.total}${pv.soft ? " (soft)" : ""}</strong>. Trainer now suggests: <strong>${describeMove(recommendedNext)}</strong>.`;
+        }
         setButtons("player", false, false);
       }
     });
@@ -607,9 +766,7 @@
     btnStand.addEventListener("click", () => {
       if (!inHand) return;
       const moveCode = "S";
-      const moveEval = evaluateMove(moveCode);
-
-      logEl.innerHTML = `You stand.<br><br>Trainer move: <strong>${describeMove(moveEval.recommended)}</strong>. Your move: <strong>${describeMove(moveCode)}</strong>. ${moveEval.correct ? "✅ Correct." : "❌ Off basic strategy."}`;
+      evaluateMove(moveCode);
       resolveAllHands();
     });
 
@@ -619,7 +776,7 @@
       if (currentHand.length !== 2) return;
 
       const moveCode = "D";
-      const moveEval = evaluateMove(moveCode);
+      evaluateMove(moveCode);
 
       bankroll -= baseBet;
       bets[currentHandIndex] += baseBet;
@@ -627,14 +784,19 @@
       const pv = handValue(currentHand);
       renderHands(false);
 
+      if (toggleFeedbackEl.checked) {
+        feedbackEl.innerHTML += `<br>You double to ${bets[currentHandIndex]} and draw to <strong>${pv.total}</strong>.`;
+      }
+
       if (pv.total > 21) {
         bankroll -= bets[currentHandIndex];
-        logEl.innerHTML = `You double and bust with <strong>${pv.total}</strong>.<br><br>Trainer move: <strong>${describeMove(moveEval.recommended)}</strong>. Your move: <strong>${describeMove(moveCode)}</strong>. ${moveEval.correct ? "✅ Correct." : "❌ Off basic strategy."}`;
+        if (toggleFeedbackEl.checked) {
+          feedbackEl.innerHTML += `<br>You bust after doubling.`;
+        }
         setButtons("resolve");
         inHand = false;
         renderHands(true);
       } else {
-        logEl.innerHTML = `You double to ${bets[currentHandIndex]} chips and draw to <strong>${pv.total}</strong>.<br><br>Trainer move: <strong>${describeMove(moveEval.recommended)}</strong>. Your move: <strong>${describeMove(moveCode)}</strong>. ${moveEval.correct ? "✅ Correct." : "❌ Off basic strategy."}`;
         resolveAllHands();
       }
     });
@@ -645,7 +807,7 @@
       if (!isPair(currentHand) || currentHand.length !== 2 || playerHands.length >= 4) return;
 
       const moveCode = "P";
-      const moveEval = evaluateMove(moveCode);
+      evaluateMove(moveCode);
 
       bankroll -= baseBet;
       const [c1, c2] = currentHand;
@@ -653,7 +815,9 @@
       playerHands.splice(currentHandIndex + 1, 0, [c2, drawCard()]);
       bets.splice(currentHandIndex + 1, 0, baseBet);
 
-      logEl.innerHTML = `You split your pair into two hands.<br><br>Trainer move: <strong>${describeMove(moveEval.recommended)}</strong>. Your move: <strong>${describeMove(moveCode)}</strong>. ${moveEval.correct ? "✅ Correct." : "❌ Off basic strategy."}`;
+      if (toggleFeedbackEl.checked) {
+        feedbackEl.innerHTML += `<br>You split into two hands of ${bets[currentHandIndex]} chips each.`;
+      }
       renderHands(false);
       setButtons("player", false, false);
     });
@@ -669,9 +833,14 @@
       inHand = false;
       handsPlayed = 0;
       correctMoves = 0;
-      logEl.innerHTML = "New shoe loaded and bankroll reset to 1000 chips. Tap <strong>Deal</strong> to train again.";
+      decisionHands = 0;
+      feedbackEl.innerHTML = "New shoe loaded and bankroll reset to 1000 chips. Tap <strong>Deal</strong> to start another session.";
       renderHands(false);
       setButtons("idle");
+    });
+
+    toggleFeedbackEl.addEventListener("change", () => {
+      feedbackEl.classList.toggle("hidden", !toggleFeedbackEl.checked);
     });
 
     setButtons("idle");
