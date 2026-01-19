@@ -1,18 +1,27 @@
-<!-- budgeting.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Session Budgeting Tool – The Blackjack Mindset</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
   <style>
     :root {
       --bg: #05070b;
       --bg-soft: #080b13;
       --bg-elevated: #0e1220;
       --accent: #1dd1a1;
+      --accent-soft: rgba(29, 209, 161, 0.16);
       --accent-warm: #feca57;
-      --text: #f5f7fb;
+      --text: #f7f8fc;
       --muted: #a1a7bc;
       --border-subtle: #252a39;
       --border-strong: #343a4f;
@@ -24,22 +33,23 @@
       --max-width: 960px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #151b2f 0, #05070b 55%, #020308 100%);
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, #151b2f 0, #05070b 55%, #020308 100%);
       color: var(--text);
       -webkit-font-smoothing: antialiased;
     }
 
-    a {
-      color: inherit;
+    h1, h2, h3, h4 {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
+
+    a { color: inherit; }
 
     .page-shell {
       max-width: var(--max-width);
@@ -48,10 +58,20 @@
     }
 
     header {
-      margin-bottom: 18px;
+      margin-bottom: 20px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
+      position: relative;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -6px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      opacity: 0.9;
     }
 
     .breadcrumb {
@@ -70,8 +90,8 @@
     }
 
     h1 {
-      font-size: clamp(1.9rem, 2.5vw, 2.2rem);
-      letter-spacing: 0.12em;
+      font-size: clamp(2rem, 2.6vw, 2.3rem);
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       margin: 0;
     }
@@ -80,7 +100,7 @@
       margin: 0;
       font-size: 0.94rem;
       color: var(--muted);
-      max-width: 620px;
+      max-width: 640px;
       line-height: 1.7;
     }
 
@@ -107,19 +127,15 @@
 
     main {
       display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.1fr);
-      gap: 20px;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr);
+      gap: 18px;
       align-items: flex-start;
     }
 
-    @media (max-width: 840px) {
+    @media (max-width: 880px) {
       main {
         grid-template-columns: 1fr;
       }
-    }
-
-    section {
-      margin-bottom: 18px;
     }
 
     .panel {
@@ -128,11 +144,30 @@
       border: 1px solid var(--border-subtle);
       box-shadow: var(--shadow-soft);
       padding: 18px 20px 18px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -40% -10%;
+      background:
+        radial-gradient(circle at top left, rgba(29, 209, 161, 0.09) 0, transparent 55%),
+        radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.08) 0, transparent 55%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .panel-inner {
+      position: relative;
+      z-index: 1;
     }
 
     h2 {
       font-size: 0.96rem;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--muted);
       margin: 0 0 10px;
@@ -143,7 +178,7 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
-      margin: 14px 0 6px;
+      margin: 12px 0 6px;
     }
 
     p {
@@ -175,128 +210,187 @@
       line-height: 1.4;
     }
 
-    strong {
-      font-weight: 600;
-    }
+    strong { font-weight: 600; }
 
-    /* Form */
-    .budget-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
-      gap: 16px;
-      align-items: flex-start;
-    }
-
-    @media (max-width: 840px) {
-      .budget-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .budget-form label {
-      display: block;
-      font-size: 0.84rem;
-      color: var(--muted);
-      margin-bottom: 3px;
-    }
-
-    .budget-form input {
-      width: 100%;
-      border-radius: 8px;
-      border: 1px solid var(--border-subtle);
-      background: #05070b;
-      color: var(--text);
-      padding: 7px 8px;
-      font-size: 0.9rem;
-      margin-bottom: 8px;
-      outline: none;
-      transition: border-color 0.16s ease, box-shadow 0.16s ease;
-    }
-
-    .budget-form input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(29, 209, 161, 0.45);
-    }
-
-    .budget-form small {
-      display: block;
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .budget-form button {
-      margin-top: 4px;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border-subtle);
-      background: rgba(16, 21, 34, 0.96);
-      color: var(--text);
-      font-size: 0.86rem;
-      padding: 8px 12px;
-      cursor: pointer;
-      transition: border-color 0.16s ease, background 0.16s ease, transform 0.12s ease;
-    }
-
-    .budget-form button:hover {
-      border-color: var(--accent);
-      background: rgba(23, 30, 48, 0.98);
-      transform: translateY(-1px);
-    }
-
-    .budget-summary {
-      background: rgba(3, 5, 12, 0.98);
-      border-radius: var(--radius-lg);
+    .callout {
+      border-radius: var(--radius-md);
       border: 1px solid var(--border-strong);
-      padding: 12px 12px;
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 4px;
-    }
-
-    .summary-row span:first-child {
-      color: var(--muted);
-    }
-
-    .summary-row span:last-child {
-      color: var(--text);
-    }
-
-    .summary-row.highlight span:last-child {
-      color: var(--accent-warm);
-    }
-
-    .summary-note {
-      font-size: 0.8rem;
+      background: rgba(5, 7, 14, 0.96);
+      padding: 8px 10px;
+      font-size: 0.88rem;
       color: var(--muted);
       margin-top: 6px;
     }
 
-    /* Right column panels */
-    .note-panel {
-      margin-top: 14px;
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(252, 202, 87, 0.7);
+      padding: 4px 8px;
+      font-size: 0.78rem;
+      color: var(--accent-warm);
+      background: rgba(252, 202, 87, 0.08);
+      margin-bottom: 8px;
     }
 
-    .back-link {
-      margin-top: 10px;
+    /* Tool styles */
+    .activity-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .activity-title {
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .pill-small {
+      font-size: 0.78rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 4px 8px;
+      color: var(--muted);
+      background: rgba(3, 5, 12, 0.96);
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 720px) {
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    label {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    input[type="number"] {
+      border-radius: 9px;
+      border: 1px solid var(--border-strong);
+      background: rgba(5, 7, 14, 0.98);
+      color: var(--text);
       font-size: 0.86rem;
+      padding: 7px 9px;
+      outline: none;
     }
 
-    .back-link a {
+    input[type="number"]:focus {
+      border-color: var(--accent);
+    }
+
+    .simulate-button {
+      margin-top: 10px;
+      width: 100%;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(29, 209, 161, 0.8);
+      background: linear-gradient(135deg, #1dd1a1, #10ac84);
+      color: #020308;
+      font-size: 0.84rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 8px 10px;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .simulate-button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 1);
+    }
+
+    .sim-output {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      background: rgba(3, 5, 12, 0.98);
+      padding: 8px 10px;
+      margin-top: 10px;
+      font-size: 0.88rem;
+    }
+
+    .output-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .output-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .output-value {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .output-good {
       color: var(--accent);
-      text-decoration: none;
     }
 
-    .back-link a:hover {
-      text-decoration: underline;
+    .output-warning {
+      color: #ff7675;
+    }
+
+    .output-neutral {
+      color: #feca57;
+    }
+
+    .example-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 720px) {
+      .example-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .example-card {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      background: rgba(3, 5, 12, 0.98);
+      padding: 8px 10px;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    .example-title {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 4px;
     }
 
     footer {
-      margin-top: 20px;
+      margin-top: 22px;
       font-size: 0.78rem;
       color: var(--muted);
       border-top: 1px solid var(--border-subtle);
@@ -308,127 +402,166 @@
   <div class="page-shell">
     <header>
       <div class="breadcrumb">
-        <a href="index.html">← Back to Interactive Trainer</a>
+        <a href="full-access.html">← Back to Full Access Hub</a>
       </div>
       <h1>Session Budgeting Tool</h1>
       <p>
-        A simple calculator and short lesson to frame blackjack as a fixed-cost form of entertainment. The goal
-        is to decide what you can afford to lose before you play and to stick to it.
+        Turn a single bankroll into concrete session plans. This tool helps you choose a unit size, number of sessions,
+        and rough risk level so blackjack stays inside your entertainment budget.[web:251][web:38]
       </p>
       <div class="tagline-pill">
         <span class="tag-dot"></span>
-        <span>Educational • Limits • Responsible Play</span>
+        <span>Units • Sessions • Risk Level</span>
       </div>
     </header>
 
     <main>
       <!-- LEFT: TOOL -->
-      <section class="panel">
-        <h2>Interactive Budget Calculator</h2>
-        <p>
-          Use this tool to translate a total entertainment budget into practical session limits. These numbers do
-          not change the casino’s edge—they simply provide a structure for how much you are prepared to spend.
-        </p>
+      <section>
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="activity-header">
+              <div class="activity-title">Build Your Budget</div>
+              <div class="pill-small">Start from total bankroll</div>
+            </div>
+            <p style="margin-bottom:6px;">
+              Enter a total amount you can afford to lose over a period (for example a trip or month), then pick a
+              target unit size and number of sessions. The tool suggests whether the plan is conservative, typical, or
+              aggressive.[web:251][web:252]
+            </p>
 
-        <div class="budget-grid">
-          <div class="budget-form">
-            <label for="bankroll-input">Total amount set aside for blackjack</label>
-            <input id="bankroll-input" type="number" min="0" step="1" placeholder="e.g., 200" />
-            <small>Only money that is fully separate from bills, savings, and essentials.</small>
+            <div class="field-grid">
+              <div class="field-group">
+                <label for="totalBankroll">Total entertainment bankroll</label>
+                <input id="totalBankroll" type="number" min="50" max="100000" value="1000" />
+              </div>
+              <div class="field-group">
+                <label for="numSessions">Planned blackjack sessions</label>
+                <input id="numSessions" type="number" min="1" max="60" value="4" />
+              </div>
+              <div class="field-group">
+                <label for="unitSize">Target bet per hand (unit)</label>
+                <input id="unitSize" type="number" min="1" max="1000" value="10" />
+              </div>
+              <div class="field-group">
+                <label for="sessionLength">Typical session length (hours)</label>
+                <input id="sessionLength" type="number" min="1" max="8" value="3" />
+              </div>
+            </div>
 
-            <label for="session-count-input">Planned number of sessions</label>
-            <input id="session-count-input" type="number" min="1" step="1" placeholder="e.g., 4" />
-            <small>For example, over a trip or a month.</small>
+            <button class="simulate-button" onclick="computeBudget()">
+              Calculate session plan
+            </button>
 
-            <label for="unit-size-input">Typical bet size per hand</label>
-            <input id="unit-size-input" type="number" min="0" step="1" placeholder="e.g., 10" />
-            <small>Use a realistic average bet size, not a best-case scenario.</small>
-
-            <button type="button" onclick="calculateBudget()">Calculate Guidelines</button>
+            <div class="sim-output">
+              <div class="output-row">
+                <span class="output-label">Suggested bankroll per session:</span>
+                <span class="output-value output-neutral" id="session-bankroll">–</span>
+              </div>
+              <div class="output-row">
+                <span class="output-label">Units per session (approx.):</span>
+                <span class="output-value" id="session-units">–</span>
+              </div>
+              <div class="output-row">
+                <span class="output-label">Risk rating for this setup:</span>
+                <span class="output-value output-neutral" id="risk-rating">–</span>
+              </div>
+              <p id="budget-comment" style="margin:4px 0 0;font-size:0.86rem;color:var(--muted);">
+                Use the result as a guide, not a promise. Fewer units means swingier sessions; more units make it easier
+                to ride out variance.[web:38][web:258]
+              </p>
+            </div>
           </div>
+        </div>
+      </section>
 
-          <div class="budget-summary" id="budget-summary">
-            <div class="summary-row">
-              <span>Suggested maximum per session</span>
-              <span id="per-session-output">–</span>
-            </div>
-            <div class="summary-row">
-              <span>Approx. hands per session</span>
-              <span id="hands-output">–</span>
-            </div>
-            <div class="summary-row highlight">
-              <span>Stop-loss reminder</span>
-              <span id="stop-loss-output">–</span>
-            </div>
-            <p class="summary-note">
-              Treat these numbers as boundaries, not targets. If you reach your session limit or stop-loss, the
-              recommendation is to stop, regardless of how the session feels.
+      <!-- RIGHT: EXPLANATION -->
+      <section>
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>How the Tool Thinks</h2>
+            <p>
+              For recreational blackjack, many guides suggest bringing roughly 30–50 betting units for a single
+              session, with 50–100 units giving a smoother ride, depending on table rules and variance.[web:38][web:251]
+            </p>
+            <ul>
+              <li>The tool splits your total bankroll evenly across sessions, then compares that to your unit size.</li>
+              <li>If you end up with far fewer than 30 units per session, you are choosing a high‑volatility plan.</li>
+              <li>More units per session widen the cushion for normal downswings but never remove the house edge.</li>
+            </ul>
+            <p>
+              Think of units as “chances to be wrong” before the session budget is gone, not as guarantees of how many
+              hands you will see.
             </p>
           </div>
         </div>
 
-        <div class="back-link">
-          Prefer to work on decisions first? <a href="index.html">Return to the trainer</a>.
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Example Setups</h2>
+            <p>
+              These examples are not recommendations, just illustrations of how the numbers change as you tweak unit
+              size and sessions.[web:251][web:38]
+            </p>
+            <div class="example-grid">
+              <div class="example-card">
+                <div class="example-title">Low stakes weekend</div>
+                <p>
+                  Bankroll 400, 4 sessions, 5‑unit bets → 100 per session ≈ 20 units. Expect swingy sessions; consider
+                  smaller units if you want longer play.
+                </p>
+              </div>
+              <div class="example-card">
+                <div class="example-title">Moderate cushion</div>
+                <p>
+                  Bankroll 1000, 4 sessions, 10‑unit bets → 250 per session ≈ 25 units. Middle‑of‑the‑road volatility
+                  for 2–3 hours at a low‑minimum table.
+                </p>
+              </div>
+              <div class="example-card">
+                <div class="example-title">Smoother experience</div>
+                <p>
+                  Bankroll 1000, 4 sessions, 5‑unit bets → 250 per session ≈ 50 units. More room for variance, smaller
+                  average swings per session.
+                </p>
+              </div>
+            </div>
+            <div class="callout">
+              If the unit size needed to feel “fun” gives you very few units per session, the safer move is to reduce
+              stakes or shorten the trip, not to stretch the bankroll.
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Practical Guidelines</h2>
+            <p>
+              Bankroll planning is about comfort, not chasing an exact “correct” number. Use guidelines as a ceiling
+              on risk, not a challenge to spend the whole amount.[web:64][web:259]
+            </p>
+            <ul>
+              <li>Keep individual bets to a small share of the session bankroll, often 1–5% depending on appetite for risk.[web:252][web:257]</li>
+              <li>Decide in advance how many sessions your bankroll must cover and avoid “borrowing” from future sessions.</li>
+              <li>Combine this tool with your responsible‑play limits so time and emotion are capped alongside money.</li>
+            </ul>
+            <p>
+              Adjust the inputs until the risk rating and commentary match how relaxed you want to feel at the table.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Important Disclaimers</h2>
+            <ul>
+              <li>This tool is for <strong>educational purposes only</strong> and uses simple rules of thumb.[web:38][web:251]</li>
+              <li>It does not guarantee any outcome or replace financial advice.</li>
+              <li>Never risk money you cannot comfortably afford to lose, and seek support if gambling feels hard to control.[web:245][web:247]</li>
+            </ul>
+          </div>
         </div>
       </section>
-
-      <!-- RIGHT: LESSON CONTENT -->
-      <div>
-        <section class="panel">
-          <h2>Why Budgeting Matters</h2>
-          <p>
-            One of the clearest markers of responsible gambling is setting limits on time and money before play and
-            treating those limits as non-negotiable. A budget turns an open-ended activity into something finite.
-          </p>
-          <ul>
-            <li>It separates gambling money from essential expenses and savings.</li>
-            <li>It reduces the pressure to “get even” after normal losses.</li>
-            <li>It makes it easier to take breaks and walk away when you planned to.</li>
-          </ul>
-          <p>
-            The aim is not to avoid all losses. The aim is to decide in advance what level of loss you are willing
-            to accept as the price of entertainment.
-          </p>
-        </section>
-
-        <section class="panel note-panel">
-          <h2>How to Use This Tool</h2>
-          <h3>1. Start with a total amount</h3>
-          <p>
-            Decide how much money you can afford to lose over a defined period (for example, a weekend trip or a
-            month). This should come from your entertainment budget, not from rent, food, or obligations.
-          </p>
-
-          <h3>2. Break it into sessions</h3>
-          <p>
-            Split that total into several sessions. This reduces the risk of spending everything in a single visit
-            and helps smooth out normal streaks of wins and losses across time.
-          </p>
-
-          <h3>3. Choose a realistic bet size</h3>
-          <p>
-            Pick a typical bet amount that you can sustain over many hands, not the maximum you might occasionally
-            place. The calculator uses this to estimate how many hands a session budget can reasonably support.
-          </p>
-
-          <h3>4. Respect the stop-loss</h3>
-          <p>
-            The “stop-loss reminder” is where you agree to stop for that session, even if you feel you are “due” to
-            recover. This is one of the simplest ways to prevent chasing losses.
-          </p>
-        </section>
-
-        <section class="panel note-panel">
-          <h2>Important Notes & Disclaimers</h2>
-          <ul>
-            <li>This tool is for <strong>educational purposes only</strong>.</li>
-            <li>It does not change the mathematical edge or guarantee any particular experience.</li>
-            <li>All amounts are examples; you are responsible for your own decisions and limits.</li>
-            <li>You must be of <strong>legal gambling age</strong> in your region to participate in any real-money play.</li>
-            <li>If gambling is not enjoyable, controlled, and affordable, you should avoid it and seek support.</li>
-          </ul>
-        </section>
-      </div>
     </main>
 
     <footer>
@@ -437,29 +570,59 @@
   </div>
 
   <script>
-    function calculateBudget() {
-      const bankroll = parseFloat(document.getElementById("bankroll-input").value);
-      const sessions = parseInt(document.getElementById("session-count-input").value, 10);
-      const unitSize = parseFloat(document.getElementById("unit-size-input").value);
+    function computeBudget() {
+      let total = parseFloat(document.getElementById("totalBankroll").value);
+      let sessions = parseInt(document.getElementById("numSessions").value, 10);
+      let unit = parseFloat(document.getElementById("unitSize").value);
+      let hours = parseFloat(document.getElementById("sessionLength").value);
 
-      const perSessionOutput = document.getElementById("per-session-output");
-      const handsOutput = document.getElementById("hands-output");
-      const stopLossOutput = document.getElementById("stop-loss-output");
+      if (isNaN(total) || total <= 0) total = 1000;
+      if (isNaN(sessions) || sessions < 1) sessions = 1;
+      if (sessions > 60) sessions = 60;
+      if (isNaN(unit) || unit <= 0) unit = 10;
+      if (isNaN(hours) || hours <= 0) hours = 3;
+      if (hours > 10) hours = 10;
 
-      if (!bankroll || bankroll <= 0 || !sessions || sessions <= 0 || !unitSize || unitSize <= 0) {
-        perSessionOutput.textContent = "–";
-        handsOutput.textContent = "–";
-        stopLossOutput.textContent = "–";
-        return;
+      document.getElementById("totalBankroll").value = total.toFixed(0);
+      document.getElementById("numSessions").value = sessions;
+      document.getElementById("unitSize").value = unit.toFixed(0);
+      document.getElementById("sessionLength").value = hours;
+
+      const perSession = total / sessions;
+      const unitsPerSession = perSession / unit;
+
+      const sessionSpan = document.getElementById("session-bankroll");
+      const unitsSpan = document.getElementById("session-units");
+      const riskSpan = document.getElementById("risk-rating");
+      const commentP = document.getElementById("budget-comment");
+
+      sessionSpan.textContent = perSession.toFixed(0);
+      unitsSpan.textContent = unitsPerSession.toFixed(1) + " units";
+
+      riskSpan.classList.remove("output-good", "output-warning", "output-neutral");
+
+      let rating;
+      let comment;
+
+      if (unitsPerSession >= 50) {
+        rating = "Conservative";
+        riskSpan.classList.add("output-good");
+        comment =
+          "You have a relatively deep cushion of units per session. Swings will still happen, but this setup is on the calmer side for recreational play.";
+      } else if (unitsPerSession >= 25) {
+        rating = "Typical";
+        riskSpan.classList.add("output-neutral");
+        comment =
+          "This falls in a common range for casual sessions. Expect noticeable swings, especially at faster tables, but the bankroll is not extremely thin.";
+      } else {
+        rating = "Aggressive";
+        riskSpan.classList.add("output-warning");
+        comment =
+          "You are bringing relatively few units per session. Downswings can wipe out a session quickly; consider smaller bets, fewer sessions, or a larger bankroll.";
       }
 
-      const maxPerSession = bankroll / sessions;
-      const conservativeStopLoss = maxPerSession * 0.8;
-      const approxHands = maxPerSession / unitSize;
-
-      perSessionOutput.textContent = "$" + maxPerSession.toFixed(2);
-      handsOutput.textContent = approxHands.toFixed(0) + " hands (approx.)";
-      stopLossOutput.textContent = "Pause if you reach about $" + conservativeStopLoss.toFixed(2) + " in losses.";
+      riskSpan.textContent = rating;
+      commentP.textContent = comment + " Use your responsible‑play limits to decide when the session ends regardless of results.";
     }
   </script>
 </body>
