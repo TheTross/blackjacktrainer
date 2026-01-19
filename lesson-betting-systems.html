@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why Betting Systems Fail – The Blackjack Mindset</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg: #05070b;
+      --bg-soft: #080b13;
+      --bg-elevated: #0e1220;
+      --accent: #1dd1a1;
+      --accent-soft: rgba(29, 209, 161, 0.16);
+      --accent-warm: #feca57;
+      --text: #f7f8fc;
+      --muted: #a1a7bc;
+      --border-subtle: #252a39;
+      --border-strong: #343a4f;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.65);
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --max-width: 960px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, #151b2f 0, #05070b 55%, #020308 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    a { color: inherit; }
+
+    .page-shell {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 24px 18px 32px;
+    }
+
+    header {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -6px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      opacity: 0.9;
+    }
+
+    .breadcrumb {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .breadcrumb a {
+      text-decoration: none;
+      color: var(--muted);
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 2.6vw, 2.3rem);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 0.94rem;
+      color: var(--muted);
+      max-width: 640px;
+      line-height: 1.7;
+    }
+
+    .tagline-pill {
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: rgba(5, 7, 14, 0.94);
+    }
+
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(29, 209, 161, 0.9);
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr);
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 880px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: rgba(7, 10, 20, 0.98);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 20px 18px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -40% -10%;
+      background:
+        radial-gradient(circle at top left, rgba(29, 209, 161, 0.09) 0, transparent 55%),
+        radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.08) 0, transparent 55%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .panel-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      font-size: 0.96rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+
+    h3 {
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 12px 0 6px;
+    }
+
+    p {
+      font-size: 0.94rem;
+      line-height: 1.7;
+      margin: 0 0 10px;
+      color: var(--text);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 6px 0 0;
+    }
+
+    li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 4px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    li::before {
+      content: "•";
+      color: var(--accent);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    strong { font-weight: 600; }
+
+    .callout {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      background: rgba(5, 7, 14, 0.96);
+      padding: 8px 10px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(252, 202, 87, 0.7);
+      padding: 4px 8px;
+      font-size: 0.78rem;
+      color: var(--accent-warm);
+      background: rgba(252, 202, 87, 0.08);
+      margin-bottom: 8px;
+    }
+
+    /* Activity styles */
+    .activity-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .activity-title {
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .pill-small {
+      font-size: 0.78rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 4px 8px;
+      color: var(--muted);
+      background: rgba(3, 5, 12, 0.96);
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 720px) {
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    label {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    input[type="number"] {
+      border-radius: 9px;
+      border: 1px solid var(--border-strong);
+      background: rgba(5, 7, 14, 0.98);
+      color: var(--text);
+      font-size: 0.86rem;
+      padding: 7px 9px;
+      outline: none;
+    }
+
+    input[type="number"]:focus {
+      border-color: var(--accent);
+    }
+
+    .simulate-button {
+      margin-top: 10px;
+      width: 100%;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(29, 209, 161, 0.8);
+      background: linear-gradient(135deg, #1dd1a1, #10ac84);
+      color: #020308;
+      font-size: 0.84rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 8px 10px;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .simulate-button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 1);
+    }
+
+    .sim-output {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      background: rgba(3, 5, 12, 0.98);
+      padding: 8px 10px;
+      margin-top: 10px;
+      font-size: 0.88rem;
+    }
+
+    .output-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .output-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .output-value {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .output-good {
+      color: var(--accent);
+    }
+
+    .output-bad {
+      color: #ff7675;
+    }
+
+    .output-neutral {
+      color: #feca57;
+    }
+
+    .sim-note {
+      margin-top: 4px;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 22px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header>
+      <div class="breadcrumb">
+        <a href="full-access.html">← Back to Full Access Hub</a>
+      </div>
+      <h1>Why Betting Systems Fail</h1>
+      <p>
+        This lesson explains why changing bet sizes alone cannot remove the house edge, even when a system looks
+        convincing on paper or “usually” produces small wins.
+      </p>
+      <div class="tagline-pill">
+        <span class="tag-dot"></span>
+        <span>House Edge • Variance • Limits</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- LEFT COLUMN: CONCEPTS -->
+      <section>
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>What Betting Systems Promise</h2>
+            <p>
+              Many systems claim to smooth out losses by adjusting bet size. A common example is doubling after each
+              loss until a win “cleans up” the streak for a small profit.
+            </p>
+            <ul>
+              <li>The pitch is simple: if you always win back previous losses plus one unit, you “cannot” lose overall.</li>
+              <li>Short, friendly examples show a few losses followed by a win, with a tidy profit at the end.</li>
+              <li>The missing piece is what happens during the rare but inevitable long losing sequence.</li>
+            </ul>
+            <div class="callout>
+              If a system claims to win “almost always,” ask what the rare losing case looks like and how large it is.
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Why the Math Does Not Change</h2>
+            <p>
+              In a negative‑expectation game, each individual bet still has the same long‑run edge against you
+              regardless of size. Rearranging bet sizes does not change the underlying probabilities.
+            </p>
+            <ul>
+              <li>The house edge is defined per unit wagered, not per session or system.</li>
+              <li>Whatever total you bet across all hands will, on average, lose that percentage to the house.</li>
+              <li>A system can change the pattern of wins and losses, but not the long‑run direction.</li>
+            </ul>
+            <p>
+              If the expectation per dollar is negative, betting more dollars—no matter how cleverly—extends that
+              expectation across a larger amount of money.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Bankrolls, Limits, and Risk</h2>
+            <p>
+              The critical flaw in progression systems is the clash between exponentially growing bets and very real
+              limits: your bankroll and the table maximum.
+            </p>
+            <ul>
+              <li>Each loss doubles the required next bet, so stakes can explode in just a handful of hands.</li>
+              <li>Most tables cap bet size long before the “guaranteed” recovery bet can be placed.</li>
+              <li>Even with a large bankroll, one extended losing run can wipe out many small past wins.</li>
+            </ul>
+            <p>
+              In practice, these systems trade frequent small wins for the occasional large loss. The average remains
+              negative.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: INTERACTIVE ACTIVITY + TAKEAWAYS -->
+      <section>
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="activity-header">
+              <div class="activity-title">Progression Walkthrough</div>
+              <div class="pill-small">See the growth in bets</div>
+            </div>
+            <p style="margin-bottom:6px;">
+              This simplified activity shows how a “double after loss” system behaves. You choose a base bet, bankroll,
+              and maximum number of doubles. The tool simulates random win/loss sequences and summarizes what happened.
+            </p>
+
+            <div class="field-grid">
+              <div class="field-group">
+                <label for="baseBet">Base bet (units)</label>
+                <input id="baseBet" type="number" min="1" max="1000" value="10" />
+              </div>
+              <div class="field-group">
+                <label for="bankroll">Session bankroll (units)</label>
+                <input id="bankroll" type="number" min="50" max="100000" value="200" />
+              </div>
+              <div class="field-group">
+                <label for="maxDoubles">Maximum doubles allowed</label>
+                <input id="maxDoubles" type="number" min="1" max="10" value="5" />
+              </div>
+              <div class="field-group">
+                <label for="numRuns">Number of simulated streaks</label>
+                <input id="numRuns" type="number" min="5" max="200" value="50" />
+              </div>
+            </div>
+
+            <p style="margin-top:6px;font-size:0.84rem;color:var(--muted);">
+              Assumptions: each hand is either a win (+bet) or loss (−bet) with a slight house edge; pushes are
+              ignored and table max is approximated by your “maximum doubles” setting.
+            </p>
+
+            <button class="simulate-button" onclick="runProgressionSim()">
+              Run progression sim
+            </button>
+
+            <div class="sim-output">
+              <div class="output-row">
+                <span class="output-label">Runs ending with a profit of 1 unit:</span>
+                <span class="output-value output-good" id="runs-small-win">–</span>
+              </div>
+              <div class="output-row">
+                <span class="output-label">Runs ending in a large loss:</span>
+                <span class="output-value output-bad" id="runs-bust">–</span>
+              </div>
+              <div class="output-row">
+                <span class="output-label">Largest bet placed in any run:</span>
+                <span class="output-value output-neutral" id="max-bet-used">–</span>
+              </div>
+              <p class="sim-note" id="sim-note">
+                Adjust the numbers and rerun to see how often small wins are traded for occasional large losses.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>How to Read the Simulation</h2>
+            <p>
+              The simulator is simplified, but it captures the basic trade‑off: many streaks end with a small profit,
+              and a smaller set end with a loss much larger than that profit.
+            </p>
+            <ul>
+              <li>Increasing the number of allowed doubles makes busts less frequent but dramatically larger when they occur.</li>
+              <li>Increasing the base bet or shrinking the bankroll makes busts more likely in a typical session.</li>
+              <li>The “largest bet” line shows how quickly exposures grow when you chase losses mechanically.</li>
+            </ul>
+            <p>
+              In the long run, the rare large busts outweigh the many small wins, and the overall expectation stays
+              negative.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Practical Takeaways</h2>
+            <p>
+              Betting systems are not pointless, but they should be seen as ways to shape variance, not as methods for
+              beating the game.
+            </p>
+            <ul>
+              <li>Simple, fixed bet sizes paired with clear limits are easier to manage than aggressive progressions.</li>
+              <li>If you experiment with systems, keep stakes small and sessions clearly defined.</li>
+              <li>Be skeptical of any method that claims to “guarantee” profit in a negative‑expectation game.</li>
+            </ul>
+            <p>
+              The safest way to use blackjack is as a capped entertainment expense, not as a system‑driven income
+              source.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Important Disclaimers</h2>
+            <ul>
+              <li>This lesson and simulation are for <strong>educational purposes only</strong>.</li>
+              <li>The model is simplified and does not reflect every rule set, side bet, or betting pattern.</li>
+              <li>Nothing here guarantees any specific outcome in real‑money play.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2026 The Blackjack Mindset. Educational content only. No financial advice or gambling recommendations.
+    </footer>
+  </div>
+
+  <script>
+    function runProgressionSim() {
+      let baseBet = parseFloat(document.getElementById("baseBet").value);
+      let bankroll = parseFloat(document.getElementById("bankroll").value);
+      let maxDoubles = parseInt(document.getElementById("maxDoubles").value, 10);
+      let numRuns = parseInt(document.getElementById("numRuns").value, 10);
+
+      if (isNaN(baseBet) || baseBet <= 0) baseBet = 10;
+      if (isNaN(bankroll) || bankroll <= 0) bankroll = 200;
+      if (isNaN(maxDoubles) || maxDoubles < 1) maxDoubles = 5;
+      if (isNaN(numRuns) || numRuns < 1) numRuns = 50;
+
+      document.getElementById("baseBet").value = baseBet;
+      document.getElementById("bankroll").value = bankroll;
+      document.getElementById("maxDoubles").value = maxDoubles;
+      document.getElementById("numRuns").value = numRuns;
+
+      const pWin = 0.48; // slightly negative game
+      let smallWinRuns = 0;
+      let bustRuns = 0;
+      let largestBet = baseBet;
+
+      for (let r = 0; r < numRuns; r++) {
+        let currentBet = baseBet;
+        let currentBankroll = bankroll;
+        let doublesUsed = 0;
+        let runOver = false;
+
+        while (!runOver) {
+          // Cannot afford the current bet -> bust this run
+          if (currentBet > currentBankroll || doublesUsed > maxDoubles) {
+            bustRuns += 1;
+            runOver = true;
+            break;
+          }
+
+          if (currentBet > largestBet) largestBet = currentBet;
+
+          const roll = Math.random();
+          if (roll < pWin) {
+            // Win: collect profit of currentBet and finish run with +baseBet
+            currentBankroll += currentBet;
+            currentBankroll -= baseBet; // treat baseBet as target profit vs starting stack
+            smallWinRuns += 1;
+            runOver = true;
+          } else {
+            // Loss: subtract bet and double for next round
+            currentBankroll -= currentBet;
+            currentBet *= 2;
+            doublesUsed += 1;
+          }
+
+          // Safety break if bankroll is gone
+          if (currentBankroll <= 0) {
+            bustRuns += 1;
+            runOver = true;
+          }
+        }
+      }
+
+      const smallSpan = document.getElementById("runs-small-win");
+      const bustSpan = document.getElementById("runs-bust");
+      const maxSpan = document.getElementById("max-bet-used");
+
+      smallSpan.textContent = smallWinRuns + " of " + numRuns;
+      bustSpan.textContent = bustRuns + " of " + numRuns;
+      maxSpan.textContent = largestBet.toFixed(2) + " units";
+
+      const note = document.getElementById("sim-note");
+      if (bustRuns === 0) {
+        note.textContent =
+          "In this limited sample no busts occurred, but the potential loss per run is still much larger than the one‑unit profit.";
+      } else {
+        note.textContent =
+          "Notice how many small winning runs are offset by fewer bust runs that are much more expensive. The system changes variance, not the long‑run edge.";
+      }
+    }
+  </script>
+</body>
+</html>
