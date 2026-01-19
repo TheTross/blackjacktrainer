@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Blackjack Trainer – Clean v3</title>
+  <title>Cold Deck Blackjack – Trainer + Course</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
     * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif; }
@@ -10,8 +10,8 @@
       color-scheme: dark;
       --bg: #020617;
       --bg-soft: #021720;
-      --surface: #06171a;
-      --surface-soft: #0b2427;
+      --surface: #050816;
+      --surface-soft: #071821;
       --border-soft: rgba(148,163,184,0.4);
       --accent: #22c55e;
       --accent-soft: rgba(34,197,94,0.12);
@@ -32,12 +32,12 @@
     }
     .shell {
       width: 100%;
-      max-width: 920px;
-      background: linear-gradient(145deg, #020617, #020c10);
+      max-width: 1120px;
+      background: linear-gradient(145deg, #020617, #020b10);
       border-radius: 22px;
       border: 1px solid rgba(15,23,42,0.9);
       box-shadow:
-        0 24px 80px rgba(0,0,0,0.8),
+        0 24px 80px rgba(0,0,0,0.85),
         0 0 0 1px rgba(15,23,42,0.7) inset;
       padding: 16px 16px 14px;
     }
@@ -46,7 +46,8 @@
       justify-content: space-between;
       align-items: center;
       gap: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
     }
     .brand {
       display: flex;
@@ -85,14 +86,16 @@
 
     .layout {
       display: grid;
-      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
-      gap: 10px;
+      grid-template-columns: minmax(0, 1.55fr) minmax(0, 1.45fr);
+      gap: 12px;
+      align-items: flex-start;
     }
-    @media (max-width: 720px) {
+    @media (max-width: 880px) {
       .shell { padding: 12px 10px 12px; border-radius: 18px; }
       .layout { grid-template-columns: minmax(0, 1fr); }
     }
 
+    /* TRAINER TABLE */
     .table {
       border-radius: 18px;
       background: radial-gradient(circle at top, #042f2e 0, #022c22 55%, #01110f 100%);
@@ -219,14 +222,20 @@
       border-style: solid;
     }
 
-    .side-panel {
-      border-radius: 18px;
-      background: var(--surface);
-      border: 1px solid var(--border-soft);
-      padding: 10px 12px;
+    /* RIGHT COLUMN – FEEDBACK + COURSE */
+    .right {
       display: flex;
       flex-direction: column;
       gap: 8px;
+    }
+    .feedback-panel {
+      border-radius: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border-soft);
+      padding: 9px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
     .side-title {
       font-size: 12px;
@@ -282,19 +291,16 @@
     }
 
     .feedback {
-      border-radius: 14px;
-      background: rgba(15,23,42,0.95);
+      border-radius: 12px;
+      background: rgba(15,23,42,0.96);
       border: 1px solid var(--border-soft);
       padding: 7px 8px;
       font-size: 12px;
       color: var(--text-main);
     }
-    .feedback strong {
-      color: #facc15;
-    }
-    .feedback.hidden {
-      display: none;
-    }
+    .feedback strong { color: #facc15; }
+    .feedback.hidden { display: none; }
+
     .stats-row {
       display: flex;
       flex-wrap: wrap;
@@ -313,6 +319,85 @@
       font-weight: 600;
     }
 
+    .course {
+      border-radius: 18px;
+      background: var(--surface-soft);
+      border: 1px solid var(--border-soft);
+      padding: 9px 10px 9px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .course-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .course-title {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+    .course-badge {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(56,189,248,0.7);
+      background: rgba(15,23,42,0.9);
+      color: #bae6fd;
+    }
+    .course-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 2px;
+    }
+    .course-tab {
+      font-size: 11px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.5);
+      background: rgba(15,23,42,0.9);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .course-tab.active {
+      background: rgba(15,118,110,0.5);
+      border-color: var(--accent);
+      color: #e5f9f4;
+    }
+    .course-body {
+      margin-top: 4px;
+      border-radius: 12px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(148,163,184,0.45);
+      padding: 8px 9px;
+      font-size: 12px;
+      color: var(--text-main);
+      max-height: 260px;
+      overflow: auto;
+    }
+    .lesson { display: none; }
+    .lesson.active { display: block; }
+    .lesson h3 {
+      margin: 0 0 4px;
+      font-size: 13px;
+      color: #e0f2fe;
+    }
+    .lesson h4 {
+      margin: 5px 0 3px;
+      font-size: 12px;
+      color: #bfdbfe;
+    }
+    .lesson ul {
+      margin: 0;
+      padding-left: 16px;
+    }
+    .lesson li { margin-bottom: 2px; }
+
     @keyframes cardIn {
       from { opacity: 0; transform: translateY(8px) scale(0.98); }
       to { opacity: 1; transform: translateY(0) scale(1); }
@@ -324,7 +409,7 @@
     <div class="header">
       <div class="brand">
         <div class="brand-title">Cold Deck Blackjack</div>
-        <div class="brand-sub">Learn optimal play by drilling real hands with fake chips.</div>
+        <div class="brand-sub">Trainer + mini-course: learn the rules, strategy, and etiquette, then drill hands.</div>
       </div>
       <div class="meta">
         <div class="pill">Bankroll: <span id="bankroll">1000</span></div>
@@ -334,6 +419,7 @@
     </div>
 
     <div class="layout">
+      <!-- TRAINER -->
       <div class="table">
         <div class="table-row">
           <div class="label">Dealer</div>
@@ -361,24 +447,122 @@
         </div>
       </div>
 
-      <aside class="side-panel">
-        <div class="side-title">Trainer Feedback</div>
-        <div class="toggle-row">
-          <span>Show basic strategy suggestions</span>
-          <label class="switch">
-            <input type="checkbox" id="toggle-feedback" checked />
-            <span class="slider"></span>
-          </label>
+      <!-- FEEDBACK + COURSE -->
+      <div class="right">
+        <div class="feedback-panel">
+          <div class="side-title">Trainer Feedback</div>
+          <div class="toggle-row">
+            <span>Show basic strategy suggestions</span>
+            <label class="switch">
+              <input type="checkbox" id="toggle-feedback" checked />
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div id="feedback" class="feedback">
+            Tap <strong>Deal</strong> to start. The trainer will tell you if your move matches basic strategy (including double and split).[web:26][web:127]
+          </div>
+          <div class="stats-row">
+            <div class="stats-pill">Correct: <span id="correct-moves">0</span></div>
+            <div class="stats-pill">Accuracy: <span id="accuracy">-</span></div>
+            <div class="stats-pill">Hands with decisions: <span id="decision-hands">0</span></div>
+          </div>
         </div>
-        <div id="feedback" class="feedback">
-          Tap <strong>Deal</strong> to start. Make a move and the trainer will tell you if it matches basic strategy (including double and split).
-        </div>
-        <div class="stats-row">
-          <div class="stats-pill">Correct: <span id="correct-moves">0</span></div>
-          <div class="stats-pill">Accuracy: <span id="accuracy">-</span></div>
-          <div class="stats-pill">Hands with decisions: <span id="decision-hands">0</span></div>
-        </div>
-      </aside>
+
+        <section class="course">
+          <div class="course-header">
+            <div>
+              <div class="course-title">Mini Course · Learn Strategy</div>
+            </div>
+            <div class="course-badge">Follow: 1 → 4, then drill on the table.</div>
+          </div>
+          <div class="course-tabs">
+            <button class="course-tab active" data-lesson="lesson1">1. Rules</button>
+            <button class="course-tab" data-lesson="lesson2">2. Splits</button>
+            <button class="course-tab" data-lesson="lesson3">3. Soft Hands</button>
+            <button class="course-tab" data-lesson="lesson4">4. Hard Totals</button>
+          </div>
+          <div class="course-body">
+            <article id="lesson1" class="lesson active">
+              <h3>Lesson 1 · Core rules & flow</h3>
+              <ul>
+                <li>Goal: Get closer to 21 than the dealer without going over.[web:137][web:145]</li>
+                <li>Values: 2–10 = face value, J/Q/K = 10, Aces = 1 or 11.[web:66][web:145]</li>
+                <li>You act first. If you bust, you lose immediately, even if the dealer later busts.[web:63][web:137]</li>
+                <li>Dealer usually hits until at least 17 (house rules like soft 17 can change details).[web:129][web:133]</li>
+              </ul>
+              <h4>Basic actions</h4>
+              <ul>
+                <li><strong>Hit</strong> – take another card.</li>
+                <li><strong>Stand</strong> – keep your hand and end your turn.[web:127][web:145]</li>
+                <li><strong>Double</strong> – double your bet, take exactly one more card.[web:131][web:145]</li>
+                <li><strong>Split</strong> – if you have a pair, split into two hands with an extra bet.[web:125][web:131]</li>
+              </ul>
+              <h4>Drill</h4>
+              <ul>
+                <li>Play 20 hands on the trainer using only Hit/Stand.</li>
+                <li>Don’t worry about perfect play yet; just get comfortable with the flow.</li>
+              </ul>
+            </article>
+
+            <article id="lesson2" class="lesson">
+              <h3>Lesson 2 · Splits that actually help</h3>
+              <p>Splitting turns one hand into two. It’s powerful when you use it on the right pairs.[web:125][web:142]</p>
+              <h4>Golden rules for pairs</h4>
+              <ul>
+                <li>Always split: A,A and 8,8.[web:125][web:142]</li>
+                <li>Never split: 5,5 (treat as 10, good for doubling) and 10,10 (already strong).[web:142]</li>
+                <li>Split 2,2 / 3,3 / 7,7 vs dealer 2–7.[web:142]</li>
+                <li>Split 6,6 vs 2–6; split 9,9 vs 2–9 except 7.[web:142][web:127]</li>
+              </ul>
+              <h4>How to practice here</h4>
+              <ul>
+                <li>Play until you see pairs. When the trainer suggests “Split”, take it and read the feedback.</li>
+                <li>After 30–40 hands, you should remember the “always” and “never” rules without looking.</li>
+              </ul>
+            </article>
+
+            <article id="lesson3" class="lesson">
+              <h3>Lesson 3 · Soft hands (Ace = 11)</h3>
+              <p>Soft hands are any hand where an Ace counts as 11 without busting, like A–6 = “soft 17”.[web:26][web:127]</p>
+              <h4>Why they matter</h4>
+              <ul>
+                <li>Soft hands are flexible: you can hit or double more aggressively because one Ace can drop from 11 to 1.[web:26][web:128]</li>
+                <li>Good soft play reduces the house edge a lot for beginners.[web:26][web:143]</li>
+              </ul>
+              <h4>Simple soft rules</h4>
+              <ul>
+                <li>Soft 13–17 (A+2 to A+6): Hit.[web:26][web:25]</li>
+                <li>Soft 18 (A+7): Stand vs dealer 2–8, hit vs 9–Ace. (Many charts double vs 3–6 when allowed.)[web:26][web:128]</li>
+                <li>Soft 19+ (A+8 or better): Stand.[web:26]</li>
+              </ul>
+              <h4>Drill</h4>
+              <ul>
+                <li>Play 30 hands and focus only on soft totals: every time you see an Ace counted as 11, pause and say the rule out loud.</li>
+              </ul>
+            </article>
+
+            <article id="lesson4" class="lesson">
+              <h3>Lesson 4 · Hard totals (no soft Ace)</h3>
+              <p>Hard hands are everything else – no Ace counted as 11. Here’s a simplified set of rules.[web:26][web:127][web:140]</p>
+              <h4>Hard totals quick sheet</h4>
+              <ul>
+                <li>8 or less: Hit.</li>
+                <li>9: Double vs dealer 3–6, otherwise hit.[web:26][web:25]</li>
+                <li>10: Double vs 2–9, otherwise hit.[web:26][web:25]</li>
+                <li>11: Double vs anything except Ace; otherwise hit.[web:26][web:25]</li>
+                <li>12: Stand vs 4–6, otherwise hit.[web:26][web:127]</li>
+                <li>13–16: Stand vs 2–6, hit vs 7–Ace.[web:26][web:127]</li>
+                <li>17+: Stand.[web:26]</li>
+              </ul>
+              <h4>Drill</h4>
+              <ul>
+                <li>Play 50 hands with feedback ON.</li>
+                <li>Try to say your move (hit/stand/double/split) before you look at what the trainer recommends.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+      </div>
     </div>
   </div>
 
@@ -431,7 +615,6 @@
       return hand.length === 2 && handValue(hand).total === 21;
     }
 
-    // Simplified but decent basic strategy with split/double support.[web:26][web:57][web:128][web:131]
     function basicStrategyMove(player, dealerUp, canDouble, canSplit) {
       const { total, soft } = handValue(player);
       const dealerVal = cardValue(dealerUp);
@@ -525,6 +708,9 @@
     const btnDouble = document.getElementById("btn-double");
     const btnSplit = document.getElementById("btn-split");
     const btnNewShoe = document.getElementById("btn-newshoe");
+
+    const courseTabs = document.querySelectorAll(".course-tab");
+    const lessons = document.querySelectorAll(".lesson");
 
     let shoe = createShoe();
     let dealerHand = [];
@@ -841,6 +1027,16 @@
 
     toggleFeedbackEl.addEventListener("change", () => {
       feedbackEl.classList.toggle("hidden", !toggleFeedbackEl.checked);
+    });
+
+    courseTabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        courseTabs.forEach(t => t.classList.remove("active"));
+        lessons.forEach(l => l.classList.remove("active"));
+        tab.classList.add("active");
+        const id = tab.dataset.lesson;
+        document.getElementById(id).classList.add("active");
+      });
     });
 
     setButtons("idle");
