@@ -39,7 +39,8 @@
       margin: 0;
       padding: 0;
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #151b2f 0, #05070b 55%, #020308 100%);
+      background:
+        radial-gradient(circle at top, #151b2f 0, #05070b 55%, #020308 100%);
       color: var(--text);
       -webkit-font-smoothing: antialiased;
     }
@@ -53,14 +54,24 @@
     .page-shell {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 24px 18px 30px;
+      padding: 24px 18px 32px;
     }
 
     header {
-      margin-bottom: 18px;
+      margin-bottom: 20px;
       display: flex;
       flex-direction: column;
       gap: 8px;
+      position: relative;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -6px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      opacity: 0.9;
     }
 
     .breadcrumb {
@@ -79,8 +90,8 @@
     }
 
     h1 {
-      font-size: clamp(1.9rem, 2.5vw, 2.2rem);
-      letter-spacing: 0.12em;
+      font-size: clamp(2rem, 2.6vw, 2.3rem);
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       margin: 0;
     }
@@ -89,7 +100,7 @@
       margin: 0;
       font-size: 0.94rem;
       color: var(--muted);
-      max-width: 620px;
+      max-width: 640px;
       line-height: 1.7;
     }
 
@@ -116,7 +127,7 @@
 
     main {
       display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr);
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr);
       gap: 18px;
       align-items: flex-start;
     }
@@ -134,11 +145,29 @@
       box-shadow: var(--shadow-soft);
       padding: 18px 20px 18px;
       margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -40% -10%;
+      background:
+        radial-gradient(circle at top left, rgba(29, 209, 161, 0.09) 0, transparent 55%),
+        radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.08) 0, transparent 55%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .panel-inner {
+      position: relative;
+      z-index: 1;
     }
 
     h2 {
       font-size: 0.96rem;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--muted);
       margin: 0 0 10px;
@@ -193,6 +222,143 @@
       margin-top: 6px;
     }
 
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(252, 202, 87, 0.7);
+      padding: 4px 8px;
+      font-size: 0.78rem;
+      color: var(--accent-warm);
+      background: rgba(252, 202, 87, 0.08);
+      margin-bottom: 8px;
+    }
+
+    /* Activity styles */
+    .activity-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .activity-title {
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .pill-small {
+      font-size: 0.78rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 4px 8px;
+      color: var(--muted);
+      background: rgba(3, 5, 12, 0.96);
+    }
+
+    .activity-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 720px) {
+      .activity-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    label {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    select, input[type="number"] {
+      border-radius: 9px;
+      border: 1px solid var(--border-strong);
+      background: rgba(5, 7, 14, 0.98);
+      color: var(--text);
+      font-size: 0.86rem;
+      padding: 7px 9px;
+      outline: none;
+    }
+
+    select:focus, input[type="number"]:focus {
+      border-color: var(--accent);
+    }
+
+    .simulate-button {
+      margin-top: 10px;
+      width: 100%;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(29, 209, 161, 0.8);
+      background: linear-gradient(135deg, #1dd1a1, #10ac84);
+      color: #020308;
+      font-size: 0.84rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 8px 10px;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .simulate-button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 1);
+    }
+
+    .sim-output {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      background: rgba(3, 5, 12, 0.98);
+      padding: 8px 10px;
+      margin-top: 10px;
+      font-size: 0.88rem;
+    }
+
+    .output-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .output-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .output-value {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .output-good {
+      color: var(--accent);
+    }
+
+    .output-bad {
+      color: #ff7675;
+    }
+
+    .output-neutral {
+      color: #feca57;
+    }
+
     footer {
       margin-top: 22px;
       font-size: 0.78rem;
@@ -223,100 +389,183 @@
       <!-- LEFT COLUMN: CONCEPTS -->
       <section>
         <div class="panel">
-          <h2>Big Picture Numbers</h2>
-          <p>
-            In a typical multi‑deck game with reasonable rules and solid basic strategy, the player wins a little
-            over four out of every ten hands, the dealer wins a little under five out of ten, and the rest push.
-          </p>
-          <ul>
-            <li>The exact percentages depend on rules like number of decks, whether the dealer hits soft 17, and the blackjack payout.</li>
-            <li>With good rules and basic strategy, the house edge is usually well under 1% of total money bet.</li>
-            <li>Without basic strategy, common mistakes can push that edge several times higher.</li>
-          </ul>
-          <p>
-            These numbers come from computer simulations of huge samples of hands, not from what happens in a single
-            session at a live table.
-          </p>
-        </div>
-
-        <div class="panel">
-          <h2>What “Expectation” Means</h2>
-          <p>
-            Expected value (EV) is the long‑run average result per unit bet if you could replay the same situation
-            thousands of times under the same rules.
-          </p>
-          <ul>
-            <li>For any specific combination of your hand and the dealer’s upcard, each action (hit, stand, double, split) has its own EV.</li>
-            <li>Basic strategy charts simply pick the action with the highest EV in that situation, even if that action still loses money on average.</li>
-            <li>Following basic strategy lowers the house edge as far as the rules allow, but does not flip it in your favour.</li>
-          </ul>
-          <div class="callout">
-            A decision can be correct in EV terms and still lose on this particular hand. Probability describes
-            tendencies over many hands, not guarantees for the next one.
+          <div class="panel-inner">
+            <h2>Big Picture Numbers</h2>
+            <p>
+              In a typical multi‑deck game with solid basic strategy, you win a little over four hands out of ten,
+              the dealer wins a little under five, and the rest push. Blackjack pays more than a regular win, which
+              is how the edge stays small.
+            </p>
+            <ul>
+              <li>The exact percentages depend on rules like number of decks, blackjack payout, and whether the dealer hits soft 17.</li>
+              <li>With good rules and basic strategy, the house edge is usually well under 1% of total money bet.</li>
+              <li>Playing by “feel” instead of a strategy chart often multiplies that edge without the player noticing.</li>
+            </ul>
+            <p>
+              These numbers come from simulations of huge samples of hands. One short session can land far above or
+              below these averages and still be perfectly normal.
+            </p>
           </div>
         </div>
 
         <div class="panel">
-          <h2>Variance & Streaks</h2>
-          <p>
-            Variance measures how widely actual results swing around that long‑run expectation. In blackjack, variance
-            is what produces the familiar waves of hot streaks and cold stretches.
-          </p>
-          <ul>
-            <li>Even with perfect basic strategy, you will sometimes see long runs of losing hands.</li>
-            <li>Winning streaks are just as real: you can easily have nights where you run far above the theoretical edge.</li>
-            <li>The “long run” where the math clearly shows through can mean hundreds of thousands or millions of hands, not a weekend trip.</li>
-          </ul>
-          <p>
-            Understanding variance helps separate emotion from math: a rough downswing does not mean the rules or
-            strategy suddenly stopped working.
-          </p>
+          <div class="panel-inner">
+            <h2>What “Expectation” Means</h2>
+            <p>
+              Expected value (EV) is the long‑run average result per unit bet if you could replay the same situation
+              thousands of times under the same rules. Each decision has its own EV.
+            </p>
+            <ul>
+              <li>For a given player total and dealer upcard, hit, stand, double, and split all have different EVs.</li>
+              <li>Basic strategy charts simply choose the action with the highest EV, even if it still loses money on average.</li>
+              <li>Using the highest‑EV play every time is how you keep the house edge as low as the rules allow.</li>
+            </ul>
+            <div class="callout">
+              A decision can be correct in EV terms and still lose on this specific hand. Probability describes what
+              happens across many similar hands, not what “must” happen on the next one.
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Variance & Streaks</h2>
+            <p>
+              Variance measures how widely real results swing around the long‑run average. In blackjack, variance is
+              what produces hot streaks, cold streaks, and long periods that feel flat.
+            </p>
+            <ul>
+              <li>You can play perfect basic strategy and still hit ten losing hands in a row.</li>
+              <li>You can make many bad decisions and still walk away ahead for the night.</li>
+              <li>The “long run” where the averages clearly emerge is much longer than a weekend trip.</li>
+            </ul>
+            <p>
+              Understanding variance turns emotional swings into expected noise. The question becomes “Was the
+              decision good?” instead of “Did this hand win?”
+            </p>
+          </div>
         </div>
       </section>
 
-      <!-- RIGHT COLUMN: CONNECTING TO TRAINER -->
+      <!-- RIGHT COLUMN: INTERACTIVE ACTIVITY + TAKEAWAYS -->
       <section>
         <div class="panel">
-          <h2>Connecting Numbers to the Trainer</h2>
-          <p>
-            The interactive trainer on the main page uses a fixed rule set and a shuffled deck to generate situations.
-            When it suggests an action, that suggestion is based on which choice tends to have the best EV in similar spots.
-          </p>
-          <ul>
-            <li>Each hand you see in the trainer is one random sample from the same probability model described here.</li>
-            <li>Sometimes the recommended play will win, sometimes it will lose, but over many hands it will do better than the alternatives.</li>
-            <li>Your “accuracy” in the trainer measures how often you match that recommended decision, not how much you would have won or lost in money terms.</li>
-          </ul>
-          <div class="callout">
-            When the trainer suggests a move that feels uncomfortable, pause and ask: “If I repeated this exact spot
-            thousands of times, which choice gives me the best long‑run average?”
+          <div class="panel-inner">
+            <div class="activity-header">
+              <div class="activity-title">Mini Simulation Activity</div>
+              <div class="pill-small">Feel the variance</div>
+            </div>
+            <p style="margin-bottom:6px;">
+              Use this simplified simulator to see how the same small edge can produce very different short‑term
+              results. Each “hand” is just a +1 unit win, −1 unit loss, or 0 push.
+            </p>
+
+            <div class="activity-grid">
+              <div>
+                <div class="field-group">
+                  <label for="strategyQuality">Strategy quality</label>
+                  <select id="strategyQuality">
+                    <option value="good">Near basic strategy (small house edge)</option>
+                    <option value="average">Average casual play</option>
+                    <option value="poor">Loose, emotional play</option>
+                  </select>
+                </div>
+
+                <div class="field-group" style="margin-top:6px;">
+                  <label for="numHands">Number of hands in this session</label>
+                  <input
+                    id="numHands"
+                    type="number"
+                    min="10"
+                    max="1000"
+                    step="10"
+                    value="100"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <p style="font-size:0.85rem;color:var(--muted);margin-top:0;">
+                  Assumptions for this toy model:
+                </p>
+                <ul style="margin-top:2px;">
+                  <li>Win, loss, and push probabilities are fixed for the session.</li>
+                  <li>Each hand is independent: no betting systems, no card counting.</li>
+                  <li>Results are in “units” (for example, $10 chips) rather than dollars.</li>
+                </ul>
+              </div>
+            </div>
+
+            <button class="simulate-button" onclick="runSimulation()">
+              Run simulation
+            </button>
+
+            <div class="sim-output" id="sim-output">
+              <div class="output-row">
+                <span class="output-label">Net result:</span>
+                <span class="output-value output-neutral" id="sim-net">–</span>
+              </div>
+              <div class="output-row">
+                <span class="output-label">Hands won / lost / pushed:</span>
+                <span class="output-value" id="sim-breakdown">–</span>
+              </div>
+              <div class="output-row">
+                <span class="output-label">Comment:</span>
+              </div>
+              <p id="sim-comment" style="margin:4px 0 0;font-size:0.86rem;color:var(--muted);">
+                Choose a strategy quality, set a number of hands, and click “Run simulation” to see one possible path.
+              </p>
+            </div>
           </div>
         </div>
 
         <div class="panel">
-          <h2>Practical Takeaways</h2>
-          <p>
-            Probability and variance are not there to make blackjack mysterious. They simply describe how often
-            different outcomes occur and how bumpy the ride will feel along the way.
-          </p>
-          <ul>
-            <li>Use a basic strategy chart as your default for every hand instead of “going with your gut.”</li>
-            <li>Expect both winning streaks and losing streaks and plan your bankroll so that either outcome is manageable.</li>
-            <li>Judge your decisions by whether they follow sound strategy, not by what happened on one or two hands.</li>
-          </ul>
-          <p>
-            The next lessons build on this foundation: first by looking at common mistakes, then at psychology,
-            betting systems, casino environments, and responsible limits.
-          </p>
+          <div class="panel-inner">
+            <h2>How to Read Your Results</h2>
+            <p>
+              A single run of the simulator is like a single trip to the casino: one possible path, not proof of
+              anything. Run it multiple times with the same settings and notice how the net result jumps around.
+            </p>
+            <ul>
+              <li>“Near basic strategy” may still end a short session ahead or behind, even with a small built‑in disadvantage.</li>
+              <li>“Average” and “poor” settings show how bigger edges against you produce deeper swings and more losing sessions.</li>
+              <li>Increasing the number of hands usually pulls results closer to the expected direction, but not in a straight line.</li>
+            </ul>
+            <p>
+              The goal is to feel how a small house edge plus variance can create outcomes that would look like
+              “luck” on a single night.
+            </p>
+          </div>
         </div>
 
         <div class="panel">
-          <h2>Important Disclaimers</h2>
-          <ul>
-            <li>This lesson is for <strong>educational purposes only</strong>.</li>
-            <li>Probabilities and edges are approximate and depend on specific rules and assumptions.</li>
-            <li>Nothing here guarantees any particular outcome in real‑money play.</li>
-          </ul>
+          <div class="panel-inner">
+            <h2>Practical Takeaways</h2>
+            <p>
+              Probability and variance are the background rules of blackjack. You cannot see them directly at the
+              table, but you can decide how to respond to them.
+            </p>
+            <ul>
+              <li>Use a basic strategy chart so each decision is grounded in long‑run EV instead of guesswork.</li>
+              <li>Plan your bankroll and session length as if a bad run could happen early, not as if a hot streak is guaranteed.</li>
+              <li>Judge yourself by whether you followed your plan, not by whether this particular session won or lost.</li>
+            </ul>
+            <p>
+              The next lessons build on this foundation: common mistakes, psychology, betting systems, casino
+              environments, and responsible limits all sit on top of the same probabilities.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Important Disclaimers</h2>
+            <ul>
+              <li>This lesson and activity are for <strong>educational purposes only</strong>.</li>
+              <li>The simulation is a simplified model and does not reflect every rule, side bet, or real‑world factor.</li>
+              <li>Nothing here guarantees any particular outcome in real‑money play.</li>
+            </ul>
+          </div>
         </div>
       </section>
     </main>
@@ -325,5 +574,66 @@
       © 2026 The Blackjack Mindset. Educational content only. No financial advice or gambling recommendations.
     </footer>
   </div>
+
+  <script>
+    function getProbabilities(quality) {
+      // Very rough toy settings: win / loss / push probabilities and EV tilt.
+      // All three sum to 1; "edge" is baked into win vs loss balance.
+      if (quality === "good") {
+        return { win: 0.44, loss: 0.47, push: 0.09 };
+      }
+      if (quality === "average") {
+        return { win: 0.42, loss: 0.50, push: 0.08 };
+      }
+      // poor
+      return { win: 0.40, loss: 0.53, push: 0.07 };
+    }
+
+    function runSimulation() {
+      const quality = document.getElementById("strategyQuality").value;
+      let hands = parseInt(document.getElementById("numHands").value, 10);
+      if (isNaN(hands) || hands < 10) hands = 10;
+      if (hands > 1000) hands = 1000;
+      document.getElementById("numHands").value = hands;
+
+      const probs = getProbabilities(quality);
+      let wins = 0, losses = 0, pushes = 0, net = 0;
+
+      for (let i = 0; i < hands; i++) {
+        const r = Math.random();
+        if (r < probs.win) {
+          wins += 1;
+          net += 1;
+        } else if (r < probs.win + probs.loss) {
+          losses += 1;
+          net -= 1;
+        } else {
+          pushes += 1;
+        }
+      }
+
+      const netSpan = document.getElementById("sim-net");
+      netSpan.textContent = (net > 0 ? "+" : "") + net + " units";
+
+      netSpan.classList.remove("output-good", "output-bad", "output-neutral");
+      if (net > 0) netSpan.classList.add("output-good");
+      else if (net < 0) netSpan.classList.add("output-bad");
+      else netSpan.classList.add("output-neutral");
+
+      document.getElementById("sim-breakdown").textContent =
+        wins + " won • " + losses + " lost • " + pushes + " pushed";
+
+      let comment;
+      if (net > 0) {
+        comment = "This run finished ahead, even though the model still assumes a small edge for the house. Another run with the same settings could easily end behind.";
+      } else if (net < 0) {
+        comment = "This run finished behind, which is expected over many sessions when the house has an edge. The exact size of the loss is driven by variance.";
+      } else {
+        comment = "This run ended flat. With more or fewer hands, or just a different random sequence, the same settings could finish ahead or behind.";
+      }
+
+      document.getElementById("sim-comment").textContent = comment;
+    }
+  </script>
 </body>
 </html>
