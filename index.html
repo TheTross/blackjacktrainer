@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Blackjack Mindset – Interactive Trainer & Guide</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Blackjack Mindset – Professional Trainer & Guide</title>
   <style>
     :root {
       --bg: #05070b;
-      --bg-elevated: #10141f;
+      --bg-soft: #080b13;
+      --bg-elevated: #0e1220;
       --accent: #1dd1a1;
       --accent-soft: rgba(29, 209, 161, 0.16);
+      --accent-warm: #feca57;
       --text: #f5f7fb;
-      --muted: #9aa0b5;
+      --muted: #a1a7bc;
       --border-subtle: #252a39;
+      --border-strong: #343a4f;
       --danger: #ff6b6b;
-      --warning: #feca57;
-      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.55);
-      --radius-lg: 16px;
-      --radius-md: 10px;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.65);
+      --radius-lg: 18px;
+      --radius-md: 12px;
       --radius-pill: 999px;
+      --max-width: 1120px;
     }
 
     * {
@@ -30,40 +33,120 @@
       padding: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
         "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #182235 0, #05070b 55%, #020308 100%);
+      background: radial-gradient(circle at top, #151b2f 0, #05070b 55%, #020308 100%);
       color: var(--text);
       -webkit-font-smoothing: antialiased;
     }
 
+    /* Top shell / overall layout */
+    .page-shell {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 20px 18px 40px;
+    }
+
     header {
-      max-width: 1120px;
-      margin: 40px auto 24px;
-      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    @media (min-width: 900px) {
+      header {
+        margin-top: 6px;
+      }
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
     }
 
     h1 {
-      font-size: clamp(2.4rem, 4vw, 3.2rem);
-      letter-spacing: 0.04em;
+      font-size: clamp(2.4rem, 3.4vw, 3rem);
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      margin: 0 0 8px;
+      margin: 0;
     }
 
     header h2 {
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 400;
       color: var(--muted);
-      max-width: 640px;
+      max-width: 620px;
       line-height: 1.6;
       margin: 0;
     }
 
+    .tagline-pill {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(37, 42, 57, 0.9);
+      padding: 6px 10px;
+      font-size: 0.76rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: radial-gradient(circle at top left, #13192b 0, #05070b 65%);
+    }
+
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(29, 209, 161, 0.9);
+    }
+
+    /* Top navigation modules */
+    .top-nav {
+      margin-top: 6px;
+      padding: 10px 12px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      background: rgba(5, 7, 14, 0.96);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .top-nav button {
+      border-radius: var(--radius-pill);
+      border: 1px solid transparent;
+      background: transparent;
+      padding: 8px 12px;
+      font-size: 0.86rem;
+      color: var(--muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.16s ease, color 0.16s ease, border-color 0.16s ease,
+        transform 0.12s ease;
+    }
+
+    .top-nav button:hover {
+      background: rgba(23, 30, 52, 0.96);
+      border-color: var(--border-subtle);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .top-nav button.primary-tab {
+      background: rgba(29, 209, 161, 0.08);
+      border-color: rgba(29, 209, 161, 0.6);
+      color: var(--accent);
+    }
+
+    /* Main content layout */
     main {
-      max-width: 1120px;
-      margin: 0 auto 40px;
-      padding: 0 20px 40px;
+      margin-top: 22px;
       display: grid;
-      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.8fr);
-      gap: 24px;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.9fr);
+      gap: 22px;
       align-items: flex-start;
     }
 
@@ -74,33 +157,24 @@
     }
 
     section {
-      margin-bottom: 24px;
+      margin-bottom: 18px;
     }
 
-    #intro,
-    #trainer,
-    #how-it-works,
-    #disclaimers,
-    #cta,
-    #navigation {
-      background: rgba(8, 10, 18, 0.96);
+    .panel {
+      background: rgba(7, 10, 20, 0.98);
       border-radius: var(--radius-lg);
       border: 1px solid var(--border-subtle);
       box-shadow: var(--shadow-soft);
-      padding: 20px 22px 18px;
+      padding: 18px 20px 16px;
     }
 
-    #intro {
-      border-left: 4px solid var(--accent);
-    }
-
-    #navigation {
-      margin-top: 12px;
+    .panel + .panel {
+      margin-top: 14px;
     }
 
     h3 {
-      font-size: 0.98rem;
-      letter-spacing: 0.12em;
+      font-size: 0.95rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--muted);
       margin: 0 0 10px;
@@ -108,15 +182,15 @@
 
     h4 {
       font-size: 0.9rem;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
-      margin: 18px 0 6px;
+      margin: 16px 0 6px;
     }
 
     p {
-      font-size: 0.95rem;
-      line-height: 1.65;
+      font-size: 0.94rem;
+      line-height: 1.7;
       margin: 0 0 10px;
       color: var(--text);
     }
@@ -128,7 +202,7 @@
     }
 
     li {
-      font-size: 0.93rem;
+      font-size: 0.9rem;
       color: var(--muted);
       margin: 4px 0;
       display: flex;
@@ -147,50 +221,20 @@
       font-weight: 600;
     }
 
-    /* Navigation buttons */
-    #navigation ul {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    #navigation button {
-      width: 100%;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-subtle);
-      background: linear-gradient(135deg, #121827, #0b0f1a);
-      color: var(--text);
-      font-size: 0.9rem;
-      padding: 10px 12px;
-      cursor: pointer;
-      text-align: left;
-      transition: border-color 0.18s ease, transform 0.16s ease, box-shadow 0.16s ease,
-        background 0.16s ease;
-    }
-
-    #navigation button:hover {
-      border-color: var(--accent);
-      background: linear-gradient(135deg, #151c31, #101523);
-      transform: translateY(-1px);
-      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.5);
-    }
-
-    /* Trainer layout */
+    /* Trainer visual and layout */
     #trainer {
-      margin-top: 0;
       position: relative;
       overflow: hidden;
+      background: radial-gradient(circle at top left, #13192b 0, #05070b 65%);
     }
 
     #trainer::before {
       content: "";
       position: absolute;
-      inset: -30%;
+      inset: -40%;
       background:
         radial-gradient(circle at top left, rgba(29, 209, 161, 0.08) 0, transparent 55%),
         radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.08) 0, transparent 55%);
-      opacity: 0.9;
       pointer-events: none;
     }
 
@@ -198,7 +242,7 @@
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.5fr);
       gap: 16px;
     }
 
@@ -209,11 +253,11 @@
     }
 
     #table-visual {
-      background: radial-gradient(circle at center, #064b38 0, #043428 62%, #021712 100%);
+      background: radial-gradient(circle at center, #064b38 0, #043428 60%, #021712 100%);
       border-radius: var(--radius-md);
-      border: 1px solid rgba(0, 0, 0, 0.65);
-      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.7);
-      padding: 16px;
+      border: 1px solid rgba(0, 0, 0, 0.7);
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.8);
+      padding: 14px;
       position: relative;
       overflow: hidden;
     }
@@ -247,7 +291,7 @@
       border-radius: 10px;
       border: 1px solid rgba(8, 10, 18, 0.6);
       background: linear-gradient(135deg, #f5f7fb, #ced3e5);
-      box-shadow: 0 6px 14px rgba(2, 3, 8, 0.65);
+      box-shadow: 0 6px 14px rgba(2, 3, 8, 0.75);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -256,12 +300,11 @@
       font-weight: 600;
     }
 
-    /* Cards */
     .seat-label {
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.16em;
-      color: rgba(245, 247, 251, 0.8);
+      color: rgba(245, 247, 251, 0.88);
       margin-bottom: 4px;
     }
 
@@ -269,7 +312,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 9px;
     }
 
     .card-stack {
@@ -283,7 +326,7 @@
       border-radius: 8px;
       border: 1px solid rgba(0, 0, 0, 0.7);
       background: radial-gradient(circle at top, #ffffff 0, #e2e4f0 65%, #c2c6d7 100%);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.75);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.8);
       position: relative;
       padding: 4px 5px;
       display: flex;
@@ -314,7 +357,7 @@
       align-items: center;
       justify-content: center;
       font-size: 1.2rem;
-      opacity: 0.92;
+      opacity: 0.94;
     }
 
     .total-pill {
@@ -336,23 +379,15 @@
       letter-spacing: 0.12em;
     }
 
-    #dealer-row {
-      margin-bottom: 14px;
-    }
-
-    #player-row {
-      margin-top: 10px;
-    }
-
     #felt-actions {
       display: flex;
       gap: 10px;
-      margin-top: 12px;
+      margin-top: 10px;
     }
 
     .felt-button {
       flex: 1;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
       border-radius: var(--radius-pill);
@@ -361,29 +396,29 @@
       cursor: pointer;
       background: rgba(0, 0, 0, 0.4);
       color: rgba(245, 247, 251, 0.92);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.8);
       transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease,
         border-color 0.12s ease;
     }
 
     .felt-button.primary {
-      background: radial-gradient(circle at top, #1dd1a1 0, #0da37b 60%, #06755a 100%);
+      background: radial-gradient(circle at top, #1dd1a1 0, #0da37b 56%, #06755a 100%);
       color: #020308;
       font-weight: 600;
     }
 
     .felt-button:hover {
       transform: translateY(-1px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.8);
-      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.9);
+      border-color: rgba(255, 255, 255, 0.1);
       background: rgba(0, 0, 0, 0.55);
     }
 
     .felt-button.primary:hover {
-      background: radial-gradient(circle at top, #30e3b6 0, #13b588 60%, #077960 100%);
+      background: radial-gradient(circle at top, #30e3b6 0, #13b588 56%, #077960 100%);
     }
 
-    /* Trainer sidebar */
+    /* Trainer copy and feedback */
     #trainer-copy {
       display: flex;
       flex-direction: column;
@@ -397,11 +432,11 @@
     }
 
     #feedback {
-      background: rgba(3, 5, 12, 0.95);
+      background: rgba(3, 5, 12, 0.98);
       border-radius: var(--radius-md);
       border: 1px solid rgba(52, 58, 79, 0.9);
-      padding: 10px 11px;
-      margin-top: 8px;
+      padding: 9px 10px;
+      margin-top: 6px;
     }
 
     #result-text {
@@ -412,28 +447,28 @@
     #explanation-text {
       font-size: 0.88rem;
       color: var(--muted);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
 
     #accuracy-text {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: var(--accent);
     }
 
     #controls {
       display: flex;
       gap: 8px;
-      margin-top: 10px;
+      margin-top: 9px;
     }
 
     #controls button {
       flex: 1;
       border-radius: var(--radius-pill);
       border: 1px solid var(--border-subtle);
-      background: rgba(10, 12, 20, 0.95);
+      background: rgba(10, 12, 20, 0.96);
       color: var(--text);
-      font-size: 0.85rem;
-      padding: 8px 10px;
+      font-size: 0.82rem;
+      padding: 7px 10px;
       cursor: pointer;
       transition: border-color 0.16s ease, background 0.16s ease, transform 0.12s ease;
     }
@@ -444,12 +479,110 @@
       transform: translateY(-1px);
     }
 
-    /* Right column blocks */
-    #how-it-works ul,
-    #disclaimers ul {
-      margin-top: 8px;
+    /* Budgeting tool */
+    #budget-tool {
+      background: rgba(7, 10, 20, 0.98);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-strong);
     }
 
+    .budget-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr);
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 880px) {
+      .budget-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .budget-form label {
+      display: block;
+      font-size: 0.84rem;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    .budget-form input {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+      background: #05070b;
+      color: var(--text);
+      padding: 7px 8px;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .budget-form input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(29, 209, 161, 0.45);
+    }
+
+    .budget-form small {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .budget-form button {
+      margin-top: 4px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      background: rgba(16, 21, 34, 0.96);
+      color: var(--text);
+      font-size: 0.86rem;
+      padding: 7px 12px;
+      cursor: pointer;
+      transition: border-color 0.16s ease, background 0.16s ease, transform 0.12s ease;
+    }
+
+    .budget-form button:hover {
+      border-color: var(--accent);
+      background: rgba(23, 30, 48, 0.98);
+      transform: translateY(-1px);
+    }
+
+    .budget-summary {
+      background: rgba(3, 5, 12, 0.98);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      padding: 10px 11px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .summary-row span:first-child {
+      color: var(--muted);
+    }
+
+    .summary-row span:last-child {
+      color: var(--text);
+    }
+
+    .summary-row.highlight span:last-child {
+      color: var(--accent-warm);
+    }
+
+    .summary-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* CTA */
     #cta a {
       display: inline-flex;
       align-items: center;
@@ -464,226 +597,285 @@
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.9);
       transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
     }
 
     #cta a:hover {
       transform: translateY(-1px);
-      filter: brightness(1.02);
-      box-shadow: 0 20px 42px rgba(0, 0, 0, 0.9);
+      filter: brightness(1.03);
+      box-shadow: 0 20px 42px rgba(0, 0, 0, 1);
     }
 
     footer {
-      max-width: 1120px;
-      margin: 0 auto 32px;
-      padding: 0 20px;
+      max-width: var(--max-width);
+      margin: 10px auto 30px;
+      padding: 0 18px;
       font-size: 0.78rem;
       color: var(--muted);
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>The Blackjack Mindset</h1>
-    <h2>Professional, interactive training that explains how decisions, probability, and psychology shape your time at the table.</h2>
-  </header>
-
-  <main>
-    <!-- LEFT COLUMN -->
-    <div>
-      <!-- Intro / Credibility -->
-      <section id="intro">
-        <h3>Overview</h3>
-        <p>
-          This project grew out of a simple question: if blackjack is one of the more structured casino games,
-          why do thoughtful people still make choices that steadily work against them?
-        </p>
-        <p>
-          <strong>The Blackjack Mindset</strong> is not a promise of shortcuts. It is a compact, practical guide
-          and trainer that focuses on decision quality, realistic probability, and disciplined play as entertainment.
-        </p>
-      </section>
-
-      <!-- Navigation to Other Pages -->
-      <section id="navigation">
-        <h3>Lesson Modules</h3>
-        <p>Select a module to explore in more depth. Each button can link to its own HTML lesson page.</p>
-        <ul>
-          <li><button onclick="location.href='probability.html'">Probability & Variance</button></li>
-          <li><button onclick="location.href='mistakes.html'">Common Player Mistakes</button></li>
-          <li><button onclick="location.href='psychology.html'">Psychology & Emotions</button></li>
-          <li><button onclick="location.href='betting-systems.html'">Why Betting Systems Fail</button></li>
-          <li><button onclick="location.href='casino-design.html'">How Casinos Shape Decisions</button></li>
-          <li><button onclick="location.href='responsible-play.html'">Responsible, Disciplined Play</button></li>
-        </ul>
-      </section>
-
-      <!-- Interactive Trainer -->
-      <section id="trainer">
-        <h3>Interactive Decision Trainer</h3>
-        <div id="trainer-inner">
-          <!-- Table / Cards Visual -->
-          <div id="table-visual">
-            <div id="table-header">
-              <span>Education Mode</span>
-              <div id="deck-icon">
-                <span>21</span>
-              </div>
-            </div>
-
-            <div id="dealer-row">
-              <div class="seat-label">Dealer</div>
-              <div class="hand-row">
-                <div class="card-stack">
-                  <!-- Dealer upcard (sample: 10♠) -->
-                  <div class="card black" id="dealer-card-1">
-                    <div class="card-rank">10</div>
-                    <div class="card-center">♠</div>
-                    <div class="card-suit">♠</div>
-                  </div>
-                  <!-- Hole card back -->
-                  <div class="card" style="background: radial-gradient(circle at top, #172033 0, #040712 70%, #010206 100%);">
-                    <div class="card-center" style="font-size:0.9rem; color:rgba(255,255,255,0.75);">
-                      ◆
-                    </div>
-                  </div>
-                </div>
-                <div class="total-pill">
-                  <span id="dealer-card-label">Upcard: 10</span>
-                  <span>Risk Anchor</span>
-                </div>
-              </div>
-            </div>
-
-            <div id="player-row">
-              <div class="seat-label">You</div>
-              <div class="hand-row">
-                <div class="card-stack" id="player-card-stack">
-                  <!-- player cards are illustrative; values are also shown in text on the right -->
-                  <div class="card red" id="player-card-1">
-                    <div class="card-rank">8</div>
-                    <div class="card-center">♥</div>
-                    <div class="card-suit">♥</div>
-                  </div>
-                  <div class="card black" id="player-card-2">
-                    <div class="card-rank">8</div>
-                    <div class="card-center">♣</div>
-                    <div class="card-suit">♣</div>
-                  </div>
-                </div>
-                <div class="total-pill">
-                  <span id="player-total-label">Total: 16</span>
-                  <span>Decision Point</span>
-                </div>
-              </div>
-            </div>
-
-            <div id="felt-actions">
-              <button class="felt-button primary" onclick="dealHand()">Deal a Hand</button>
-              <button class="felt-button" onclick="resetStats()">Reset</button>
-            </div>
-          </div>
-
-          <!-- Trainer Copy / Controls -->
-          <div id="trainer-copy">
-            <p>
-              The trainer presents a simplified hand, asks what you would do, and compares your choice to a
-              widely accepted basic strategy recommendation for that situation. The focus is on understanding
-              <strong>why</strong> a choice is recommended, not on chasing outcomes.
-            </p>
-
-            <section id="hand-display">
-              <p><strong>Current hand context</strong></p>
-              <p><span id="player-hand">Your hand will appear here.</span></p>
-              <p><span id="dealer-card">Dealer’s upcard will appear here.</span></p>
-            </section>
-
-            <section id="actions">
-              <h4>Your Decision</h4>
-              <p style="margin-bottom:6px;">Choose the action that feels correct to you for this hand.</p>
-              <div style="display:flex;flex-wrap:wrap;gap:6px;">
-                <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('hit')">Hit</button>
-                <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('stand')">Stand</button>
-                <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('double')">Double</button>
-                <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('split')">Split</button>
-              </div>
-            </section>
-
-            <div id="feedback">
-              <p id="result-text">Click “Deal a Hand” to begin a scenario.</p>
-              <p id="explanation-text"></p>
-              <p id="accuracy-text"></p>
-            </div>
-
-            <div id="controls">
-              <button onclick="dealHand()">Next Scenario</button>
-              <button onclick="resetStats()">Clear History</button>
-            </div>
+  <div class="page-shell">
+    <header>
+      <div class="brand-row">
+        <div>
+          <h1>The Blackjack Mindset</h1>
+          <div class="tagline-pill">
+            <span class="tag-dot"></span>
+            <span>Educational • Probability • Responsible Play</span>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+      <h2>
+        A professional, interactive guide to understanding blackjack decisions, probabilities, and psychology—
+        designed for learning, not chasing outcomes.
+      </h2>
 
-    <!-- RIGHT COLUMN -->
-    <div>
-      <!-- How the Trainer Works -->
-      <section id="how-it-works">
-        <h3>How the Trainer Teaches</h3>
-        <p>
-          Instead of asking you to memorize a full chart, the trainer rotates through a focused set of hands
-          that highlight recurring patterns in blackjack decisions.
-        </p>
-        <ul>
-          <li>Hands where the main risk is <strong>busting yourself</strong> by being too aggressive.</li>
-          <li>Hands where the main risk is <strong>letting the dealer outdraw you</strong> by being too passive.</li>
-          <li>Pairs and soft totals that behave differently from “normal” hard hands.</li>
-          <li>Structured opportunities to increase exposure when the situation is objectively stronger.</li>
-        </ul>
-        <p>
-          Each explanation is written in plain language, so you connect the recommendation to a clear reason,
-          not just a rule.
-        </p>
-      </section>
+      <!-- Top modules navigation -->
+      <nav class="top-nav">
+        <button class="primary-tab" onclick="location.href='#trainer'">Interactive Trainer</button>
+        <button onclick="location.href='#budget-tool'">Session Budgeting</button>
+        <button onclick="location.href='probability.html'">Probability & Variance</button>
+        <button onclick="location.href='mistakes.html'">Common Mistakes</button>
+        <button onclick="location.href='psychology.html'">Psychology & Emotions</button>
+        <button onclick="location.href='betting-systems.html'">Betting Systems</button>
+        <button onclick="location.href='casino-design.html'">Casino Design</button>
+        <button onclick="location.href='responsible-play.html'">Responsible Play</button>
+      </nav>
+    </header>
 
-      <!-- Disclaimers -->
-      <section id="disclaimers">
-        <h3>Important Disclaimers</h3>
-        <ul>
-          <li>This tool and guide are for <strong>educational purposes only</strong>.</li>
-          <li>There is no promise of specific outcomes, income, or any form of advantage over casinos.</li>
-          <li>Examples are simplified and do not capture every rule set, side bet, or table variation.</li>
-          <li>You must be of <strong>legal gambling age</strong> in your jurisdiction to participate in any real-money games, if you choose to do so.</li>
-          <li>If gambling is not enjoyable, controlled, and affordable for you, seek support and avoid participation.</li>
-        </ul>
-      </section>
+    <main>
+      <!-- LEFT COLUMN -->
+      <div>
+        <!-- Credibility / Overview -->
+        <section class="panel" id="intro">
+          <h3>Overview</h3>
+          <p>
+            This project was built from a simple curiosity: if blackjack is relatively structured, why do smart,
+            informed people still make decisions that steadily work against them over time?
+          </p>
+          <p>
+            <strong>The Blackjack Mindset</strong> is a short, focused guide paired with interactive tools. The aim
+            is not to find loopholes, but to make the logic, probabilities, and psychological patterns behind the
+            game easier to see.
+          </p>
+        </section>
 
-      <!-- Call to Action -->
-      <section id="cta">
-        <h3>Full Guide & Lesson Access</h3>
-        <p>
-          If you find the trainer helpful and want structured, written explanations of probability,
-          psychology, common mistakes, and responsible frameworks, the full digital guide expands each topic
-          in a concise, practical format.
-        </p>
-        <p>
-          Access the complete guide, lesson modules, and trainer for <strong>$17</strong> via Gumroad.
-        </p>
-        <p>
-          <a href="https://gumroad.com/" target="_blank" rel="noopener noreferrer">
-            Access The Blackjack Mindset – $17
-          </a>
-        </p>
-      </section>
-    </div>
-  </main>
+        <!-- Interactive Trainer -->
+        <section class="panel" id="trainer">
+          <h3>Interactive Decision Trainer</h3>
+          <div id="trainer-inner">
+            <!-- Visual table with cards -->
+            <div id="table-visual">
+              <div id="table-header">
+                <span>Education Mode</span>
+                <div id="deck-icon">21</div>
+              </div>
 
-  <footer>
-    <p>© 2026 The Blackjack Mindset. Educational content only. No financial advice or gambling recommendations.</p>
-  </footer>
+              <div>
+                <div class="seat-label">Dealer</div>
+                <div class="hand-row">
+                  <div class="card-stack">
+                    <!-- dealer upcard -->
+                    <div class="card black" id="dealer-card-1">
+                      <div class="card-rank">10</div>
+                      <div class="card-center">♠</div>
+                      <div class="card-suit">♠</div>
+                    </div>
+                    <!-- card back -->
+                    <div class="card" style="background: radial-gradient(circle at top, #172033 0, #040712 70%, #010206 100%);">
+                      <div class="card-center" style="font-size:0.9rem;color:rgba(255,255,255,0.75);">
+                        ◆
+                      </div>
+                    </div>
+                  </div>
+                  <div class="total-pill">
+                    <span id="dealer-card-label">Upcard: 10</span>
+                    <span>Risk Anchor</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="seat-label">You</div>
+                <div class="hand-row">
+                  <div class="card-stack" id="player-card-stack">
+                    <div class="card red" id="player-card-1">
+                      <div class="card-rank">8</div>
+                      <div class="card-center">♥</div>
+                      <div class="card-suit">♥</div>
+                    </div>
+                    <div class="card black" id="player-card-2">
+                      <div class="card-rank">8</div>
+                      <div class="card-center">♣</div>
+                      <div class="card-suit">♣</div>
+                    </div>
+                  </div>
+                  <div class="total-pill">
+                    <span id="player-total-label">Total: 16</span>
+                    <span>Decision Point</span>
+                  </div>
+                </div>
+              </div>
+
+              <div id="felt-actions">
+                <button class="felt-button primary" onclick="dealHand()">Deal Scenario</button>
+                <button class="felt-button" onclick="resetStats()">Reset</button>
+              </div>
+            </div>
+
+            <!-- Trainer copy / actions / feedback -->
+            <div id="trainer-copy">
+              <p>
+                The trainer presents a scenario, asks what you would do, and shows how your decision compares with
+                a commonly recommended basic approach for that situation. The emphasis is on the reasoning, not on
+                short-term results.
+              </p>
+
+              <section id="hand-display">
+                <h4>Current Scenario</h4>
+                <p id="player-hand">Your hand will appear here.</p>
+                <p id="dealer-card">Dealer’s upcard will appear here.</p>
+              </section>
+
+              <section id="actions">
+                <h4>Your Decision</h4>
+                <p style="margin-bottom:6px;">Choose the action that feels appropriate for this hand.</p>
+                <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                  <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('hit')">Hit</button>
+                  <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('stand')">Stand</button>
+                  <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('double')">Double</button>
+                  <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('split')">Split</button>
+                </div>
+              </section>
+
+              <div id="feedback">
+                <p id="result-text">Click “Deal Scenario” to start.</p>
+                <p id="explanation-text"></p>
+                <p id="accuracy-text"></p>
+              </div>
+
+              <div id="controls">
+                <button onclick="dealHand()">Next Scenario</button>
+                <button onclick="resetStats()">Clear History</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Budgeting tool -->
+        <section class="panel" id="budget-tool">
+          <h3>Session Budgeting Tool</h3>
+          <div class="budget-grid">
+            <div class="budget-form">
+              <p>
+                This simple budgeting tool is designed to frame blackjack as a fixed-cost form of entertainment,
+                not as a source of income. Enter only amounts you are fully prepared to lose.
+              </p>
+
+              <label for="bankroll-input">Total amount set aside for play</label>
+              <input id="bankroll-input" type="number" min="0" step="1" placeholder="e.g., 200" />
+              <small>Money that is separate from bills, savings, and essentials.</small>
+
+              <label for="session-count-input">Number of sessions you plan</label>
+              <input id="session-count-input" type="number" min="1" step="1" placeholder="e.g., 4" />
+              <small>For example, over a trip or a month.</small>
+
+              <label for="unit-size-input">Typical bet size per hand</label>
+              <input id="unit-size-input" type="number" min="0" step="1" placeholder="e.g., 10" />
+              <small>This does not need to be “optimal”—just realistic for you.</small>
+
+              <button type="button" onclick="calculateBudget()">Calculate Guidelines</button>
+            </div>
+
+            <div class="budget-summary" id="budget-summary">
+              <div class="summary-row">
+                <span>Suggested maximum per session</span>
+                <span id="per-session-output">–</span>
+              </div>
+              <div class="summary-row">
+                <span>Approx. hands per session</span>
+                <span id="hands-output">–</span>
+              </div>
+              <div class="summary-row highlight">
+                <span>Stop-loss reminder</span>
+                <span id="stop-loss-output">–</span>
+              </div>
+              <p class="summary-note">
+                These figures are illustrative only. They do not change the underlying house edge or any
+                probabilities; they simply create a structure for how much you are prepared to spend and when to
+                stop.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div>
+        <!-- How it works -->
+        <section class="panel" id="how-it-works">
+          <h3>What the Guide Emphasizes</h3>
+          <p>
+            The written guide and trainer work together to explain how structured decisions and emotional
+            impulses interact. The focus is on clarity and realism rather than optimism.
+          </p>
+          <ul>
+            <li>Probability explained in everyday language, with no heavy formulas.</li>
+            <li>Common judgment errors such as chasing, overconfidence, and “just one more hand”.</li>
+            <li>Why popular betting patterns do not change the mathematical edge.</li>
+            <li>How casino environments are built to keep people playing longer than planned.</li>
+          </ul>
+          <p>
+            Each lesson module is short, specific, and designed to be read in a few minutes, then applied in the
+            trainer.
+          </p>
+        </section>
+
+        <!-- Disclaimers -->
+        <section class="panel" id="disclaimers">
+          <h3>Important Disclaimers</h3>
+          <ul>
+            <li>This material is for <strong>educational purposes only</strong>.</li>
+            <li>There are no promises of financial outcomes, advantage, or income of any kind.</li>
+            <li>Examples are simplified and do not reflect every possible rule set or scenario.</li>
+            <li>You must be of <strong>legal gambling age</strong> in your jurisdiction to participate in any real-money games.</li>
+            <li>If gambling is not enjoyable, controlled, and affordable, you should avoid it and seek appropriate support.</li>
+          </ul>
+        </section>
+
+        <!-- CTA -->
+        <section class="panel" id="cta">
+          <h3>Access the Full Guide</h3>
+          <p>
+            If you find the trainer and budgeting tool useful and want a concise, structured explanation of the
+            underlying ideas, the full digital guide and lesson modules expand each topic with clear, practical
+            language.
+          </p>
+          <p>
+            The complete package—including the guide, lesson pages, and interactive trainer—is available for
+            <strong>$17</strong> on Gumroad.
+          </p>
+          <p>
+            <a href="https://gumroad.com/" target="_blank" rel="noopener noreferrer">
+              Access The Blackjack Mindset – $17
+            </a>
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <p>
+        © 2026 The Blackjack Mindset. Educational content only. No financial advice or gambling recommendations.
+      </p>
+    </footer>
+  </div>
 
   <script>
+    // Trainer data and logic
     const hands = [
       {
         player: "16 (10 + 6)",
@@ -691,7 +883,8 @@
         dealerUpcardLabel: "Upcard: 10",
         playerTotalLabel: "Total: 16",
         recommended: "hit",
-        explanation: "With 16 against a strong dealer 10, standing loses too often over time. Hitting may occasionally bust, but it typically loses less in the long run compared with standing."
+        explanation:
+          "With 16 against a strong dealer 10, standing tends to lose more over time. Hitting can be uncomfortable because of bust risk, but it usually loses less in the long run than standing."
       },
       {
         player: "12 (10 + 2)",
@@ -699,7 +892,8 @@
         dealerUpcardLabel: "Upcard: 4",
         playerTotalLabel: "Total: 12",
         recommended: "stand",
-        explanation: "With 12 against a dealer 4, the dealer is more likely to bust drawing cards. Hitting exposes you to busting on many outcomes, so standing is usually the better long-run decision."
+        explanation:
+          "With 12 against a dealer 4, the dealer is more likely to draw into trouble. Hitting exposes you to busting on many outcomes, so standing is generally the stronger long-run decision."
       },
       {
         player: "11 (5 + 6)",
@@ -707,7 +901,8 @@
         dealerUpcardLabel: "Upcard: 6",
         playerTotalLabel: "Total: 11",
         recommended: "double",
-        explanation: "An 11 against a weak 6 gives you many ways to improve to a strong total. Doubling increases your stake when the odds of ending with a good hand are relatively favourable."
+        explanation:
+          "An 11 against a weak dealer 6 puts you in a favourable position to improve to a strong total. Doubling increases your exposure when the situation is structurally better for you."
       },
       {
         player: "A,7 (soft 18)",
@@ -715,7 +910,8 @@
         dealerUpcardLabel: "Upcard: 9",
         playerTotalLabel: "Total: Soft 18",
         recommended: "hit",
-        explanation: "Soft 18 against a dealer 9 is more vulnerable than it appears. Hitting allows you to improve while the Ace protects you from busting immediately on a single extra card."
+        explanation:
+          "Soft 18 against a dealer 9 is less secure than it looks. Hitting can improve your position, and the Ace allows flexibility without an immediate bust on the next card."
       },
       {
         player: "8,8 (pair of 8s)",
@@ -723,7 +919,8 @@
         dealerUpcardLabel: "Upcard: 10",
         playerTotalLabel: "Total: 16 (8,8)",
         recommended: "split",
-        explanation: "A total of 16 is difficult to play well. Splitting 8s allows you to restart from stronger positions rather than committing to one weak 16 against a strong dealer card."
+        explanation:
+          "A total of 16 is structurally difficult to play well. Splitting 8s allows two new hands from stronger starting points instead of committing to one weak 16 against a strong card."
       },
       {
         player: "A,6 (soft 17)",
@@ -731,7 +928,8 @@
         dealerUpcardLabel: "Upcard: 3",
         playerTotalLabel: "Total: Soft 17",
         recommended: "double",
-        explanation: "Soft 17 has room to improve on many cards without immediately busting. Against a dealer 3, doubling backs a situation where the dealer is more likely to struggle to reach a strong total."
+        explanation:
+          "Soft 17 can improve on many cards without immediately busting, and the dealer 3 is relatively weak. Doubling is recommended when you can press a situation that is more often favourable."
       }
     ];
 
@@ -740,16 +938,15 @@
     let correctDecisions = 0;
 
     function applyHandToVisual(hand) {
-      // Update text labels
       document.getElementById("player-hand").textContent = "Your hand: " + hand.player;
       document.getElementById("dealer-card").textContent = "Dealer upcard: " + hand.dealer;
       document.getElementById("dealer-card-label").textContent = hand.dealerUpcardLabel;
       document.getElementById("player-total-label").textContent = hand.playerTotalLabel;
 
-      // Update sample cards for a couple of key patterns (kept simple for v1)
       const playerCard1 = document.getElementById("player-card-1");
       const playerCard2 = document.getElementById("player-card-2");
 
+      // Very simple mapping for visual variety
       if (hand.player.includes("8,8")) {
         playerCard1.querySelector(".card-rank").textContent = "8";
         playerCard1.querySelector(".card-center").textContent = "♥";
@@ -794,9 +991,9 @@
         playerCard2.classList.remove("red");
       }
 
-      // Dealer upcard visual
       const dealerCard1 = document.getElementById("dealer-card-1");
-      dealerCard1.querySelector(".card-rank").textContent = hand.dealer.replace(/\D/g, "") || hand.dealer;
+      dealerCard1.querySelector(".card-rank").textContent =
+        hand.dealer.replace(/\D/g, "") || hand.dealer;
       dealerCard1.querySelector(".card-center").textContent = "♠";
     }
 
@@ -807,13 +1004,15 @@
 
       applyHandToVisual(hand);
 
-      document.getElementById("result-text").textContent = "Consider this situation and make your decision.";
+      document.getElementById("result-text").textContent =
+        "Review the scenario and choose the action you believe is most appropriate.";
       document.getElementById("explanation-text").textContent = "";
     }
 
     function chooseAction(action) {
       if (currentHandIndex === null) {
-        document.getElementById("result-text").textContent = "Please click “Deal a Hand” to load a scenario.";
+        document.getElementById("result-text").textContent =
+          "Please click “Deal Scenario” to load a hand.";
         return;
       }
 
@@ -823,10 +1022,10 @@
       if (action === hand.recommended) {
         correctDecisions += 1;
         document.getElementById("result-text").textContent =
-          "Your choice aligns with the recommended approach for this type of hand.";
+          "Your decision aligns with the commonly recommended approach for this scenario.";
       } else {
         document.getElementById("result-text").textContent =
-          "Your choice differs from the commonly recommended approach for this type of hand.";
+          "Your decision differs from the commonly recommended approach for this scenario.";
       }
 
       document.getElementById("explanation-text").textContent =
@@ -836,7 +1035,9 @@
         ? Math.round((correctDecisions / totalHands) * 100)
         : 0;
       document.getElementById("accuracy-text").textContent =
-        "You have matched the suggested decision on " + accuracy + "% of scenarios viewed so far.";
+        "You have matched the suggested decision on " +
+        accuracy +
+        "% of the scenarios you have viewed.";
     }
 
     function resetStats() {
@@ -845,13 +1046,38 @@
       currentHandIndex = null;
       document.getElementById("player-hand").textContent = "Your hand will appear here.";
       document.getElementById("dealer-card").textContent = "Dealer’s upcard will appear here.";
-      document.getElementById("dealer-card-label").textContent = "Upcard: –";
-      document.getElementById("player-total-label").textContent = "Total: –";
-      document.getElementById("result-text").textContent = "Click “Deal a Hand” to begin a scenario.";
+      document.getElementById("dealer-card-label").textContent = "Upcard: 10";
+      document.getElementById("player-total-label").textContent = "Total: 16";
+      document.getElementById("result-text").textContent = "Click “Deal Scenario” to start.";
       document.getElementById("explanation-text").textContent = "";
       document.getElementById("accuracy-text").textContent = "";
     }
-  </script>
 
+    // Budgeting tool logic
+    function calculateBudget() {
+      const bankroll = parseFloat(document.getElementById("bankroll-input").value);
+      const sessions = parseInt(document.getElementById("session-count-input").value, 10);
+      const unitSize = parseFloat(document.getElementById("unit-size-input").value);
+
+      const perSessionOutput = document.getElementById("per-session-output");
+      const handsOutput = document.getElementById("hands-output");
+      const stopLossOutput = document.getElementById("stop-loss-output");
+
+      if (!bankroll || bankroll <= 0 || !sessions || sessions <= 0 || !unitSize || unitSize <= 0) {
+        perSessionOutput.textContent = "–";
+        handsOutput.textContent = "–";
+        stopLossOutput.textContent = "–";
+        return;
+      }
+
+      const maxPerSession = bankroll / sessions;
+      const conservativeStopLoss = maxPerSession * 0.8;
+      const approxHands = maxPerSession / unitSize;
+
+      perSessionOutput.textContent = "$" + maxPerSession.toFixed(2);
+      handsOutput.textContent = approxHands.toFixed(0) + " hands (approx.)";
+      stopLossOutput.textContent = "Pause if you reach about $" + conservativeStopLoss.toFixed(2) + " in losses.";
+    }
+  </script>
 </body>
 </html>
