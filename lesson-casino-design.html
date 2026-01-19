@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Casinos Shape Decisions – The Blackjack Mindset</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg: #05070b;
+      --bg-soft: #080b13;
+      --bg-elevated: #0e1220;
+      --accent: #1dd1a1;
+      --accent-soft: rgba(29, 209, 161, 0.16);
+      --accent-warm: #feca57;
+      --text: #f7f8fc;
+      --muted: #a1a7bc;
+      --border-subtle: #252a39;
+      --border-strong: #343a4f;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.65);
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --max-width: 960px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, #151b2f 0, #05070b 55%, #020308 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    a { color: inherit; }
+
+    .page-shell {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 24px 18px 32px;
+    }
+
+    header {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -6px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      opacity: 0.9;
+    }
+
+    .breadcrumb {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .breadcrumb a {
+      text-decoration: none;
+      color: var(--muted);
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 2.6vw, 2.3rem);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 0.94rem;
+      color: var(--muted);
+      max-width: 640px;
+      line-height: 1.7;
+    }
+
+    .tagline-pill {
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: rgba(5, 7, 14, 0.94);
+    }
+
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(29, 209, 161, 0.9);
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr);
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 880px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: rgba(7, 10, 20, 0.98);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 20px 18px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -40% -10%;
+      background:
+        radial-gradient(circle at top left, rgba(29, 209, 161, 0.09) 0, transparent 55%),
+        radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.08) 0, transparent 55%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .panel-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      font-size: 0.96rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+
+    h3 {
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 12px 0 6px;
+    }
+
+    p {
+      font-size: 0.94rem;
+      line-height: 1.7;
+      margin: 0 0 10px;
+      color: var(--text);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 6px 0 0;
+    }
+
+    li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 4px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    li::before {
+      content: "•";
+      color: var(--accent);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    strong { font-weight: 600; }
+
+    .callout {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      background: rgba(5, 7, 14, 0.96);
+      padding: 8px 10px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(252, 202, 87, 0.7);
+      padding: 4px 8px;
+      font-size: 0.78rem;
+      color: var(--accent-warm);
+      background: rgba(252, 202, 87, 0.08);
+      margin-bottom: 8px;
+    }
+
+    /* Activity styles */
+    .activity-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .activity-title {
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .pill-small {
+      font-size: 0.78rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 4px 8px;
+      color: var(--muted);
+      background: rgba(3, 5, 12, 0.96);
+    }
+
+    .trigger-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .trigger-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(52, 58, 79, 0.9);
+      background: rgba(3, 5, 12, 0.98);
+      padding: 7px 8px;
+      font-size: 0.88rem;
+    }
+
+    .trigger-row input[type="checkbox"] {
+      margin-top: 3px;
+      accent-color: #1dd1a1;
+    }
+
+    .trigger-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .trigger-title {
+      font-weight: 500;
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+
+    .trigger-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .simulate-button {
+      margin-top: 8px;
+      width: 100%;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(29, 209, 161, 0.8);
+      background: linear-gradient(135deg, #1dd1a1, #10ac84);
+      color: #020308;
+      font-size: 0.84rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 8px 10px;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .simulate-button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 1);
+    }
+
+    .sim-output {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      background: rgba(3, 5, 12, 0.98);
+      padding: 8px 10px;
+      margin-top: 10px;
+      font-size: 0.88rem;
+    }
+
+    .output-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .output-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .output-value {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .output-good {
+      color: var(--accent);
+    }
+
+    .output-neutral {
+      color: #feca57;
+    }
+
+    .output-warning {
+      color: #ff7675;
+    }
+
+    footer {
+      margin-top: 22px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header>
+      <div class="breadcrumb">
+        <a href="full-access.html">← Back to Full Access Hub</a>
+      </div>
+      <h1>How Casinos Shape Decisions</h1>
+      <p>
+        This lesson looks at how lighting, sound, layout, and other design choices nudge players to stay longer, move
+        in certain directions, and keep making decisions without thinking about the clock.
+      </p>
+      <div class="tagline-pill">
+        <span class="tag-dot"></span>
+        <span>Environment • Attention • Subtle Nudges</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- LEFT COLUMN: CONCEPTS -->
+      <section>
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Layout and Sense of Time</h2>
+            <p>
+              Casino floors are usually designed like mazes, with few straight paths or clear sightlines to exits,
+              clocks, or natural light. The goal is to keep you inside the gaming space and moving past more games.
+            </p>
+            <ul>
+              <li>Restrooms, restaurants, and cash‑out areas are often placed deep in the floor so you walk past more tables and machines.</li>
+              <li>Windows and clocks are rare, making it easy to lose track of how long you have been playing.</li>
+              <li>Wide main aisles draw you toward high‑margin games, while quieter zones sit off to the side.</li>
+            </ul>
+            <p>
+              None of this forces you to play, but it gently removes cues that would normally remind you to stop or
+              change activities.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Lighting, Sound, and Color</h2>
+            <p>
+              The sensory layer is tuned to keep you stimulated but comfortable: warm lighting, busy carpets, and a
+              constant soundtrack of wins create a background of low‑level excitement.
+            </p>
+            <ul>
+              <li>Soft, warm light makes spaces feel inviting and hides small signs of fatigue.</li>
+              <li>Flashing lights and celebratory sounds around jackpots and bonuses make wins more salient than losses.</li>
+              <li>Color schemes and patterns guide attention toward gaming areas and away from exits or quiet spaces.</li>
+            </ul>
+            <p>
+              These cues can make it harder to notice your own tiredness and easier to keep playing “just a bit
+              longer.”
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Attention, Comfort, and Control</h2>
+            <p>
+              Design choices also shape how focused and “in control” you feel. Comfortable seating, easy chip access,
+              and touch‑based interfaces reduce friction between impulse and action.
+            </p>
+            <ul>
+              <li>Chairs and tables are built for long sitting, but not so relaxing that you forget about the game.</li>
+              <li>Chip racks, ATMs, and cashiers are positioned so adding more funds is always convenient.</li>
+              <li>Touch screens and quick‑bet buttons turn complex wagers into a couple of taps, reinforcing the feeling of control.</li>
+            </ul>
+            <p>
+              Feeling comfortable and in control is pleasant, but it can also mask how automatic your decisions have
+              become.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: INTERACTIVE ACTIVITY + TAKEAWAYS -->
+      <section>
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="activity-header">
+              <div class="activity-title">Environment Filter</div>
+              <div class="pill-small">Spot your personal hooks</div>
+            </div>
+            <p style="margin-bottom:6px;">
+              Tick the design elements that you notice changing your behaviour the most. The tool suggests specific
+              counter‑moves you can use on your next visit.
+            </p>
+
+            <div class="trigger-grid">
+              <label class="trigger-row">
+                <input type="checkbox" class="env-trigger" data-type="time" />
+                <div class="trigger-text">
+                  <span class="trigger-title">Losing track of time</span>
+                  <span class="trigger-desc">You often look up surprised at how late it is or how long you have been playing.</span>
+                </div>
+              </label>
+
+              <label class="trigger-row">
+                <input type="checkbox" class="env-trigger" data-type="route" />
+                <div class="trigger-text">
+                  <span class="trigger-title">Wandering routes</span>
+                  <span class="trigger-desc">You tend to drift toward new games when walking to restrooms, ATMs, or exits.</span>
+                </div>
+              </label>
+
+              <label class="trigger-row">
+                <input type="checkbox" class="env-trigger" data-type="sound" />
+                <div class="trigger-text">
+                  <span class="trigger-title">Noise and celebrations</span>
+                  <span class="trigger-desc">Big wins, music, or crowd reactions pull you toward certain areas or bets.</span>
+                </div>
+              </label>
+
+              <label class="trigger-row">
+                <input type="checkbox" class="env-trigger" data-type="comfort" />
+                <div class="trigger-text">
+                  <span class="trigger-title">Too comfortable to leave</span>
+                  <span class="trigger-desc">You stay seated mainly because it feels like effort to cash out and move.</span>
+                </div>
+              </label>
+
+              <label class="trigger-row">
+                <input type="checkbox" class="env-trigger" data-type="access" />
+                <div class="trigger-text">
+                  <span class="trigger-title">Easy access to more money</span>
+                  <span class="trigger-desc">Nearby ATMs or chips make it simple to reload when you had not planned to.</span>
+                </div>
+              </label>
+
+              <label class="trigger-row">
+                <input type="checkbox" class="env-trigger" data-type="screen" />
+                <div class="trigger-text">
+                  <span class="trigger-title">Fast digital decisions</span>
+                  <span class="trigger-desc">Touch screens or quick‑bet options lead you to place bets without much reflection.</span>
+                </div>
+              </label>
+            </div>
+
+            <button class="simulate-button" onclick="summarizeEnvironment()">
+              Build my environment plan
+            </button>
+
+            <div class="sim-output">
+              <div class="output-row">
+                <span class="output-label">Number of hooks selected:</span>
+                <span class="output-value output-neutral" id="env-count">0</span>
+              </div>
+              <div class="output-row">
+                <span class="output-label">Primary focus area:</span>
+                <span class="output-value output-good" id="env-focus">None yet</span>
+              </div>
+              <p id="env-comment" style="margin:4px 0 0;font-size:0.86rem;color:var(--muted);">
+                Use this tool before a trip to decide where you will set boundaries around time, routes, and access to
+                more funds.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Using the Plan in Practice</h2>
+            <p>
+              Once you know which elements pull you in, you can set small, concrete rules that reduce their impact
+              without needing constant willpower.
+            </p>
+            <ul>
+              <li>For time loss: use alarms on your phone and keep it on you, not buried at the table.</li>
+              <li>For wandering routes: pick direct paths for breaks and cash‑outs, even if they feel “less fun.”</li>
+              <li>For easy reloads: decide before you arrive how many trips to the ATM or cage are allowed—if any.</li>
+            </ul>
+            <p>
+              Treat these boundaries as part of the game rules you create for yourself, alongside the strategy chart
+              and session budget.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Practical Takeaways</h2>
+            <p>
+              Casino environments are designed to be engaging and immersive. Knowing that lets you enjoy the space
+              without handing over all of your attention by default.
+            </p>
+            <ul>
+              <li>Notice when the room, not the cards, is driving the decision to keep playing.</li>
+              <li>Plan how you will use breaks, exits, and non‑gaming areas before you sit down.</li>
+              <li>Combine this lesson with the emotions and responsible‑play modules for a full picture.</li>
+            </ul>
+            <p>
+              The more intentionally you move through the casino, the easier it is to keep blackjack in the “chosen
+              entertainment” category instead of something that runs in the background.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Important Disclaimers</h2>
+            <ul>
+              <li>This lesson and activity are for <strong>educational purposes only</strong>.</li>
+              <li>They describe general design patterns and may not apply to every venue.</li>
+              <li>If casino environments feel hard to leave or control, seek support in your region.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2026 The Blackjack Mindset. Educational content only. No financial advice or gambling recommendations.
+    </footer>
+  </div>
+
+  <script>
+    function summarizeEnvironment() {
+      const boxes = document.querySelectorAll(".env-trigger");
+      let total = 0;
+      const counts = {
+        time: 0,
+        route: 0,
+        sound: 0,
+        comfort: 0,
+        access: 0,
+        screen: 0
+      };
+
+      boxes.forEach(box => {
+        if (box.checked) {
+          total += 1;
+          const t = box.dataset.type;
+          if (counts[t] !== undefined) counts[t] += 1;
+        }
+      });
+
+      const countSpan = document.getElementById("env-count");
+      countSpan.textContent = total;
+      countSpan.classList.remove("output-good", "output-neutral", "output-warning");
+      if (total === 0) {
+        countSpan.classList.add("output-neutral");
+      } else if (total <= 3) {
+        countSpan.classList.add("output-good");
+      } else {
+        countSpan.classList.add("output-warning");
+      }
+
+      const focusSpan = document.getElementById("env-focus");
+      const commentP = document.getElementById("env-comment");
+
+      if (total === 0) {
+        focusSpan.textContent = "None selected";
+        commentP.textContent =
+          "If none of these stand out yet, pay attention on your next visit to which parts of the environment make it hardest to stick to your plan.";
+        return;
+      }
+
+      // Determine dominant category
+      const keys = Object.keys(counts);
+      let bestKey = keys[0];
+      keys.forEach(k => {
+        if (counts[k] > counts[bestKey]) bestKey = k;
+      });
+
+      let focusLabel;
+      let advice;
+
+      switch (bestKey) {
+        case "time":
+          focusLabel = "Time awareness";
+          advice =
+            "Your main hook is losing track of time. Use alarms, daylight checks, and pre‑set session lengths to keep sessions contained.";
+          break;
+        case "route":
+          focusLabel = "Movement and routes";
+          advice =
+            "You are most affected by how the floor guides your movement. Choose direct routes to restrooms, exits, and cash‑out areas and avoid “just browsing” the floor.";
+          break;
+        case "sound":
+          focusLabel = "Noise and celebration cues";
+          advice =
+            "Big sounds and celebrations pull your attention. Consider sitting slightly away from the noisiest zones and remind yourself that these sounds do not change the odds.";
+          break;
+        case "comfort":
+          focusLabel = "Comfort and seating";
+          advice =
+            "Once seated, you tend to stay. Build in standing checkpoints and tie breaks to specific times or shoe changes rather than comfort alone.";
+          break;
+        case "access":
+          focusLabel = "Access to more money";
+          advice =
+            "Easy reloads are the main risk. Decide on a hard limit for cash withdrawals or chip buy‑ins before you enter the casino.";
+          break;
+        case "screen":
+          focusLabel = "Fast digital decisions";
+          advice =
+            "Quick‑tap interfaces speed you up. Slow things down by counting to three before confirming larger bets or by capping bet sizes in advance.";
+          break;
+        default:
+          focusLabel = "Mixed influences";
+          advice =
+            "Multiple elements pull you in. Use a combination of time limits, direct routes, and strict bankroll rules to stay in control.";
+      }
+
+      focusSpan.textContent = focusLabel;
+      commentP.textContent = advice;
+    }
+  </script>
+</body>
+</html>
