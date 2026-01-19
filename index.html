@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Blackjack Trainer v2 – Learn, Practice, Etiquette</title>
+  <title>Blackjack Trainer – Hit · Stand · Double · Split</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
     * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif; }
@@ -11,93 +11,19 @@
       min-height: 100vh;
       background: radial-gradient(circle at top, #020617 0, #000 55%, #020617 100%);
       color: #f9fafb;
-      padding: 16px 10px 28px;
+      padding: 20px 12px 40px;
       display: flex;
       justify-content: center;
-    }
-    .page {
-      width: 100%;
-      max-width: 980px;
-    }
-    .nav {
-      display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
-      gap: 10px;
-      flex-wrap: wrap;
     }
-    .brand {
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #bbf7d0;
-    }
-    .brand span {
-      color: #22c55e;
-    }
-    .tabs {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-    .tab {
-      font-size: 12px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.6);
-      background: rgba(15,23,42,0.9);
-      color: #e5e7eb;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .tab.active {
-      background: #22c55e;
-      border-color: #22c55e;
-      color: #022c22;
-      box-shadow: 0 8px 18px rgba(22,163,74,0.5);
-    }
-    .tab:hover {
-      background: rgba(15,23,42,1);
-    }
-
-    .section {
-      display: none;
-    }
-    .section.active {
-      display: block;
-    }
-
-    .panel {
-      margin-bottom: 14px;
-      padding: 14px 16px;
-      border-radius: 18px;
-      background: linear-gradient(145deg, rgba(8,47,73,0.96), rgba(15,118,110,0.85));
-      border: 1px solid rgba(148,163,184,0.6);
-      box-shadow: 0 24px 60px rgba(15,23,42,0.8);
-    }
-    .panel-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 4px;
-      letter-spacing: 0.11em;
-      text-transform: uppercase;
-      color: #e0f2fe;
-    }
-    .panel-sub {
-      font-size: 13px;
-      color: #e5e7eb;
-    }
-
     .table {
       width: 100%;
+      max-width: 960px;
       background: rgba(8, 47, 35, 0.96);
       border-radius: 18px;
       box-shadow: 0 25px 60px rgba(0,0,0,0.6);
       border: 1px solid rgba(148, 163, 184, 0.45);
       padding: 18px 18px 10px;
-      margin-bottom: 18px;
     }
     .header {
       display: flex;
@@ -252,231 +178,504 @@
       background: rgba(15, 23, 42, 0.9);
       border: 1px solid rgba(148, 163, 184, 0.5);
     }
-
-    .content-box {
-      padding: 12px 14px;
-      border-radius: 16px;
-      background: rgba(15,23,42,0.96);
-      border: 1px solid rgba(148,163,184,0.6);
-      font-size: 13px;
-      color: #e5e7eb;
-      margin-bottom: 12px;
-    }
-    .content-box h3 {
-      margin: 0 0 6px;
-      font-size: 15px;
-      color: #e0f2fe;
-    }
-    .content-box h4 {
-      margin: 8px 0 4px;
-      font-size: 13px;
-      color: #bfdbfe;
-    }
-    .content-box ul {
-      margin: 0;
-      padding-left: 16px;
-    }
-    .content-box li {
-      margin-bottom: 3px;
-    }
-
     @keyframes cardIn {
       from { opacity: 0; transform: translateY(10px) scale(0.98); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
-
     @media (max-width: 640px) {
-      .panel { padding: 12px 12px; }
       .table { padding: 14px 12px 10px; }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <header class="nav">
-      <div class="brand">Cold Deck <span>Blackjack</span></div>
-      <div class="tabs">
-        <button class="tab active" data-target="trainer">Trainer</button>
-        <button class="tab" data-target="basics">Basics</button>
-        <button class="tab" data-target="etiquette">Etiquette</button>
-        <button class="tab" data-target="cheatsheet">Cheat Sheet</button>
+  <div class="table">
+    <div class="header">
+      <div class="title">Blackjack Trainer · Hit · Stand · Double · Split</div>
+      <div class="chips">
+        Bankroll: <span id="bankroll">1000</span> · Bet: <span id="bet">10</span>
+        · Hand: <span id="hand-index">1</span>/<span id="hand-count">1</span>
       </div>
-    </header>
+    </div>
 
-    <!-- TRAINER SECTION -->
-    <section id="trainer" class="section active">
-      <div class="panel">
-        <div class="panel-title">Practice Table</div>
-        <div class="panel-sub">
-          Learn basic strategy by playing real hands with fake chips. The trainer tells you when your move matches optimal play.
+    <div class="row">
+      <div class="col">
+        <div class="label">Dealer</div>
+        <div class="cards" id="dealer-cards"></div>
+        <div class="score" id="dealer-score">Total: -</div>
+      </div>
+
+      <div class="col">
+        <div class="label">You</div>
+        <div class="cards" id="player-cards"></div>
+        <div class="score" id="player-score">Total: -</div>
+        <div class="controls">
+          <button id="btn-deal" class="btn-primary">Deal</button>
+          <button id="btn-hit" class="btn-secondary" disabled>Hit</button>
+          <button id="btn-stand" class="btn-secondary" disabled>Stand</button>
+          <button id="btn-double" class="btn-secondary" disabled>Double</button>
+          <button id="btn-split" class="btn-secondary" disabled>Split</button>
+          <button id="btn-newshoe" class="btn-ghost">Reset Shoe</button>
         </div>
       </div>
+    </div>
 
-      <div class="table">
-        <div class="header">
-          <div class="title">Live Trainer · Basic Strategy</div>
-          <div class="chips">Bankroll: <span id="bankroll">1000</span> · Bet: <span id="bet">10</span></div>
+    <div class="row" style="margin-bottom:6px;">
+      <div class="col">
+        <div class="label">Trainer Feedback</div>
+        <div class="log" id="log">
+          Tap <strong>Deal</strong> to start. Make a move and see if you match basic strategy (including double and split).[web:26][web:57]
         </div>
-
-        <div class="row">
-          <div class="col">
-            <div class="label">Dealer</div>
-            <div class="cards" id="dealer-cards"></div>
-            <div class="score" id="dealer-score">Total: -</div>
-          </div>
-
-          <div class="col">
-            <div class="label">You</div>
-            <div class="cards" id="player-cards"></div>
-            <div class="score" id="player-score">Total: -</div>
-            <div class="controls">
-              <button id="btn-deal" class="btn-primary">Deal</button>
-              <button id="btn-hit" class="btn-secondary" disabled>Hit</button>
-              <button id="btn-stand" class="btn-secondary" disabled>Stand</button>
-              <button id="btn-newshoe" class="btn-ghost">Reset Shoe</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="row" style="margin-bottom:6px;">
-          <div class="col">
-            <div class="label">Trainer Feedback</div>
-            <div class="log" id="log">
-              Tap <strong>Deal</strong> to start. Make your decision and see how often you match basic strategy.
-            </div>
-            <div class="stats">
-              <span class="pill">Hands: <span id="hands-played">0</span></span>
-              <span class="pill">Correct moves: <span id="correct-moves">0</span></span>
-              <span class="pill">Accuracy: <span id="accuracy">-</span></span>
-            </div>
-          </div>
+        <div class="stats">
+          <span class="pill">Hands: <span id="hands-played">0</span></span>
+          <span class="pill">Correct moves: <span id="correct-moves">0</span></span>
+          <span class="pill">Accuracy: <span id="accuracy">-</span></span>
         </div>
       </div>
-    </section>
-
-    <!-- BASICS SECTION -->
-    <section id="basics" class="section">
-      <div class="panel">
-        <div class="panel-title">Blackjack Basics</div>
-        <div class="panel-sub">
-          Learn the core rules and a simplified strategy, then jump back into the trainer to drill it.[web:58][web:63][web:66]
-        </div>
-      </div>
-
-      <div class="content-box">
-        <h3>How the game works</h3>
-        <ul>
-          <li>Goal: Get closer to 21 than the dealer without going over.</li>
-          <li>Cards: 2–10 = face value, J/Q/K = 10, Aces = 1 or 11.[web:66]</li>
-          <li>You act first. If you bust, you lose immediately, even if the dealer later busts.[web:63]</li>
-          <li>Dealer usually hits until at least 17 (house rules vary slightly).[web:63][web:64]</li>
-        </ul>
-
-        <h4>Your basic options</h4>
-        <ul>
-          <li><strong>Hit</strong> – take another card.</li>
-          <li><strong>Stand</strong> – keep your hand and end your turn.[web:60][web:66]</li>
-          <li>(Advanced: double, split, surrender – covered in a future version.)</li>
-        </ul>
-
-        <h4>Simplified starter strategy</h4>
-        <ul>
-          <li>Always split Aces and 8s.[web:57][web:58]</li>
-          <li>Hit totals of 8 or less every time.[web:57][web:64]</li>
-          <li>Stand on 12–16 when dealer shows 2–6 (weak upcard).[web:57][web:58]</li>
-          <li>Hit until at least 17 when dealer shows 7–Ace (strong upcard).[web:57][web:63]</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ETIQUETTE SECTION -->
-    <section id="etiquette" class="section">
-      <div class="panel">
-        <div class="panel-title">Table Etiquette</div>
-        <div class="panel-sub">
-          Don’t just play better – look like you know what you’re doing. These are the unwritten rules most beginners never learn.[web:56][web:63]
-        </div>
-      </div>
-
-      <div class="content-box">
-        <h3>Before you sit down</h3>
-        <ul>
-          <li>Buy in when the dealer finishes a round, not mid-hand.</li>
-          <li>Place cash on the felt; don’t hand it directly to the dealer.[web:56]</li>
-          <li>Check the table limits and rules (blackjack payout, number of decks).[web:63]</li>
-        </ul>
-
-        <h4>During the hand</h4>
-        <ul>
-          <li>Use hand signals (tap for hit, wave for stand) so cameras can see your decisions.[web:56][web:63]</li>
-          <li>Don’t touch your chips once the first card has been dealt.</li>
-          <li>Keep your cards on the table in games where cards are dealt face up.[web:56]</li>
-        </ul>
-
-        <h4>How to be a good player</h4>
-        <ul>
-          <li>Don’t blame other players for “taking the dealer’s bust card” – variance happens.</li>
-          <li>Tip dealers occasionally if you’re playing for a while and winning.[web:56]</li>
-          <li>Know your stop-loss before you sit down; walk away when you hit it.</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- CHEAT SHEET SECTION -->
-    <section id="cheatsheet" class="section">
-      <div class="panel">
-        <div class="panel-title">Cheat Sheet</div>
-        <div class="panel-sub">
-          A screenshot-friendly summary of how to play most hands. Start here if you just want the quick rules.[web:26][web:60]
-        </div>
-      </div>
-
-      <div class="content-box">
-        <h3>Quick decisions</h3>
-        <h4>Pairs</h4>
-        <ul>
-          <li>Split: A,A and 8,8.</li>
-          <li>Never split: 5,5 or 10,10.</li>
-        </ul>
-
-        <h4>Hard hands (no soft Ace)</h4>
-        <ul>
-          <li>8 or less: Hit.</li>
-          <li>9–11: Usually hit (advanced: double in good spots).[web:26][web:60]</li>
-          <li>12–16: Stand vs dealer 2–6, hit vs 7–Ace.[web:57][web:58]</li>
-          <li>17+: Stand.</li>
-        </ul>
-
-        <h4>Soft hands (Ace = 11)</h4>
-        <ul>
-          <li>Soft 13–17 (A+2 to A+6): Hit.[web:26][web:58]</li>
-          <li>Soft 18: Stand vs 2–8, hit vs 9–Ace.[web:26][web:58]</li>
-          <li>Soft 19+: Stand.</li>
-        </ul>
-
-        <p style="margin-top:8px;font-size:12px;color:#9ca3af;">
-          Tip: Screenshot this page before you play, then run 50+ hands on the Trainer tab until your decisions line up with the sheet automatically.
-        </p>
-      </div>
-    </section>
+    </div>
   </div>
 
   <script>
-    // Simple tab switching
-    const tabs = document.querySelectorAll('.tab');
-    const sections = document.querySelectorAll('.section');
+    const SUITS = ["♠", "♥", "♦", "♣"];
+    const RANKS = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
 
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        sections.forEach(s => s.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.target).classList.add('active');
+    function createShoe(decks = 4) {
+      const shoe = [];
+      for (let d = 0; d < decks; d++) {
+        for (const s of SUITS) {
+          for (const r of RANKS) {
+            shoe.push({ rank: r, suit: s });
+          }
+        }
+      }
+      for (let i = shoe.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shoe[i], shoe[j]] = [shoe[j], shoe[i]];
+      }
+      return shoe;
+    }
+
+    function cardValue(card) {
+      if (card.rank === "A") return 11;
+      if (["K","Q","J"].includes(card.rank)) return 10;
+      return parseInt(card.rank, 10);
+    }
+
+    function handValue(hand) {
+      let total = 0;
+      let aces = 0;
+      for (const c of hand) {
+        total += cardValue(c);
+        if (c.rank === "A") aces++;
+      }
+      while (total > 21 && aces > 0) {
+        total -= 10;
+        aces--;
+      }
+      const soft = aces > 0 && total <= 21;
+      return { total, soft };
+    }
+
+    function isPair(hand) {
+      return hand.length === 2 && hand[0].rank === hand[1].rank;
+    }
+
+    function isBlackjack(hand) {
+      return hand.length === 2 && handValue(hand).total === 21;
+    }
+
+    function basicStrategyMove(player, dealerUp, canDouble, canSplit) {
+      const { total, soft } = handValue(player);
+      const dealerVal = cardValue(dealerUp);
+
+      if (isPair(player) && canSplit) {
+        const r = player[0].rank;
+        if (r === "A" || r === "8") return "P";
+        if (r === "10" || r === "J" || r === "Q" || r === "K") return "S";
+        if (r === "9") {
+          if ([2,3,4,5,6,8,9].includes(dealerVal)) return "P"; else return "S";
+        }
+        if (r === "7") {
+          if (dealerVal >= 2 && dealerVal <= 7) return "P"; else return "H";
+        }
+        if (r === "6") {
+          if (dealerVal >= 3 && dealerVal <= 6) return "P"; else return "H";
+        }
+        if (r === "3" || r === "2") {
+          if (dealerVal >= 4 && dealerVal <= 7) return "P"; else return "H";
+        }
+        if (r === "4") {
+          if (dealerVal === 5 || dealerVal === 6) return "P"; else return "H";
+        }
+        if (r === "5") {
+          if (canDouble && dealerVal >= 2 && dealerVal <= 9) return "D"; else return "H";
+        }
+      }
+
+      if (soft) {
+        if (total <= 17) {
+          if (canDouble && dealerVal >= 3 && dealerVal <= 6 && total >= 15) return "D";
+          return "H";
+        }
+        if (total === 18) {
+          if (canDouble && dealerVal >= 3 && dealerVal <= 6) return "D";
+          if (dealerVal >= 9 || dealerVal === 1) return "H";
+          return "S";
+        }
+        if (total >= 19) return "S";
+      } else {
+        if (total <= 8) return "H";
+        if (total === 9) {
+          if (canDouble && dealerVal >= 3 && dealerVal <= 6) return "D";
+          return "H";
+        }
+        if (total === 10) {
+          if (canDouble && dealerVal <= 9) return "D";
+          return "H";
+        }
+        if (total === 11) {
+          if (canDouble) return "D";
+          return "H";
+        }
+        if (total === 12) {
+          if (dealerVal >= 4 && dealerVal <= 6) return "S";
+          return "H";
+        }
+        if (total >= 13 && total <= 16) {
+          if (dealerVal >= 2 && dealerVal <= 6) return "S";
+          return "H";
+        }
+        if (total >= 17) return "S";
+      }
+      return "S";
+    }
+
+    function describeMove(code) {
+      if (code === "H") return "Hit";
+      if (code === "S") return "Stand";
+      if (code === "D") return "Double Down";
+      if (code === "P") return "Split";
+      return "";
+    }
+
+    const dealerCardsEl = document.getElementById("dealer-cards");
+    const playerCardsEl = document.getElementById("player-cards");
+    const dealerScoreEl = document.getElementById("dealer-score");
+    const playerScoreEl = document.getElementById("player-score");
+    const logEl = document.getElementById("log");
+    const bankrollEl = document.getElementById("bankroll");
+    const betEl = document.getElementById("bet");
+    const handsPlayedEl = document.getElementById("hands-played");
+    const correctMovesEl = document.getElementById("correct-moves");
+    const accuracyEl = document.getElementById("accuracy");
+    const handIndexEl = document.getElementById("hand-index");
+    const handCountEl = document.getElementById("hand-count");
+
+    const btnDeal = document.getElementById("btn-deal");
+    const btnHit = document.getElementById("btn-hit");
+    const btnStand = document.getElementById("btn-stand");
+    const btnDouble = document.getElementById("btn-double");
+    const btnSplit = document.getElementById("btn-split");
+    const btnNewShoe = document.getElementById("btn-newshoe");
+
+    let shoe = createShoe();
+    let dealerHand = [];
+    let playerHands = [];
+    let currentHandIndex = 0;
+    let bankroll = 1000;
+    let baseBet = 10;
+    let bets = [];
+    let inHand = false;
+    let handsPlayed = 0;
+    let correctMoves = 0;
+
+    function staggeredCardDelay(index) {
+      return index * 60;
+    }
+
+    function renderCard(card, hidden=false, index=0) {
+      const div = document.createElement("div");
+      div.className = "card " + ((card.suit === "♥" || card.suit === "♦") ? "red" : "black");
+      div.style.animationDelay = staggeredCardDelay(index) + "ms";
+
+      if (hidden) {
+        div.innerHTML = `
+          <div class="top"><span>?</span><span>?</span></div>
+          <div class="center">🂠</div>
+          <div class="bottom"><span>?</span><span>?</span></div>
+        `;
+        return div;
+      }
+      div.innerHTML = `
+        <div class="top"><span>${card.rank}</span><span>${card.suit}</span></div>
+        <div class="center">${card.suit}</div>
+        <div class="bottom"><span>${card.rank}</span><span>${card.suit}</span></div>
+      `;
+      return div;
+    }
+
+    function renderHands(revealDealer=false) {
+      dealerCardsEl.innerHTML = "";
+      playerCardsEl.innerHTML = "";
+
+      dealerHand.forEach((c, idx) => {
+        const hidden = idx === 1 && !revealDealer && inHand;
+        dealerCardsEl.appendChild(renderCard(c, hidden, idx));
       });
+
+      const currentHand = playerHands[currentHandIndex] || [];
+      currentHand.forEach((c, idx) => {
+        playerCardsEl.appendChild(renderCard(c, false, idx));
+      });
+
+      const pv = handValue(currentHand);
+      playerScoreEl.textContent = `Total: ${pv.total}${pv.soft ? " (soft)" : ""}`;
+
+      if (revealDealer) {
+        const dv = handValue(dealerHand);
+        dealerScoreEl.textContent = `Total: ${dv.total}${dv.soft ? " (soft)" : ""}`;
+      } else {
+        if (dealerHand.length > 0) {
+          const dv = cardValue(dealerHand[0]);
+          dealerScoreEl.textContent = `Showing: ${dv}`;
+        } else {
+          dealerScoreEl.textContent = "Total: -";
+        }
+      }
+
+      bankrollEl.textContent = bankroll;
+      betEl.textContent = baseBet;
+      handsPlayedEl.textContent = handsPlayed;
+      correctMovesEl.textContent = correctMoves;
+      accuracyEl.textContent = handsPlayed ? Math.round((correctMoves / handsPlayed) * 100) + "%" : "-";
+      handIndexEl.textContent = currentHandIndex + 1;
+      handCountEl.textContent = playerHands.length;
+    }
+
+    function drawCard() {
+      if (shoe.length < 20) {
+        shoe = createShoe();
+      }
+      return shoe.pop();
+    }
+
+    function setButtons(state, canDouble, canSplit) {
+      if (state === "idle") {
+        btnDeal.disabled = false;
+        btnHit.disabled = true;
+        btnStand.disabled = true;
+        btnDouble.disabled = true;
+        btnSplit.disabled = true;
+      } else if (state === "player") {
+        btnDeal.disabled = true;
+        btnHit.disabled = false;
+        btnStand.disabled = false;
+        btnDouble.disabled = !canDouble;
+        btnSplit.disabled = !canSplit;
+      } else if (state === "resolve") {
+        btnDeal.disabled = false;
+        btnHit.disabled = true;
+        btnStand.disabled = true;
+        btnDouble.disabled = true;
+        btnSplit.disabled = true;
+      }
+    }
+
+    function startHand() {
+      if (bankroll < baseBet) bankroll = 1000;
+
+      dealerHand = [drawCard(), drawCard()];
+      playerHands = [[drawCard(), drawCard()]];
+      bets = [baseBet];
+      currentHandIndex = 0;
+      inHand = true;
+
+      const currentHand = playerHands[0];
+      const pv = handValue(currentHand);
+
+      if (isBlackjack(currentHand) || isBlackjack(dealerHand)) {
+        resolveAllHands(true);
+        return;
+      }
+
+      const dealerUp = dealerHand[0];
+      const canDouble = currentHand.length === 2;
+      const canSplit = isPair(currentHand);
+
+      const recommended = basicStrategyMove(currentHand, dealerUp, canDouble, canSplit);
+      logEl.innerHTML = `New hand. Dealer shows <strong>${dealerUp.rank}${dealerUp.suit}</strong>. Your total: <strong>${pv.total}${pv.soft ? " (soft)" : ""}</strong>. Trainer suggests: <strong>${describeMove(recommended)}</strong>.`;
+      renderHands(false);
+      setButtons("player", canDouble, canSplit);
+    }
+
+    function dealerPlay() {
+      let dv = handValue(dealerHand);
+      while (dv.total < 17 || (dv.total === 17 && dv.soft)) {
+        dealerHand.push(drawCard());
+        dv = handValue(dealerHand);
+      }
+      return dv;
+    }
+
+    function resolveAllHands(skipDecisions=false) {
+      inHand = false;
+      const dealerFinal = dealerPlay();
+      const dealerTotal = handValue(dealerHand).total;
+      let summary = [];
+
+      for (let i = 0; i < playerHands.length; i++) {
+        const hand = playerHands[i];
+        const pv = handValue(hand);
+        let resultText;
+        if (isBlackjack(hand) && !isBlackjack(dealerHand)) {
+          bankroll += Math.round(bets[i] * 1.5);
+          resultText = `Hand ${i+1}: Blackjack!`;
+        } else if (pv.total > 21) {
+          bankroll -= bets[i];
+          resultText = `Hand ${i+1}: You bust with ${pv.total}.`;
+        } else if (dealerTotal > 21) {
+          bankroll += bets[i];
+          resultText = `Hand ${i+1}: Dealer busts with ${dealerTotal}, you win with ${pv.total}.`;
+        } else if (dealerTotal > pv.total) {
+          bankroll -= bets[i];
+          resultText = `Hand ${i+1}: Dealer ${dealerTotal} beats your ${pv.total}.`;
+        } else if (dealerTotal < pv.total) {
+          bankroll += bets[i];
+          resultText = `Hand ${i+1}: You win with ${pv.total} vs dealer ${dealerTotal}.`;
+        } else {
+          resultText = `Hand ${i+1}: Push at ${pv.total}.`;
+        }
+        summary.push(resultText);
+        if (!skipDecisions) handsPlayed++;
+      }
+
+      if (skipDecisions) {
+        handsPlayed++;
+      }
+
+      logEl.innerHTML = summary.join("<br>");
+      renderHands(true);
+      setButtons("resolve");
+    }
+
+    function evaluateMove(playerMoveCode) {
+      const currentHand = playerHands[currentHandIndex];
+      const dealerUp = dealerHand[0];
+      const canDouble = currentHand.length === 2;
+      const canSplit = isPair(currentHand) && playerHands.length < 4;
+      const recommended = basicStrategyMove(currentHand, dealerUp, canDouble, canSplit);
+
+      const correct = playerMoveCode === recommended;
+      if (correct) correctMoves++;
+      handsPlayed++;
+
+      return {
+        recommended,
+        correct
+      };
+    }
+
+    btnDeal.addEventListener("click", () => {
+      startHand();
     });
 
-    // === PASTE / ADAPT YOUR EXISTING TRAINER JS HERE ===
-    // Use the same IDs: bankroll, bet, dealer-cards, player-cards, etc.
+    btnHit.addEventListener("click", () => {
+      if (!inHand) return;
+      const moveCode = "H";
+      const moveEval = evaluateMove(moveCode);
+
+      const currentHand = playerHands[currentHandIndex];
+      currentHand.push(drawCard());
+      const pv = handValue(currentHand);
+      renderHands(false);
+
+      if (pv.total > 21) {
+        bankroll -= bets[currentHandIndex];
+        logEl.innerHTML = `You hit and bust with <strong>${pv.total}</strong>.<br><br>Trainer move: <strong>${describeMove(moveEval.recommended)}</strong>. Your move: <strong>${describeMove(moveCode)}</strong>. ${moveEval.correct ? "✅ Correct." : "❌ Off basic strategy."}`;
+        setButtons("resolve");
+        inHand = false;
+        renderHands(true);
+      } else {
+        const dealerUp = dealerHand[0];
+        const canDouble = false;
+        const canSplit = false;
+        const recommendedNext = basicStrategyMove(currentHand, dealerUp, canDouble, canSplit);
+        logEl.innerHTML = `You hit. Your total is now <strong>${pv.total}${pv.soft ? " (soft)" : ""}</strong>.<br><br>Trainer now suggests: <strong>${describeMove(recommendedNext)}</strong>.`;
+        setButtons("player", false, false);
+      }
+    });
+
+    btnStand.addEventListener("click", () => {
+      if (!inHand) return;
+      const moveCode = "S";
+      const moveEval = evaluateMove(moveCode);
+
+      logEl.innerHTML = `You stand.<br><br>Trainer move: <strong>${describeMove(moveEval.recommended)}</strong>. Your move: <strong>${describeMove(moveCode)}</strong>. ${moveEval.correct ? "✅ Correct." : "❌ Off basic strategy."}`;
+      resolveAllHands();
+    });
+
+    btnDouble.addEventListener("click", () => {
+      if (!inHand) return;
+      const currentHand = playerHands[currentHandIndex];
+      if (currentHand.length !== 2) return;
+
+      const moveCode = "D";
+      const moveEval = evaluateMove(moveCode);
+
+      bankroll -= baseBet;
+      bets[currentHandIndex] += baseBet;
+      currentHand.push(drawCard());
+      const pv = handValue(currentHand);
+      renderHands(false);
+
+      if (pv.total > 21) {
+        bankroll -= bets[currentHandIndex];
+        logEl.innerHTML = `You double and bust with <strong>${pv.total}</strong>.<br><br>Trainer move: <strong>${describeMove(moveEval.recommended)}</strong>. Your move: <strong>${describeMove(moveCode)}</strong>. ${moveEval.correct ? "✅ Correct." : "❌ Off basic strategy."}`;
+        setButtons("resolve");
+        inHand = false;
+        renderHands(true);
+      } else {
+        logEl.innerHTML = `You double to ${bets[currentHandIndex]} chips and draw to <strong>${pv.total}</strong>.<br><br>Trainer move: <strong>${describeMove(moveEval.recommended)}</strong>. Your move: <strong>${describeMove(moveCode)}</strong>. ${moveEval.correct ? "✅ Correct." : "❌ Off basic strategy."}`;
+        resolveAllHands();
+      }
+    });
+
+    btnSplit.addEventListener("click", () => {
+      if (!inHand) return;
+      const currentHand = playerHands[currentHandIndex];
+      if (!isPair(currentHand) || currentHand.length !== 2 || playerHands.length >= 4) return;
+
+      const moveCode = "P";
+      const moveEval = evaluateMove(moveCode);
+
+      bankroll -= baseBet;
+      const [c1, c2] = currentHand;
+      playerHands[currentHandIndex] = [c1, drawCard()];
+      playerHands.splice(currentHandIndex + 1, 0, [c2, drawCard()]);
+      bets.splice(currentHandIndex + 1, 0, baseBet);
+
+      logEl.innerHTML = `You split your pair into two hands.<br><br>Trainer move: <strong>${describeMove(moveEval.recommended)}</strong>. Your move: <strong>${describeMove(moveCode)}</strong>. ${moveEval.correct ? "✅ Correct." : "❌ Off basic strategy."}`;
+      renderHands(false);
+      setButtons("player", false, false);
+    });
+
+    btnNewShoe.addEventListener("click", () => {
+      shoe = createShoe();
+      bankroll = 1000;
+      baseBet = 10;
+      dealerHand = [];
+      playerHands = [];
+      bets = [];
+      currentHandIndex = 0;
+      inHand = false;
+      handsPlayed = 0;
+      correctMoves = 0;
+      logEl.innerHTML = "New shoe loaded and bankroll reset to 1000 chips. Tap <strong>Deal</strong> to train again.";
+      renderHands(false);
+      setButtons("idle");
+    });
+
+    setButtons("idle");
+    renderHands(false);
   </script>
 </body>
 </html>
