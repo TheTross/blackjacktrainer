@@ -230,12 +230,33 @@
       border: 1px solid #2b3142;
       background: radial-gradient(circle at top, #1b2334 0, #05070d 60%);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 0.98rem;
+      font-size: 0.86rem;
       font-weight: 600;
       color: #f7f8fc;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+    }
+
+    .card-rank {
+      line-height: 1;
+    }
+
+    .card-suit {
+      font-size: 0.78rem;
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    .card.red .card-rank,
+    .card.red .card-suit {
+      color: #ff6b6b;
+    }
+
+    .card.black .card-rank,
+    .card.black .card-suit {
+      color: #f7f8fc;
     }
 
     .card-placeholder {
@@ -417,6 +438,10 @@
         Practice basic strategy decisions with a focused trainer built for members. Choose the type of hands you want
         to see, answer without rushing, and track accuracy by category instead of just a single score.
       </p>
+      <p>
+        Want the separate, full version with all options unlocked?
+        <a href="full-access.html">Open full-access trainer</a>.
+      </p>
       <div class="tagline-pill">
         <span class="tag-dot"></span>
         <span>Hard • Soft • Pairs • Mixed</span>
@@ -557,6 +582,7 @@
 
   <script>
     const ranks = [2,3,4,5,6,7,8,9,10,10,10,10,11]; // 11 = Ace
+    const suits = ["♠","♥","♦","♣"];
     let currentHand = null;
     let currentMode = "mixed";
 
@@ -588,6 +614,10 @@
       return ranks[Math.floor(Math.random() * ranks.length)];
     }
 
+    function randomSuit() {
+      return suits[Math.floor(Math.random() * suits.length)];
+    }
+
     function formatCardSymbol(v) {
       if (v === 11) return "A";
       if (v === 10) return "10";
@@ -599,8 +629,21 @@
       row.innerHTML = "";
       cards.forEach(v => {
         const div = document.createElement("div");
-        div.className = "card";
-        div.textContent = formatCardSymbol(v);
+        const rankSpan = document.createElement("span");
+        const suitSpan = document.createElement("span");
+
+        const suit = randomSuit();
+        const isRed = (suit === "♥" || suit === "♦");
+
+        div.className = "card " + (isRed ? "red" : "black");
+        rankSpan.className = "card-rank";
+        suitSpan.className = "card-suit";
+
+        rankSpan.textContent = formatCardSymbol(v);
+        suitSpan.textContent = suit;
+
+        div.appendChild(rankSpan);
+        div.appendChild(suitSpan);
         row.appendChild(div);
       });
       for (let i = cards.length; i < placeholders; i++) {
