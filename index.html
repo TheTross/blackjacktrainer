@@ -16,12 +16,12 @@
       --muted: #a1a7bc;
       --border-subtle: #252a39;
       --border-strong: #343a4f;
-      --danger: #ff6b6b;
       --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.65);
-      --radius-lg: 18px;
+      --radius-xl: 22px;
+      --radius-lg: 16px;
       --radius-md: 12px;
       --radius-pill: 999px;
-      --max-width: 1120px;
+      --sidebar-width: 230px;
     }
 
     * {
@@ -31,127 +31,251 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
       background: radial-gradient(circle at top, #151b2f 0, #05070b 55%, #020308 100%);
       color: var(--text);
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Top shell / overall layout */
-    .page-shell {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 20px 18px 40px;
+    a {
+      color: inherit;
     }
 
-    header {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 18px;
+    /* Shell layout */
+    .app-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+      background:
+        radial-gradient(circle at top left, rgba(29, 209, 161, 0.08) 0, transparent 45%),
+        radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.08) 0, transparent 55%);
     }
 
-    @media (min-width: 900px) {
-      header {
-        margin-top: 6px;
+    @media (max-width: 900px) {
+      .app-shell {
+        grid-template-columns: 1fr;
       }
     }
 
-    .brand-row {
+    /* Sidebar */
+    .sidebar {
+      border-right: 1px solid var(--border-subtle);
+      background: linear-gradient(180deg, #05070b 0, #090d17 40%, #05070b 100%);
+      padding: 18px 18px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .sidebar-header {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      border: 1px solid rgba(37, 42, 57, 0.9);
+      background: radial-gradient(circle at top, #1dd1a1 0, #0da37b 55%, #045b44 100%);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #020308;
+    }
+
+    .sidebar-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .sidebar-subtitle {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .sidebar-section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-item {
+      border-radius: 9px;
+      padding: 7px 9px;
+      font-size: 0.86rem;
+      color: var(--muted);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-    }
-
-    h1 {
-      font-size: clamp(2.4rem, 3.4vw, 3rem);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin: 0;
-    }
-
-    header h2 {
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--muted);
-      max-width: 620px;
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    .tagline-pill {
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(37, 42, 57, 0.9);
-      padding: 6px 10px;
-      font-size: 0.76rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: radial-gradient(circle at top left, #13192b 0, #05070b 65%);
-    }
-
-    .tag-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 8px rgba(29, 209, 161, 0.9);
-    }
-
-    /* Top navigation modules */
-    .top-nav {
-      margin-top: 6px;
-      padding: 10px 12px;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border-subtle);
-      background: rgba(5, 7, 14, 0.96);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .top-nav button {
-      border-radius: var(--radius-pill);
+      cursor: pointer;
       border: 1px solid transparent;
       background: transparent;
-      padding: 8px 12px;
-      font-size: 0.86rem;
-      color: var(--muted);
-      cursor: pointer;
-      white-space: nowrap;
-      transition: background 0.16s ease, color 0.16s ease, border-color 0.16s ease,
-        transform 0.12s ease;
+      transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.12s ease;
     }
 
-    .top-nav button:hover {
-      background: rgba(23, 30, 52, 0.96);
+    .nav-item span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-item .chevron {
+      font-size: 0.75rem;
+      opacity: 0.6;
+    }
+
+    .nav-item:hover {
+      background: rgba(22, 28, 46, 0.96);
       border-color: var(--border-subtle);
       color: var(--text);
-      transform: translateY(-1px);
+      transform: translateY(-0.5px);
     }
 
-    .top-nav button.primary-tab {
-      background: rgba(29, 209, 161, 0.08);
-      border-color: rgba(29, 209, 161, 0.6);
+    .nav-item.primary {
+      background: rgba(29, 209, 161, 0.09);
+      border-color: rgba(29, 209, 161, 0.7);
       color: var(--accent);
     }
 
-    /* Main content layout */
-    main {
-      margin-top: 22px;
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 0.76rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        flex-direction: row;
+        align-items: center;
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+        gap: 14px;
+        overflow-x: auto;
+      }
+
+      .sidebar-main {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .sidebar-nav-wrapper {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .sidebar-nav {
+        flex-direction: row;
+      }
+
+      .sidebar-footer {
+        display: none;
+      }
+    }
+
+    /* Main area */
+    .main-area {
+      padding: 20px 24px 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .page-heading {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .page-heading h1 {
+      font-size: clamp(1.7rem, 2.3vw, 2rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .page-heading p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.6;
+    }
+
+    .top-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pill-note {
+      font-size: 0.78rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 5px 9px;
+      color: var(--muted);
+      background: rgba(5, 7, 14, 0.9);
+    }
+
+    .top-cta a {
+      border-radius: var(--radius-pill);
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(29, 209, 161, 0.75);
+      background: linear-gradient(135deg, #1dd1a1, #10ac84);
+      color: #020308;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.85);
+      transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
+    }
+
+    .top-cta a:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 1);
+    }
+
+    /* Content layout */
+    .content-grid {
       display: grid;
-      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.9fr);
-      gap: 22px;
+      grid-template-columns: minmax(0, 1.9fr) minmax(0, 1.6fr);
+      gap: 20px;
       align-items: flex-start;
     }
 
-    @media (max-width: 880px) {
-      main {
+    @media (max-width: 900px) {
+      .content-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -162,10 +286,10 @@
 
     .panel {
       background: rgba(7, 10, 20, 0.98);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-xl);
       border: 1px solid var(--border-subtle);
       box-shadow: var(--shadow-soft);
-      padding: 18px 20px 16px;
+      padding: 18px 20px 18px;
     }
 
     .panel + .panel {
@@ -173,8 +297,8 @@
     }
 
     h3 {
-      font-size: 0.95rem;
-      letter-spacing: 0.14em;
+      font-size: 0.96rem;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--muted);
       margin: 0 0 10px;
@@ -221,11 +345,11 @@
       font-weight: 600;
     }
 
-    /* Trainer visual and layout */
+    /* Trainer visual */
     #trainer {
       position: relative;
       overflow: hidden;
-      background: radial-gradient(circle at top left, #13192b 0, #05070b 65%);
+      background: radial-gradient(circle at top left, #111729 0, #05070b 70%);
     }
 
     #trainer::before {
@@ -233,8 +357,8 @@
       position: absolute;
       inset: -40%;
       background:
-        radial-gradient(circle at top left, rgba(29, 209, 161, 0.08) 0, transparent 55%),
-        radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.08) 0, transparent 55%);
+        radial-gradient(circle at top left, rgba(29, 209, 161, 0.1) 0, transparent 55%),
+        radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.1) 0, transparent 55%);
       pointer-events: none;
     }
 
@@ -243,10 +367,11 @@
       z-index: 1;
       display: grid;
       grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.5fr);
-      gap: 16px;
+      gap: 18px;
+      align-items: flex-start;
     }
 
-    @media (max-width: 880px) {
+    @media (max-width: 900px) {
       #trainer-inner {
         grid-template-columns: 1fr;
       }
@@ -254,10 +379,10 @@
 
     #table-visual {
       background: radial-gradient(circle at center, #064b38 0, #043428 60%, #021712 100%);
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(0, 0, 0, 0.7);
-      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.8);
-      padding: 14px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(0, 0, 0, 0.75);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.9);
+      padding: 15px;
       position: relative;
       overflow: hidden;
     }
@@ -288,16 +413,16 @@
     #deck-icon {
       width: 34px;
       height: 34px;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid rgba(8, 10, 18, 0.6);
       background: linear-gradient(135deg, #f5f7fb, #ced3e5);
-      box-shadow: 0 6px 14px rgba(2, 3, 8, 0.75);
+      box-shadow: 0 8px 18px rgba(2, 3, 8, 0.85);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #020308;
       font-size: 0.9rem;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .seat-label {
@@ -326,7 +451,7 @@
       border-radius: 8px;
       border: 1px solid rgba(0, 0, 0, 0.7);
       background: radial-gradient(circle at top, #ffffff 0, #e2e4f0 65%, #c2c6d7 100%);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.85);
       position: relative;
       padding: 4px 5px;
       display: flex;
@@ -382,7 +507,7 @@
     #felt-actions {
       display: flex;
       gap: 10px;
-      margin-top: 10px;
+      margin-top: 12px;
     }
 
     .felt-button {
@@ -391,14 +516,13 @@
       text-transform: uppercase;
       letter-spacing: 0.12em;
       border-radius: var(--radius-pill);
-      border: 1px solid rgba(0, 0, 0, 0.8);
-      padding: 7px 10px;
+      border: 1px solid rgba(0, 0, 0, 0.85);
+      padding: 8px 10px;
       cursor: pointer;
       background: rgba(0, 0, 0, 0.4);
-      color: rgba(245, 247, 251, 0.92);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.8);
-      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease,
-        border-color 0.12s ease;
+      color: rgba(245, 247, 251, 0.95);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.85);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease, border-color 0.12s ease;
     }
 
     .felt-button.primary {
@@ -409,8 +533,8 @@
 
     .felt-button:hover {
       transform: translateY(-1px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.9);
-      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.95);
+      border-color: rgba(255, 255, 255, 0.12);
       background: rgba(0, 0, 0, 0.55);
     }
 
@@ -418,7 +542,7 @@
       background: radial-gradient(circle at top, #30e3b6 0, #13b588 56%, #077960 100%);
     }
 
-    /* Trainer copy and feedback */
+    /* Trainer copy & feedback */
     #trainer-copy {
       display: flex;
       flex-direction: column;
@@ -479,403 +603,280 @@
       transform: translateY(-1px);
     }
 
-    /* Budgeting tool */
-    #budget-tool {
-      background: rgba(7, 10, 20, 0.98);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-strong);
-    }
-
-    .budget-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr);
-      gap: 14px;
-      align-items: flex-start;
-    }
-
-    @media (max-width: 880px) {
-      .budget-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .budget-form label {
-      display: block;
-      font-size: 0.84rem;
-      color: var(--muted);
-      margin-bottom: 3px;
-    }
-
-    .budget-form input {
-      width: 100%;
-      border-radius: 8px;
-      border: 1px solid var(--border-subtle);
-      background: #05070b;
-      color: var(--text);
-      padding: 7px 8px;
-      font-size: 0.9rem;
-      margin-bottom: 8px;
-      outline: none;
-      transition: border-color 0.16s ease, box-shadow 0.16s ease;
-    }
-
-    .budget-form input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(29, 209, 161, 0.45);
-    }
-
-    .budget-form small {
-      display: block;
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .budget-form button {
-      margin-top: 4px;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border-subtle);
-      background: rgba(16, 21, 34, 0.96);
-      color: var(--text);
-      font-size: 0.86rem;
-      padding: 7px 12px;
-      cursor: pointer;
-      transition: border-color 0.16s ease, background 0.16s ease, transform 0.12s ease;
-    }
-
-    .budget-form button:hover {
-      border-color: var(--accent);
-      background: rgba(23, 30, 48, 0.98);
-      transform: translateY(-1px);
-    }
-
-    .budget-summary {
-      background: rgba(3, 5, 12, 0.98);
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-strong);
-      padding: 10px 11px;
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 4px;
-    }
-
-    .summary-row span:first-child {
-      color: var(--muted);
-    }
-
-    .summary-row span:last-child {
-      color: var(--text);
-    }
-
-    .summary-row.highlight span:last-child {
-      color: var(--accent-warm);
-    }
-
-    .summary-note {
-      font-size: 0.8rem;
-      color: var(--muted);
+    /* Right column panels */
+    #disclaimers ul {
       margin-top: 6px;
-    }
-
-    /* CTA */
-    #cta a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 6px;
-      padding: 10px 16px;
-      border-radius: var(--radius-pill);
-      background: linear-gradient(135deg, #1dd1a1, #10ac84);
-      color: #020308;
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.9);
-      transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
-    }
-
-    #cta a:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.03);
-      box-shadow: 0 20px 42px rgba(0, 0, 0, 1);
     }
 
     footer {
-      max-width: var(--max-width);
-      margin: 10px auto 30px;
-      padding: 0 18px;
+      margin-top: 26px;
       font-size: 0.78rem;
       color: var(--muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="page-shell">
-    <header>
-      <div class="brand-row">
-        <div>
-          <h1>The Blackjack Mindset</h1>
-          <div class="tagline-pill">
-            <span class="tag-dot"></span>
-            <span>Educational • Probability • Responsible Play</span>
+  <div class="app-shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-main">
+        <div class="logo-mark">BJ</div>
+        <div class="sidebar-header">
+          <div class="sidebar-title">The Blackjack Mindset</div>
+          <div class="sidebar-subtitle">
+            A concise digital guide and trainer on probability, decisions, and responsible blackjack play.
           </div>
         </div>
       </div>
-      <h2>
-        A professional, interactive guide to understanding blackjack decisions, probabilities, and psychology—
-        designed for learning, not chasing outcomes.
-      </h2>
 
-      <!-- Top modules navigation -->
-      <nav class="top-nav">
-        <button class="primary-tab" onclick="location.href='#trainer'">Interactive Trainer</button>
-        <button onclick="location.href='#budget-tool'">Session Budgeting</button>
-        <button onclick="location.href='probability.html'">Probability & Variance</button>
-        <button onclick="location.href='mistakes.html'">Common Mistakes</button>
-        <button onclick="location.href='psychology.html'">Psychology & Emotions</button>
-        <button onclick="location.href='betting-systems.html'">Betting Systems</button>
-        <button onclick="location.href='casino-design.html'">Casino Design</button>
-        <button onclick="location.href='responsible-play.html'">Responsible Play</button>
-      </nav>
-    </header>
+      <div class="sidebar-nav-wrapper">
+        <div>
+          <div class="sidebar-section-label">Interactive</div>
+          <div class="sidebar-nav">
+            <button class="nav-item primary" onclick="location.href='#trainer'">
+              <span>Decision Trainer</span>
+              <span class="chevron">↳</span>
+            </button>
+            <button class="nav-item" onclick="location.href='budgeting.html'">
+              <span>Session Budgeting Tool</span>
+              <span class="chevron">↗</span>
+            </button>
+          </div>
+        </div>
 
-    <main>
-      <!-- LEFT COLUMN -->
-      <div>
-        <!-- Credibility / Overview -->
-        <section class="panel" id="intro">
-          <h3>Overview</h3>
+        <div>
+          <div class="sidebar-section-label" style="margin-top:10px;">Modules</div>
+          <div class="sidebar-nav">
+            <button class="nav-item" onclick="location.href='probability.html'">
+              <span>Probability & Variance</span>
+              <span class="chevron">↗</span>
+            </button>
+            <button class="nav-item" onclick="location.href='mistakes.html'">
+              <span>Common Player Mistakes</span>
+              <span class="chevron">↗</span>
+            </button>
+            <button class="nav-item" onclick="location.href='psychology.html'">
+              <span>Psychology & Emotions</span>
+              <span class="chevron">↗</span>
+            </button>
+            <button class="nav-item" onclick="location.href='betting-systems.html'">
+              <span>Why Betting Systems Fail</span>
+              <span class="chevron">↗</span>
+            </button>
+            <button class="nav-item" onclick="location.href='casino-design.html'">
+              <span>How Casinos Shape Decisions</span>
+              <span class="chevron">↗</span>
+            </button>
+            <button class="nav-item" onclick="location.href='responsible-play.html'">
+              <span>Responsible, Disciplined Play</span>
+              <span class="chevron">↗</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        Educational content only. No financial advice or promises of outcomes.
+      </div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <div class="main-area">
+      <div class="top-bar">
+        <div class="page-heading">
+          <h1>Interactive Trainer & Guide</h1>
           <p>
-            This project was built from a simple curiosity: if blackjack is relatively structured, why do smart,
-            informed people still make decisions that steadily work against them over time?
+            Learn how structured decisions, probability, and psychology interact at the blackjack table. The goal is
+            clarity and discipline, not shortcuts.
           </p>
-          <p>
-            <strong>The Blackjack Mindset</strong> is a short, focused guide paired with interactive tools. The aim
-            is not to find loopholes, but to make the logic, probabilities, and psychological patterns behind the
-            game easier to see.
-          </p>
-        </section>
+        </div>
+        <div class="top-cta">
+          <div class="pill-note">Guide + lessons + trainer • $17</div>
+          <a href="https://gumroad.com/" target="_blank" rel="noopener noreferrer">
+            Access Full Guide
+          </a>
+        </div>
+      </div>
 
-        <!-- Interactive Trainer -->
-        <section class="panel" id="trainer">
-          <h3>Interactive Decision Trainer</h3>
-          <div id="trainer-inner">
-            <!-- Visual table with cards -->
-            <div id="table-visual">
-              <div id="table-header">
-                <span>Education Mode</span>
-                <div id="deck-icon">21</div>
-              </div>
+      <div class="content-grid">
+        <!-- LEFT COLUMN -->
+        <div>
+          <!-- Overview -->
+          <section class="panel" id="overview">
+            <h3>Overview</h3>
+            <p>
+              This project grew from a simple observation: many players understand the rules of blackjack but still
+              make decisions that gradually work against them. The reasons are rarely about intelligence.
+            </p>
+            <p>
+              <strong>The Blackjack Mindset</strong> focuses on how probability, table design, and human behavior
+              interact. The trainer on this page turns abstract ideas into specific, repeatable decision patterns.
+            </p>
+          </section>
 
-              <div>
-                <div class="seat-label">Dealer</div>
-                <div class="hand-row">
-                  <div class="card-stack">
-                    <!-- dealer upcard -->
-                    <div class="card black" id="dealer-card-1">
-                      <div class="card-rank">10</div>
-                      <div class="card-center">♠</div>
-                      <div class="card-suit">♠</div>
-                    </div>
-                    <!-- card back -->
-                    <div class="card" style="background: radial-gradient(circle at top, #172033 0, #040712 70%, #010206 100%);">
-                      <div class="card-center" style="font-size:0.9rem;color:rgba(255,255,255,0.75);">
-                        ◆
+          <!-- Trainer -->
+          <section class="panel" id="trainer">
+            <h3>Decision Trainer</h3>
+            <div id="trainer-inner">
+              <!-- Visual table -->
+              <div id="table-visual">
+                <div id="table-header">
+                  <span>Education Mode</span>
+                  <div id="deck-icon">21</div>
+                </div>
+
+                <div>
+                  <div class="seat-label">Dealer</div>
+                  <div class="hand-row">
+                    <div class="card-stack">
+                      <div class="card black" id="dealer-card-1">
+                        <div class="card-rank">10</div>
+                        <div class="card-center">♠</div>
+                        <div class="card-suit">♠</div>
+                      </div>
+                      <div class="card" style="background: radial-gradient(circle at top, #172033 0, #040712 70%, #010206 100%);">
+                        <div class="card-center" style="font-size:0.9rem;color:rgba(255,255,255,0.75);">
+                          ◆
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="total-pill">
-                    <span id="dealer-card-label">Upcard: 10</span>
-                    <span>Risk Anchor</span>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="seat-label">You</div>
-                <div class="hand-row">
-                  <div class="card-stack" id="player-card-stack">
-                    <div class="card red" id="player-card-1">
-                      <div class="card-rank">8</div>
-                      <div class="card-center">♥</div>
-                      <div class="card-suit">♥</div>
-                    </div>
-                    <div class="card black" id="player-card-2">
-                      <div class="card-rank">8</div>
-                      <div class="card-center">♣</div>
-                      <div class="card-suit">♣</div>
+                    <div class="total-pill">
+                      <span id="dealer-card-label">Upcard: 10</span>
+                      <span>Risk Anchor</span>
                     </div>
                   </div>
-                  <div class="total-pill">
-                    <span id="player-total-label">Total: 16</span>
-                    <span>Decision Point</span>
+                </div>
+
+                <div>
+                  <div class="seat-label">You</div>
+                  <div class="hand-row">
+                    <div class="card-stack" id="player-card-stack">
+                      <div class="card red" id="player-card-1">
+                        <div class="card-rank">8</div>
+                        <div class="card-center">♥</div>
+                        <div class="card-suit">♥</div>
+                      </div>
+                      <div class="card black" id="player-card-2">
+                        <div class="card-rank">8</div>
+                        <div class="card-center">♣</div>
+                        <div class="card-suit">♣</div>
+                      </div>
+                    </div>
+                    <div class="total-pill">
+                      <span id="player-total-label">Total: 16</span>
+                      <span>Decision Point</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div id="felt-actions">
-                <button class="felt-button primary" onclick="dealHand()">Deal Scenario</button>
-                <button class="felt-button" onclick="resetStats()">Reset</button>
-              </div>
-            </div>
-
-            <!-- Trainer copy / actions / feedback -->
-            <div id="trainer-copy">
-              <p>
-                The trainer presents a scenario, asks what you would do, and shows how your decision compares with
-                a commonly recommended basic approach for that situation. The emphasis is on the reasoning, not on
-                short-term results.
-              </p>
-
-              <section id="hand-display">
-                <h4>Current Scenario</h4>
-                <p id="player-hand">Your hand will appear here.</p>
-                <p id="dealer-card">Dealer’s upcard will appear here.</p>
-              </section>
-
-              <section id="actions">
-                <h4>Your Decision</h4>
-                <p style="margin-bottom:6px;">Choose the action that feels appropriate for this hand.</p>
-                <div style="display:flex;flex-wrap:wrap;gap:6px;">
-                  <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('hit')">Hit</button>
-                  <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('stand')">Stand</button>
-                  <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('double')">Double</button>
-                  <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('split')">Split</button>
+                <div id="felt-actions">
+                  <button class="felt-button primary" onclick="dealHand()">Deal Scenario</button>
+                  <button class="felt-button" onclick="resetStats()">Reset</button>
                 </div>
-              </section>
-
-              <div id="feedback">
-                <p id="result-text">Click “Deal Scenario” to start.</p>
-                <p id="explanation-text"></p>
-                <p id="accuracy-text"></p>
               </div>
 
-              <div id="controls">
-                <button onclick="dealHand()">Next Scenario</button>
-                <button onclick="resetStats()">Clear History</button>
+              <!-- Copy / actions / feedback -->
+              <div id="trainer-copy">
+                <p>
+                  The trainer presents a focused set of common situations, asks what you would do, and then compares
+                  your choice with a widely accepted basic approach for that scenario. Each explanation is written so
+                  you can connect the recommendation to a clear idea, not just a rule.
+                </p>
+
+                <section id="hand-display">
+                  <h4>Current Scenario</h4>
+                  <p id="player-hand">Your hand will appear here.</p>
+                  <p id="dealer-card">Dealer’s upcard will appear here.</p>
+                </section>
+
+                <section id="actions">
+                  <h4>Your Decision</h4>
+                  <p style="margin-bottom:6px;">Choose the action that feels appropriate for this hand.</p>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                    <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('hit')">Hit</button>
+                    <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('stand')">Stand</button>
+                    <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('double')">Double</button>
+                    <button class="felt-button" style="flex:1 1 45%;" onclick="chooseAction('split')">Split</button>
+                  </div>
+                </section>
+
+                <div id="feedback">
+                  <p id="result-text">Click “Deal Scenario” to start.</p>
+                  <p id="explanation-text"></p>
+                  <p id="accuracy-text"></p>
+                </div>
+
+                <div id="controls">
+                  <button onclick="dealHand()">Next Scenario</button>
+                  <button onclick="resetStats()">Clear History</button>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
 
-        <!-- Budgeting tool -->
-        <section class="panel" id="budget-tool">
-          <h3>Session Budgeting Tool</h3>
-          <div class="budget-grid">
-            <div class="budget-form">
-              <p>
-                This simple budgeting tool is designed to frame blackjack as a fixed-cost form of entertainment,
-                not as a source of income. Enter only amounts you are fully prepared to lose.
-              </p>
+        <!-- RIGHT COLUMN -->
+        <div>
+          <!-- What the guide covers -->
+          <section class="panel" id="how-it-works">
+            <h3>What the Guide Covers</h3>
+            <p>
+              The written guide and lesson modules are designed to be brief, precise, and directly connected to
+              situations you see in the trainer.
+            </p>
+            <ul>
+              <li>Probability explained in plain language, including why good decisions sometimes lose.</li>
+              <li>Common judgment mistakes such as chasing, overconfidence, and reacting to short streaks.</li>
+              <li>Why popular betting patterns do not change the underlying math of the game.</li>
+              <li>How casino environments are built to keep people playing longer than they planned.</li>
+              <li>How to approach blackjack as a fixed-cost form of entertainment with clear boundaries.</li>
+            </ul>
+            <p>
+              Each module can be opened from the sidebar for a deeper, focused explanation of its theme.
+            </p>
+          </section>
 
-              <label for="bankroll-input">Total amount set aside for play</label>
-              <input id="bankroll-input" type="number" min="0" step="1" placeholder="e.g., 200" />
-              <small>Money that is separate from bills, savings, and essentials.</small>
+          <!-- Disclaimers -->
+          <section class="panel" id="disclaimers">
+            <h3>Important Disclaimers</h3>
+            <ul>
+              <li>This material is for <strong>educational purposes only</strong>.</li>
+              <li>There are no promises of financial outcomes, advantage, or income of any kind.</li>
+              <li>Examples are simplified and do not reflect every rule set, side bet, or variation.</li>
+              <li>You must be of <strong>legal gambling age</strong> in your jurisdiction for any real-money play.</li>
+              <li>If gambling is not enjoyable, controlled, and affordable, you should avoid it and seek support.</li>
+            </ul>
+          </section>
 
-              <label for="session-count-input">Number of sessions you plan</label>
-              <input id="session-count-input" type="number" min="1" step="1" placeholder="e.g., 4" />
-              <small>For example, over a trip or a month.</small>
-
-              <label for="unit-size-input">Typical bet size per hand</label>
-              <input id="unit-size-input" type="number" min="0" step="1" placeholder="e.g., 10" />
-              <small>This does not need to be “optimal”—just realistic for you.</small>
-
-              <button type="button" onclick="calculateBudget()">Calculate Guidelines</button>
-            </div>
-
-            <div class="budget-summary" id="budget-summary">
-              <div class="summary-row">
-                <span>Suggested maximum per session</span>
-                <span id="per-session-output">–</span>
-              </div>
-              <div class="summary-row">
-                <span>Approx. hands per session</span>
-                <span id="hands-output">–</span>
-              </div>
-              <div class="summary-row highlight">
-                <span>Stop-loss reminder</span>
-                <span id="stop-loss-output">–</span>
-              </div>
-              <p class="summary-note">
-                These figures are illustrative only. They do not change the underlying house edge or any
-                probabilities; they simply create a structure for how much you are prepared to spend and when to
-                stop.
-              </p>
-            </div>
-          </div>
-        </section>
+          <!-- CTA -->
+          <section class="panel" id="cta">
+            <h3>Access the Full Product</h3>
+            <p>
+              The complete version includes the digital guide, lesson modules, and the interactive trainer in a
+              single, organized package. It is built for people who want a clear, honest view of blackjack as a
+              structured game of decisions.
+            </p>
+            <p>
+              Access the full product for <strong>$17</strong> via Gumroad.
+            </p>
+            <p>
+              <a href="https://gumroad.com/" target="_blank" rel="noopener noreferrer">
+                Access The Blackjack Mindset – $17
+              </a>
+            </p>
+          </section>
+        </div>
       </div>
 
-      <!-- RIGHT COLUMN -->
-      <div>
-        <!-- How it works -->
-        <section class="panel" id="how-it-works">
-          <h3>What the Guide Emphasizes</h3>
-          <p>
-            The written guide and trainer work together to explain how structured decisions and emotional
-            impulses interact. The focus is on clarity and realism rather than optimism.
-          </p>
-          <ul>
-            <li>Probability explained in everyday language, with no heavy formulas.</li>
-            <li>Common judgment errors such as chasing, overconfidence, and “just one more hand”.</li>
-            <li>Why popular betting patterns do not change the mathematical edge.</li>
-            <li>How casino environments are built to keep people playing longer than planned.</li>
-          </ul>
-          <p>
-            Each lesson module is short, specific, and designed to be read in a few minutes, then applied in the
-            trainer.
-          </p>
-        </section>
-
-        <!-- Disclaimers -->
-        <section class="panel" id="disclaimers">
-          <h3>Important Disclaimers</h3>
-          <ul>
-            <li>This material is for <strong>educational purposes only</strong>.</li>
-            <li>There are no promises of financial outcomes, advantage, or income of any kind.</li>
-            <li>Examples are simplified and do not reflect every possible rule set or scenario.</li>
-            <li>You must be of <strong>legal gambling age</strong> in your jurisdiction to participate in any real-money games.</li>
-            <li>If gambling is not enjoyable, controlled, and affordable, you should avoid it and seek appropriate support.</li>
-          </ul>
-        </section>
-
-        <!-- CTA -->
-        <section class="panel" id="cta">
-          <h3>Access the Full Guide</h3>
-          <p>
-            If you find the trainer and budgeting tool useful and want a concise, structured explanation of the
-            underlying ideas, the full digital guide and lesson modules expand each topic with clear, practical
-            language.
-          </p>
-          <p>
-            The complete package—including the guide, lesson pages, and interactive trainer—is available for
-            <strong>$17</strong> on Gumroad.
-          </p>
-          <p>
-            <a href="https://gumroad.com/" target="_blank" rel="noopener noreferrer">
-              Access The Blackjack Mindset – $17
-            </a>
-          </p>
-        </section>
-      </div>
-    </main>
-
-    <footer>
-      <p>
+      <footer>
         © 2026 The Blackjack Mindset. Educational content only. No financial advice or gambling recommendations.
-      </p>
-    </footer>
+      </footer>
+    </div>
   </div>
 
   <script>
-    // Trainer data and logic
     const hands = [
       {
         player: "16 (10 + 6)",
@@ -884,7 +885,7 @@
         playerTotalLabel: "Total: 16",
         recommended: "hit",
         explanation:
-          "With 16 against a strong dealer 10, standing tends to lose more over time. Hitting can be uncomfortable because of bust risk, but it usually loses less in the long run than standing."
+          "With 16 against a strong dealer 10, standing tends to lose more over time. Hitting can be uncomfortable because of bust risk, but it typically loses less than standing in the long run."
       },
       {
         player: "12 (10 + 2)",
@@ -893,7 +894,7 @@
         playerTotalLabel: "Total: 12",
         recommended: "stand",
         explanation:
-          "With 12 against a dealer 4, the dealer is more likely to draw into trouble. Hitting exposes you to busting on many outcomes, so standing is generally the stronger long-run decision."
+          "With 12 against a dealer 4, the dealer is more likely to run into trouble drawing cards. Hitting exposes you to busting on many outcomes, so standing is usually the stronger long-run decision."
       },
       {
         player: "11 (5 + 6)",
@@ -902,7 +903,7 @@
         playerTotalLabel: "Total: 11",
         recommended: "double",
         explanation:
-          "An 11 against a weak dealer 6 puts you in a favourable position to improve to a strong total. Doubling increases your exposure when the situation is structurally better for you."
+          "An 11 against a weak dealer 6 gives you many ways to improve to a strong total. Doubling increases your exposure when the situation is structurally more favourable for you."
       },
       {
         player: "A,7 (soft 18)",
@@ -911,7 +912,7 @@
         playerTotalLabel: "Total: Soft 18",
         recommended: "hit",
         explanation:
-          "Soft 18 against a dealer 9 is less secure than it looks. Hitting can improve your position, and the Ace allows flexibility without an immediate bust on the next card."
+          "Soft 18 against a dealer 9 is less secure than it appears. Hitting can improve your outcome, and the Ace allows flexibility without an immediate bust on the next card."
       },
       {
         player: "8,8 (pair of 8s)",
@@ -920,7 +921,7 @@
         playerTotalLabel: "Total: 16 (8,8)",
         recommended: "split",
         explanation:
-          "A total of 16 is structurally difficult to play well. Splitting 8s allows two new hands from stronger starting points instead of committing to one weak 16 against a strong card."
+          "A total of 16 is structurally difficult to play well. Splitting 8s allows you to restart with two new hands from stronger starting positions rather than committing to one weak 16."
       },
       {
         player: "A,6 (soft 17)",
@@ -929,7 +930,7 @@
         playerTotalLabel: "Total: Soft 17",
         recommended: "double",
         explanation:
-          "Soft 17 can improve on many cards without immediately busting, and the dealer 3 is relatively weak. Doubling is recommended when you can press a situation that is more often favourable."
+          "Soft 17 can improve on many cards without immediately busting, and the dealer 3 is relatively weak. Doubling backs a spot that is more often favourable than not."
       }
     ];
 
@@ -946,7 +947,6 @@
       const playerCard1 = document.getElementById("player-card-1");
       const playerCard2 = document.getElementById("player-card-2");
 
-      // Very simple mapping for visual variety
       if (hand.player.includes("8,8")) {
         playerCard1.querySelector(".card-rank").textContent = "8";
         playerCard1.querySelector(".card-center").textContent = "♥";
@@ -992,8 +992,7 @@
       }
 
       const dealerCard1 = document.getElementById("dealer-card-1");
-      dealerCard1.querySelector(".card-rank").textContent =
-        hand.dealer.replace(/\D/g, "") || hand.dealer;
+      dealerCard1.querySelector(".card-rank").textContent = hand.dealer.replace(/\D/g, "") || hand.dealer;
       dealerCard1.querySelector(".card-center").textContent = "♠";
     }
 
@@ -1011,8 +1010,7 @@
 
     function chooseAction(action) {
       if (currentHandIndex === null) {
-        document.getElementById("result-text").textContent =
-          "Please click “Deal Scenario” to load a hand.";
+        document.getElementById("result-text").textContent = "Please click “Deal Scenario” to load a hand.";
         return;
       }
 
@@ -1031,13 +1029,9 @@
       document.getElementById("explanation-text").textContent =
         "Suggested action: " + hand.recommended.toUpperCase() + ". " + hand.explanation;
 
-      const accuracy = totalHands > 0
-        ? Math.round((correctDecisions / totalHands) * 100)
-        : 0;
+      const accuracy = totalHands > 0 ? Math.round((correctDecisions / totalHands) * 100) : 0;
       document.getElementById("accuracy-text").textContent =
-        "You have matched the suggested decision on " +
-        accuracy +
-        "% of the scenarios you have viewed.";
+        "You have matched the suggested decision on " + accuracy + "% of the scenarios you have viewed.";
     }
 
     function resetStats() {
@@ -1051,32 +1045,6 @@
       document.getElementById("result-text").textContent = "Click “Deal Scenario” to start.";
       document.getElementById("explanation-text").textContent = "";
       document.getElementById("accuracy-text").textContent = "";
-    }
-
-    // Budgeting tool logic
-    function calculateBudget() {
-      const bankroll = parseFloat(document.getElementById("bankroll-input").value);
-      const sessions = parseInt(document.getElementById("session-count-input").value, 10);
-      const unitSize = parseFloat(document.getElementById("unit-size-input").value);
-
-      const perSessionOutput = document.getElementById("per-session-output");
-      const handsOutput = document.getElementById("hands-output");
-      const stopLossOutput = document.getElementById("stop-loss-output");
-
-      if (!bankroll || bankroll <= 0 || !sessions || sessions <= 0 || !unitSize || unitSize <= 0) {
-        perSessionOutput.textContent = "–";
-        handsOutput.textContent = "–";
-        stopLossOutput.textContent = "–";
-        return;
-      }
-
-      const maxPerSession = bankroll / sessions;
-      const conservativeStopLoss = maxPerSession * 0.8;
-      const approxHands = maxPerSession / unitSize;
-
-      perSessionOutput.textContent = "$" + maxPerSession.toFixed(2);
-      handsOutput.textContent = approxHands.toFixed(0) + " hands (approx.)";
-      stopLossOutput.textContent = "Pause if you reach about $" + conservativeStopLoss.toFixed(2) + " in losses.";
     }
   </script>
 </body>
