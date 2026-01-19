@@ -187,22 +187,26 @@
     }
 
     .hand-row {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
       gap: 10px;
       align-items: stretch;
-      flex-wrap: wrap;
     }
 
-    .hand-card {
-      flex: 1 1 180px;
+    @media (max-width: 720px) {
+      .hand-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hand-card-shell {
       border-radius: var(--radius-lg);
       border: 1px solid var(--border-subtle);
-      background: linear-gradient(135deg, rgba(12, 18, 30, 1), rgba(4, 10, 18, 0.96));
-      padding: 10px 12px;
+      background: linear-gradient(145deg, #060b12, #04060b);
+      padding: 10px 12px 12px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
     }
 
     .hand-label {
@@ -212,9 +216,40 @@
       letter-spacing: 0.12em;
     }
 
-    .hand-value {
-      font-size: 1.2rem;
+    .card-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      min-height: 54px;
+    }
+
+    .card {
+      width: 34px;
+      height: 48px;
+      border-radius: 8px;
+      border: 1px solid #2b3142;
+      background: radial-gradient(circle at top, #1b2334 0, #05070d 60%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.98rem;
       font-weight: 600;
+      color: #f7f8fc;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+    }
+
+    .card-placeholder {
+      width: 34px;
+      height: 48px;
+      border-radius: 8px;
+      border: 1px dashed #2b3142;
+      background: rgba(3, 5, 12, 0.9);
+    }
+
+    .hand-total {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-top: 2px;
     }
 
     .small-note {
@@ -234,6 +269,9 @@
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--muted);
     }
 
     .diff-pill {
@@ -372,12 +410,12 @@
   <div class="page-shell">
     <header>
       <div class="breadcrumb">
-        <a href="full-access.html">← Back to Full Access Hub</a>
+        <span>Member Area • Trainer</span>
       </div>
       <h1>Full Access Trainer</h1>
       <p>
         Practice basic strategy decisions with a focused trainer built for members. Choose the type of hands you want
-        to see, answer without rushing, and track accuracy by category instead of just a single score.[web:270][web:271]
+        to see, answer without rushing, and track accuracy by category instead of just a single score.
       </p>
       <div class="tagline-pill">
         <span class="tag-dot"></span>
@@ -393,21 +431,33 @@
             <h2>Decision Drill</h2>
             <div class="trainer-layout">
               <div class="hand-row">
-                <div class="hand-card">
+                <div class="hand-card-shell">
                   <div class="hand-label">Your hand</div>
-                  <div class="hand-value" id="player-hand">–</div>
-                  <div class="small-note" id="hand-type-label">Choose “Deal new hand” to begin.</div>
+                  <div class="card-row" id="player-cards-row">
+                    <div class="card-placeholder"></div>
+                    <div class="card-placeholder"></div>
+                  </div>
+                  <div class="hand-total" id="player-hand-total">–</div>
+                  <div class="small-note" id="hand-type-label">
+                    Deal a new hand to begin.
+                  </div>
                 </div>
-                <div class="hand-card">
+
+                <div class="hand-card-shell">
                   <div class="hand-label">Dealer upcard</div>
-                  <div class="hand-value" id="dealer-upcard">–</div>
-                  <div class="small-note">Assume standard multi‑deck rules with dealer standing on soft 17.</div>
+                  <div class="card-row" id="dealer-card-row">
+                    <div class="card-placeholder"></div>
+                  </div>
+                  <div class="hand-total" id="dealer-upcard-label">–</div>
+                  <div class="small-note">
+                    Assume standard multi‑deck rules with the dealer standing on soft 17.
+                  </div>
                 </div>
               </div>
 
               <div class="controls-row">
                 <div class="difficulty-group" id="difficulty-group">
-                  <span style="font-size:0.8rem;color:var(--muted);margin-right:4px;">Focus:</span>
+                  <span>Focus:</span>
                   <button class="diff-pill active" data-mode="mixed">Mixed</button>
                   <button class="diff-pill" data-mode="hard">Hard totals</button>
                   <button class="diff-pill" data-mode="soft">Soft hands</button>
@@ -424,7 +474,7 @@
                   <button class="action-button secondary" onclick="submitMove('P')">Split</button>
                 </div>
                 <p class="small-note" style="margin-top:6px;">
-                  Focus on matching the recommended action, not on what happened last time a similar hand came up.[web:271][web:274]
+                  Focus on matching the recommended action, not on what happened the last time a similar hand came up.
                 </p>
                 <div class="feedback-line" id="feedback-line">
                   No hand dealt yet. Click “Deal new hand” to start.
@@ -472,17 +522,17 @@
           <div class="panel-inner">
             <h2>How to Use This Trainer</h2>
             <p>
-              Treat this like a flash‑card machine for decisions. Aim for slow, accurate answers rather than speed,
-              then gradually reduce your reliance on any printed strategy chart.[web:270][web:272]
+              Treat this like a flash‑card machine for decisions. Aim for slow, accurate answers first; speed comes
+              naturally once the patterns are locked in.
             </p>
             <ul>
-              <li>Start on “Mixed” to get a general sense of your accuracy, then drill your weakest category.</li>
-              <li>When you miss a hand, pause and think about why the correct action makes sense before moving on.</li>
-              <li>Pair this trainer with the Probability and Mistakes lessons to connect the logic behind each play.</li>
+              <li>Start on “Mixed” to get a baseline, then drill whichever category shows the lowest accuracy.</li>
+              <li>When you miss a hand, pause and think through why the correct play makes sense before dealing the next.</li>
+              <li>Use the lessons on probability, mistakes, and emotions to connect the numbers to what it feels like at the table.</li>
             </ul>
             <p>
-              The goal is to make correct decisions feel automatic so you have more bandwidth for table awareness and
-              responsible limits.
+              The goal is to make correct decisions automatic so you can focus on pacing, limits, and enjoying the
+              session.
             </p>
           </div>
         </div>
@@ -491,9 +541,9 @@
           <div class="panel-inner">
             <h2>Important Notes</h2>
             <ul>
-              <li>This trainer uses one fixed rule set and a built‑in strategy table; real casinos may have different rules.[web:271]</li>
-              <li>It ignores side bets and card counting and focuses only on basic strategy decisions.[web:266][web:270]</li>
-              <li>All practice here is for <strong>educational purposes only</strong> and does not guarantee any outcome in real play.[web:274]</li>
+              <li>This trainer uses one fixed rule set; real tables may differ on decks, soft‑17 rules, or payouts.</li>
+              <li>It ignores side bets and counting and focuses only on basic strategy decisions.</li>
+              <li>All practice here is for <strong>educational purposes only</strong> and does not guarantee any outcome in real play.</li>
             </ul>
           </div>
         </div>
@@ -506,7 +556,6 @@
   </div>
 
   <script>
-    // Simple shoe & strategy model (demo-level, not a full rules engine)
     const ranks = [2,3,4,5,6,7,8,9,10,10,10,10,11]; // 11 = Ace
     let currentHand = null;
     let currentMode = "mixed";
@@ -539,13 +588,35 @@
       return ranks[Math.floor(Math.random() * ranks.length)];
     }
 
-    function formatCardTotal(cards) {
-      const total = cards.reduce((a,c) => a + (c === 11 ? 1 : c), 0);
-      const hasAce = cards.includes(11);
-      if (hasAce && total + 10 <= 21) {
-        return (total + 10) + " (soft)";
+    function formatCardSymbol(v) {
+      if (v === 11) return "A";
+      if (v === 10) return "10";
+      return String(v);
+    }
+
+    function renderCards(containerId, cards, placeholders) {
+      const row = document.getElementById(containerId);
+      row.innerHTML = "";
+      cards.forEach(v => {
+        const div = document.createElement("div");
+        div.className = "card";
+        div.textContent = formatCardSymbol(v);
+        row.appendChild(div);
+      });
+      for (let i = cards.length; i < placeholders; i++) {
+        const ph = document.createElement("div");
+        ph.className = "card-placeholder";
+        row.appendChild(ph);
       }
-      return total.toString();
+    }
+
+    function formatHandTotal(cards) {
+      const totalLow = cards.reduce((a,c) => a + (c === 11 ? 1 : c), 0);
+      const hasAce = cards.includes(11);
+      if (hasAce && totalLow + 10 <= 21) {
+        return (totalLow + 10) + " (soft)";
+      }
+      return totalLow.toString();
     }
 
     function classifyHand(cards) {
@@ -576,7 +647,6 @@
         const a = randomRank();
         const b = randomRank();
         if (a === 11 || b === 11) {
-          // force a hard hand by making Ace count as 1 via extra card
           const base = [a === 11 ? 1 : a, b === 11 ? 1 : b];
           player = base;
         } else {
@@ -598,20 +668,24 @@
 
       currentHand = { player, dealerUp: dealer[0], type: classifyHand(player) };
 
-      document.getElementById("player-hand").textContent = formatCardTotal(player);
-      document.getElementById("dealer-upcard").textContent =
-        currentHand.dealerUp === 11 ? "A" : currentHand.dealerUp.toString();
+      renderCards("player-cards-row", player, 3);
+      renderCards("dealer-card-row", [dealer[0]], 1);
+
+      document.getElementById("player-hand-total").textContent = formatHandTotal(player);
+      document.getElementById("dealer-upcard-label").textContent =
+        dealer[0] === 11 ? "Ace" : String(dealer[0]);
+
       document.getElementById("hand-type-label").textContent =
         currentHand.type === "soft"
           ? "Soft hand: at least one Ace counting as 11."
           : currentHand.type === "pairs"
           ? "Pair: consider whether splitting makes sense."
           : "Hard total: no Ace counting as 11.";
+
       document.getElementById("feedback-line").textContent =
         "Choose Hit, Stand, Double, or Split. The trainer checks your decision against a basic strategy table.";
     }
 
-    // Extremely compact basic-strategy lookup for demo purposes
     function basicStrategy(playerCards, dealerUp) {
       const type = classifyHand(playerCards);
       const totalLow = playerCards.reduce((a,c) => a + (c === 11 ? 1 : c), 0);
@@ -650,7 +724,6 @@
         return "H";
       }
 
-      // Hard totals
       if (total >= 17) return "S";
       if (total >= 13 && total <= 16) {
         if (d >= 2 && d <= 6) return "S";
@@ -686,7 +759,7 @@
           "Answer a few hands to see your pattern.";
       } else {
         document.getElementById("stat-overall-note").textContent =
-          "Focus less on the score and more on understanding missed spots.";
+          "Use missed hands as a cue to revisit the related lesson.";
       }
       document.getElementById("stat-hard").textContent = fmt(stats.hard);
       document.getElementById("stat-soft").textContent = fmt(stats.soft);
