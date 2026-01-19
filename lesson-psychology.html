@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Psychology & Emotions – The Blackjack Mindset</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg: #05070b;
+      --bg-soft: #080b13;
+      --bg-elevated: #0e1220;
+      --accent: #1dd1a1;
+      --accent-soft: rgba(29, 209, 161, 0.16);
+      --accent-warm: #feca57;
+      --text: #f7f8fc;
+      --muted: #a1a7bc;
+      --border-subtle: #252a39;
+      --border-strong: #343a4f;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.65);
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --max-width: 960px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, #151b2f 0, #05070b 55%, #020308 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    a { color: inherit; }
+
+    .page-shell {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 24px 18px 32px;
+    }
+
+    header {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -6px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      opacity: 0.9;
+    }
+
+    .breadcrumb {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .breadcrumb a {
+      text-decoration: none;
+      color: var(--muted);
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 2.6vw, 2.3rem);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 0.94rem;
+      color: var(--muted);
+      max-width: 640px;
+      line-height: 1.7;
+    }
+
+    .tagline-pill {
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: rgba(5, 7, 14, 0.94);
+    }
+
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(29, 209, 161, 0.9);
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr);
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 880px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: rgba(7, 10, 20, 0.98);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 20px 18px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -40% -10%;
+      background:
+        radial-gradient(circle at top left, rgba(29, 209, 161, 0.09) 0, transparent 55%),
+        radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.08) 0, transparent 55%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .panel-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      font-size: 0.96rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+
+    h3 {
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 12px 0 6px;
+    }
+
+    p {
+      font-size: 0.94rem;
+      line-height: 1.7;
+      margin: 0 0 10px;
+      color: var(--text);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 6px 0 0;
+    }
+
+    li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 4px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    li::before {
+      content: "•";
+      color: var(--accent);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    strong { font-weight: 600; }
+
+    .callout {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      background: rgba(5, 7, 14, 0.96);
+      padding: 8px 10px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(252, 202, 87, 0.7);
+      padding: 4px 8px;
+      font-size: 0.78rem;
+      color: var(--accent-warm);
+      background: rgba(252, 202, 87, 0.08);
+      margin-bottom: 8px;
+    }
+
+    /* Activity styles */
+    .activity-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .activity-title {
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .pill-small {
+      font-size: 0.78rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 4px 8px;
+      color: var(--muted);
+      background: rgba(3, 5, 12, 0.96);
+    }
+
+    .slider-row {
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: #1dd1a1;
+    }
+
+    .radio-row {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+      font-size: 0.82rem;
+    }
+
+    .radio-pill {
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      background: rgba(3, 5, 12, 0.98);
+      padding: 6px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.12s ease, background 0.12s ease;
+    }
+
+    .radio-pill input {
+      display: none;
+    }
+
+    .radio-pill.active {
+      border-color: var(--accent);
+      background: rgba(9, 20, 18, 0.98);
+    }
+
+    .simulate-button {
+      margin-top: 10px;
+      width: 100%;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(29, 209, 161, 0.8);
+      background: linear-gradient(135deg, #1dd1a1, #10ac84);
+      color: #020308;
+      font-size: 0.84rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 8px 10px;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .simulate-button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 1);
+    }
+
+    .sim-output {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      background: rgba(3, 5, 12, 0.98);
+      padding: 8px 10px;
+      margin-top: 10px;
+      font-size: 0.88rem;
+    }
+
+    .output-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .output-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .output-value {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .output-good {
+      color: var(--accent);
+    }
+
+    .output-bad {
+      color: #ff7675;
+    }
+
+    .output-neutral {
+      color: #feca57;
+    }
+
+    footer {
+      margin-top: 22px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header>
+      <div class="breadcrumb">
+        <a href="full-access.html">← Back to Full Access Hub</a>
+      </div>
+      <h1>Psychology & Emotions</h1>
+      <p>
+        This lesson looks at how moods, stress, and beliefs shape blackjack decisions, especially after swings. The
+        goal is not to remove emotion, but to stop it from quietly driving the next bet.
+      </p>
+      <div class="tagline-pill">
+        <span class="tag-dot"></span>
+        <span>Tilt • Triggers • Self‑Control</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- LEFT COLUMN: CONCEPTS -->
+      <section>
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>What Tilt Actually Is</h2>
+            <p>
+              Tilt is a state where emotion takes the wheel from your plan. The rules have not changed, but the way
+              you use them has. Good players still feel frustration; the difference is what happens next.
+            </p>
+            <ul>
+              <li>Losses feel heavier than wins, so a few bad hands can feel like a crisis.</li>
+              <li>The brain wants to “fix” that feeling quickly, often by betting bigger or playing faster.</li>
+              <li>On tilt, you know better but act differently, then justify it after the fact.</li>
+            </ul>
+            <div class="callout">
+              A useful test: if you would not make this bet at the start of a fresh session, emotion is probably in
+              charge.
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Common Emotional Patterns</h2>
+            <p>
+              The same emotional loops show up again and again at the table. Recognizing your own pattern early is
+              more powerful than any clever mindset trick.
+            </p>
+            <ul>
+              <li><strong>Frustration and anger:</strong> snapping at dealers, blaming the shoe, speeding up decisions.</li>
+              <li><strong>Anxiety and avoidance:</strong> standing too often, avoiding doubles, playing “not to lose.”</li>
+              <li><strong>Euphoria and overconfidence:</strong> feeling invincible after a run and stretching limits.</li>
+              <li><strong>Escape and numbness:</strong> playing to forget stress, barely noticing time or money.</li>
+            </ul>
+            <p>
+              Each pattern is tied to a story in your head. The next step is to notice that story in real time, not
+              just after a bad night.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Checkpoints, Not Willpower</h2>
+            <p>
+              Trying to “just stay strong” is unreliable. Structured checkpoints work better: brief, automatic
+              questions you ask yourself at specific moments.
+            </p>
+            <ul>
+              <li>Before each session: “What is my plan for time, money, and how I will react to early losses?”</li>
+              <li>After any big swing: “Has my bet size or style changed because of what just happened?”</li>
+              <li>Every break: “If this were a fresh session starting now, would I keep playing?”</li>
+            </ul>
+            <p>
+              The interactive tool on this page turns these ideas into a quick emotional check‑in you can reuse.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: INTERACTIVE CHECK-IN + TAKEAWAYS -->
+      <section>
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="activity-header">
+              <div class="activity-title">Emotional Check‑In</div>
+              <div class="pill-small">Use before decisions</div>
+            </div>
+            <p style="margin-bottom:6px;">
+              Imagine a real session you are in or recently played. Use the sliders and options to describe how it
+              feels. The tool suggests a simple next step: continue, break, or stop for now.
+            </p>
+
+            <div class="slider-row">
+              <div class="slider-label">
+                <span>Current emotional intensity</span>
+                <span id="intensityLabel">4 / 10</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="10"
+                value="4"
+                id="intensitySlider"
+                oninput="updateIntensityLabel()"
+              />
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-label">
+                <span>How clear does your thinking feel?</span>
+                <span id="clarityLabel">7 / 10</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="10"
+                value="7"
+                id="claritySlider"
+                oninput="updateClarityLabel()"
+              />
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-label">
+                <span>How tempted are you to change your plan?</span>
+                <span id="urgeLabel">3 / 10</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="10"
+                value="3"
+                id="urgeSlider"
+                oninput="updateUrgeLabel()"
+              />
+            </div>
+
+            <div class="slider-row" style="margin-top:10px;">
+              <div class="slider-label">
+                <span>What best matches your mood?</span>
+              </div>
+              <div class="radio-row" id="moodRow">
+                <label class="radio-pill active">
+                  <input type="radio" name="mood" value="calm" checked />
+                  Calm / focused
+                </label>
+                <label class="radio-pill">
+                  <input type="radio" name="mood" value="frustrated" />
+                  Frustrated / annoyed
+                </label>
+                <label class="radio-pill">
+                  <input type="radio" name="mood" value="excited" />
+                  Excited / hyped
+                </label>
+              </div>
+            </div>
+
+            <button class="simulate-button" onclick="evaluateEmotion()">
+              Evaluate my state
+            </button>
+
+            <div class="sim-output" id="emotion-output">
+              <div class="output-row">
+                <span class="output-label">Suggested next step:</span>
+                <span class="output-value output-neutral" id="emotion-next">Check‑in not run yet</span>
+              </div>
+              <p id="emotion-comment" style="margin:4px 0 0;font-size:0.86rem;color:var(--muted);">
+                Use this tool before raising stakes, after a big swing, or whenever you feel different from how you
+                did at the start of the session.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>How to Use the Result</h2>
+            <p>
+              The check‑in does not diagnose anything. It simply translates your answers into a small behavioral
+              suggestion that is easy to follow in the moment.
+            </p>
+            <ul>
+              <li>“Continue with plan” means your answers look close to a normal, focused state.</li>
+              <li>“Take a structured break” is a cue to step away, reset, and decide later if you still want to play.</li>
+              <li>“Stop for this session” is a sign that emotion and urges are far from where you want them to be.</li>
+            </ul>
+            <p>
+              Over time, you will start to recognize the early signs of tilt without needing the tool in front of you.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Practical Takeaways</h2>
+            <p>
+              Emotions are part of blackjack. The aim is not to be flat; it is to notice when feelings are steering
+              decisions away from your plan.
+            </p>
+            <ul>
+              <li>Decide in advance what “too tilted to play” means for you using the same sliders and questions.</li>
+              <li>Use breaks, fresh air, or a different activity as tools, not as a last resort.</li>
+              <li>Combine this lesson with the mistakes and responsible‑play modules for a complete framework.</li>
+            </ul>
+            <p>
+              If playing stops feeling controlled or enjoyable, the healthiest decision is always to walk away,
+              regardless of what the cards have done.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Important Disclaimers</h2>
+            <ul>
+              <li>This lesson and check‑in tool are for <strong>educational purposes only</strong>.</li>
+              <li>They are not a substitute for mental‑health care, counselling, or professional advice.</li>
+              <li>If gambling or emotions around gambling feel hard to control, seek support in your region.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2026 The Blackjack Mindset. Educational content only. No financial advice or gambling recommendations.
+    </footer>
+  </div>
+
+  <script>
+    function updateIntensityLabel() {
+      const v = document.getElementById("intensitySlider").value;
+      document.getElementById("intensityLabel").textContent = v + " / 10";
+    }
+
+    function updateClarityLabel() {
+      const v = document.getElementById("claritySlider").value;
+      document.getElementById("clarityLabel").textContent = v + " / 10";
+    }
+
+    function updateUrgeLabel() {
+      const v = document.getElementById("urgeSlider").value;
+      document.getElementById("urgeLabel").textContent = v + " / 10";
+    }
+
+    // Toggle active state on mood pills
+    const moodRow = document.getElementById("moodRow");
+    moodRow.addEventListener("click", (e) => {
+      const label = e.target.closest(".radio-pill");
+      if (!label) return;
+      const all = moodRow.querySelectorAll(".radio-pill");
+      all.forEach(l => l.classList.remove("active"));
+      label.classList.add("active");
+      const input = label.querySelector("input");
+      if (input) input.checked = true;
+    });
+
+    function evaluateEmotion() {
+      const intensity = parseInt(document.getElementById("intensitySlider").value, 10);
+      const clarity = parseInt(document.getElementById("claritySlider").value, 10);
+      const urge = parseInt(document.getElementById("urgeSlider").value, 10);
+      const mood = document.querySelector('input[name="mood"]:checked').value;
+
+      const nextSpan = document.getElementById("emotion-next");
+      const commentP = document.getElementById("emotion-comment");
+
+      nextSpan.classList.remove("output-good", "output-bad", "output-neutral");
+
+      let recommendation;
+      let comment;
+
+      // Simple rule‑of‑thumb logic
+      if (intensity <= 4 && clarity >= 6 && urge <= 4 && mood === "calm") {
+        recommendation = "Continue with plan";
+        nextSpan.classList.add("output-good");
+        comment =
+          "Your answers look close to a normal, focused state. Keep stakes and decisions aligned with your pre‑session plan.";
+      } else if (intensity >= 7 || urge >= 7 || clarity <= 4) {
+        recommendation = "Stop for this session";
+        nextSpan.classList.add("output-bad");
+        comment =
+          "Emotions or urges are far from your baseline. The safest move is to end this session, step away from gambling, and reset later.";
+      } else {
+        recommendation = "Take a structured break";
+        nextSpan.classList.add("output-neutral");
+        comment =
+          "You are somewhere in the middle: not completely off‑balance, but not at your best. Take a timed break away from the table and decide afterward whether to continue.";
+      }
+
+      nextSpan.textContent = recommendation;
+      commentP.textContent = comment;
+    }
+
+    // Initialize labels on load
+    updateIntensityLabel();
+    updateClarityLabel();
+    updateUrgeLabel();
+  </script>
+</body>
+</html>
