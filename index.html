@@ -2,34 +2,108 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Blackjack Trainer v1</title>
+  <title>Blackjack Trainer v2 – Little Guide + Practice Table</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
     * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif; }
     body {
       margin: 0;
       min-height: 100vh;
-      background: radial-gradient(circle at top, #0b3b24 0, #02140b 45%, #000 100%);
+      background: radial-gradient(circle at top, #020617 0, #000 55%, #020617 100%);
       color: #f9fafb;
+      padding: 20px 12px 40px;
       display: flex;
-      align-items: center;
       justify-content: center;
-      padding: 20px;
     }
+    .page {
+      width: 100%;
+      max-width: 960px;
+    }
+    .hero {
+      margin-bottom: 18px;
+      padding: 14px 18px 18px;
+      border-radius: 18px;
+      background: linear-gradient(145deg, rgba(8,47,73,0.96), rgba(15,118,110,0.85));
+      border: 1px solid rgba(148,163,184,0.6);
+      box-shadow: 0 24px 60px rgba(15,23,42,0.8);
+    }
+    .hero-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #e0f2fe;
+      margin-bottom: 4px;
+    }
+    .hero-sub {
+      font-size: 13px;
+      color: #e5e7eb;
+      margin-bottom: 10px;
+    }
+    .hero-sub span { color: #a5f3fc; font-weight: 600; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0,2.1fr) minmax(0,1.4fr);
+      gap: 14px;
+    }
+    @media (max-width: 720px) {
+      .hero-grid { grid-template-columns: minmax(0,1fr); }
+    }
+    .guide-box {
+      border-radius: 14px;
+      background: rgba(15,23,42,0.92);
+      border: 1px solid rgba(148,163,184,0.55);
+      padding: 10px 12px;
+      font-size: 12px;
+      color: #e5e7eb;
+    }
+    .guide-label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #bef264;
+      margin-bottom: 6px;
+    }
+    .guide-heading {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #fef9c3;
+    }
+    .guide-list {
+      padding-left: 14px;
+      margin: 0;
+    }
+    .guide-list li { margin-bottom: 3px; }
+    .pill-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      color: #bbf7d0;
+      background: rgba(22,101,52,0.18);
+      border: 1px solid rgba(74,222,128,0.5);
+    }
+
     .table {
       width: 100%;
-      max-width: 900px;
-      background: rgba(8, 47, 35, 0.95);
+      background: rgba(8, 47, 35, 0.96);
       border-radius: 18px;
       box-shadow: 0 25px 60px rgba(0,0,0,0.6);
       border: 1px solid rgba(148, 163, 184, 0.45);
       padding: 18px 18px 10px;
+      margin-bottom: 18px;
     }
     .header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: baseline;
       margin-bottom: 12px;
+      gap: 8px;
+      flex-wrap: wrap;
     }
     .title {
       font-weight: 700;
@@ -85,6 +159,10 @@
       justify-content: space-between;
       padding: 4px 3px;
       font-size: 12px;
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+      animation: cardIn 180ms ease-out forwards;
+      will-change: opacity, transform;
     }
     .card.red { color: #f87171; }
     .card.black { color: #e5e7eb; }
@@ -181,51 +259,157 @@
       background: rgba(15, 23, 42, 0.9);
       border: 1px solid rgba(148, 163, 184, 0.5);
     }
-    @media (max-width: 640px) {
-      .table { padding: 14px 10px; }
+
+    .info {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(148,163,184,0.6);
+      font-size: 12px;
+      color: #e5e7eb;
+    }
+    .info-label {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #93c5fd;
+      margin-bottom: 6px;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: minmax(0,1.3fr) minmax(0,1.2fr);
+      gap: 10px;
+    }
+    @media (max-width: 720px) {
+      .info-grid { grid-template-columns: minmax(0,1fr); }
+    }
+    .info h4 {
+      margin: 4px 0 4px;
+      font-size: 13px;
+      color: #e0f2fe;
+    }
+    .info ul {
+      margin: 0;
+      padding-left: 14px;
+    }
+    .info li { margin-bottom: 3px; }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
   </style>
 </head>
 <body>
-  <div class="table">
-    <div class="header">
-      <div class="title">Blackjack Trainer · v1</div>
-      <div class="chips">Bankroll: <span id="bankroll">1000</span> chips · Bet: <span id="bet">10</span></div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="label">Dealer</div>
-        <div class="cards" id="dealer-cards"></div>
-        <div class="score" id="dealer-score">Total: -</div>
+  <div class="page">
+    <section class="hero">
+      <div class="hero-title">Blackjack Little Guide</div>
+      <div class="hero-sub">
+        Learn a simple, disciplined way to play blackjack – then drill it on the interactive table below. 
+        <span>Real game logic, fake chips, trainer feedback.</span>
       </div>
+      <div class="hero-grid">
+        <div class="guide-box">
+          <div class="guide-label">Step 1 · Rules in 20 seconds</div>
+          <div class="guide-heading">The goal</div>
+          <ul class="guide-list">
+            <li>Get closer to 21 than the dealer without going over.</li>
+            <li>Number cards = their value, face cards = 10, Aces = 1 or 11.[web:66]</li>
+            <li>You act first; if you bust, you lose even if the dealer later busts.[web:63][web:66]</li>
+          </ul>
 
-      <div class="col">
-        <div class="label">You</div>
-        <div class="cards" id="player-cards"></div>
-        <div class="score" id="player-score">Total: -</div>
-        <div class="controls">
-          <button id="btn-deal" class="btn-primary">Deal</button>
-          <button id="btn-hit" class="btn-secondary" disabled>Hit</button>
-          <button id="btn-stand" class="btn-secondary" disabled>Stand</button>
-          <button id="btn-newshoe" class="btn-ghost">New Shoe</button>
+          <div class="guide-heading" style="margin-top:6px;">Your basic options</div>
+          <ul class="guide-list">
+            <li><strong>Hit</strong> – take another card.</li>
+            <li><strong>Stand</strong> – keep your total and end your turn.[web:60][web:66]</li>
+            <li>(Advanced: double, split, surrender – save these for a later version of the guide.)[web:60][web:63]</li>
+          </ul>
+        </div>
+
+        <div class="guide-box">
+          <div class="guide-label">Step 2 · Simple strategy</div>
+          <div class="guide-heading">4-rule starter strategy</div>
+          <ul class="guide-list">
+            <li>Always split Aces and 8s.[web:57][web:58]</li>
+            <li>Always hit totals of 8 or less.[web:57][web:64]</li>
+            <li>Stand on 12 or more when the dealer shows 2–6 (“weak” card).[web:57][web:58]</li>
+            <li>Hit until at least 17 when the dealer shows 7–Ace (“strong” card).[web:57][web:63]</li>
+          </ul>
+          <div class="pill-note">
+            Trainer tip: Play 25–50 hands on the table below. Try to match your decisions to the trainer suggestion every time.
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="row" style="margin-bottom:6px;">
-      <div class="col">
-        <div class="label">Trainer Feedback</div>
-        <div class="log" id="log">
-          Tap <strong>Deal</strong> to start a hand. Play like a casino table, with fake chips. The trainer will tell you if your move matches basic strategy.
+    <section class="table">
+      <div class="header">
+        <div class="title">Practice Table · Basic Strategy Trainer</div>
+        <div class="chips">Bankroll: <span id="bankroll">1000</span> chips · Bet: <span id="bet">10</span></div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="label">Dealer</div>
+          <div class="cards" id="dealer-cards"></div>
+          <div class="score" id="dealer-score">Total: -</div>
         </div>
-        <div class="stats">
-          <span class="pill">Hands: <span id="hands-played">0</span></span>
-          <span class="pill">Correct moves: <span id="correct-moves">0</span></span>
-          <span class="pill">Accuracy: <span id="accuracy">-</span></span>
+
+        <div class="col">
+          <div class="label">You</div>
+          <div class="cards" id="player-cards"></div>
+          <div class="score" id="player-score">Total: -</div>
+          <div class="controls">
+            <button id="btn-deal" class="btn-primary">Deal</button>
+            <button id="btn-hit" class="btn-secondary" disabled>Hit</button>
+            <button id="btn-stand" class="btn-secondary" disabled>Stand</button>
+            <button id="btn-newshoe" class="btn-ghost">Reset Shoe</button>
+          </div>
         </div>
       </div>
-    </div>
+
+      <div class="row" style="margin-bottom:6px;">
+        <div class="col">
+          <div class="label">Trainer Feedback</div>
+          <div class="log" id="log">
+            Tap <strong>Deal</strong> to start. Make your play and see if it matches the suggested basic strategy move.
+          </div>
+          <div class="stats">
+            <span class="pill">Hands: <span id="hands-played">0</span></span>
+            <span class="pill">Correct moves: <span id="correct-moves">0</span></span>
+            <span class="pill">Accuracy: <span id="accuracy">-</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="info">
+      <div class="info-label">Next steps · Turn this into a full guide</div>
+      <div class="info-grid">
+        <div>
+          <h4>Section ideas to expand</h4>
+          <ul>
+            <li>“Table etiquette” mini list (signals, chip placement, pacing).[web:56][web:63]</li>
+            <li>Quick odds: why basic strategy matters for house edge.[web:26][web:61]</li>
+            <li>Common beginner mistakes (hitting 12 vs dealer 4–6, never splitting 8s).[web:55][web:58]</li>
+          </ul>
+        </div>
+        <div>
+          <h4>How to package this</h4>
+          <ul>
+            <li>Turn this page into a standalone “Blackjack Little Guide” URL.</li>
+            <li>Add a short PDF/Notion summary as a downloadable cheat sheet.[web:58][web:60]</li>
+            <li>Gate the practice link + PDF via Gumroad as your micro-product.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
   </div>
 
   <script>
@@ -290,8 +474,8 @@
         return "S";
       } else {
         if (total <= 8) return "H";
-        if (total === 9) return dealerVal >= 3 && dealerVal <= 6 ? "H" : "H";
-        if (total === 10) return dealerVal <= 9 ? "H" : "H";
+        if (total === 9) return "H";
+        if (total === 10) return "H";
         if (total === 11) return "H";
         if (total === 12) {
           if (dealerVal >= 4 && dealerVal <= 6) return "S";
@@ -337,9 +521,15 @@
     let handsPlayed = 0;
     let correctMoves = 0;
 
-    function renderCard(card, hidden=false) {
+    function staggeredCardDelay(index) {
+      return index * 60;
+    }
+
+    function renderCard(card, hidden=false, index=0) {
       const div = document.createElement("div");
       div.className = "card " + ((card.suit === "♥" || card.suit === "♦") ? "red" : "black");
+      div.style.animationDelay = staggeredCardDelay(index) + "ms";
+
       if (hidden) {
         div.innerHTML = `
           <div class="top"><span>?</span><span>?</span></div>
@@ -361,9 +551,11 @@
       playerCardsEl.innerHTML = "";
       dealerHand.forEach((c, idx) => {
         const hidden = idx === 1 && !revealDealer && inHand;
-        dealerCardsEl.appendChild(renderCard(c, hidden));
+        dealerCardsEl.appendChild(renderCard(c, hidden, idx));
       });
-      playerHand.forEach(c => playerCardsEl.appendChild(renderCard(c)));
+      playerHand.forEach((c, idx) => {
+        playerCardsEl.appendChild(renderCard(c, false, idx));
+      });
 
       const pv = handValue(playerHand);
       playerScoreEl.textContent = `Total: ${pv.total}${pv.soft ? " (soft)" : ""}`;
@@ -417,10 +609,12 @@
       setButtons("player");
       const pv = handValue(playerHand);
       const dv = handValue(dealerHand);
+      renderHands(false);
+
       if (isBlackjack(playerHand) && isBlackjack(dealerHand)) {
         inHand = false;
         handsPlayed++;
-        logEl.innerHTML = "Both you and the dealer have blackjack. Push. Trainer: there was no decision to make here.";
+        logEl.innerHTML = "Both you and the dealer have blackjack. Push. Trainer: no decision needed on this hand.";
         setButtons("resolve");
         renderHands(true);
         return;
@@ -428,7 +622,7 @@
         inHand = false;
         handsPlayed++;
         bankroll += Math.round(bet * 1.5);
-        logEl.innerHTML = "Blackjack! You would be paid 3:2 in most games. Trainer: no decision needed.";
+        logEl.innerHTML = "Blackjack! You would be paid 3:2 in many games. Trainer: no decision needed.";
         setButtons("resolve");
         renderHands(true);
         return;
@@ -436,7 +630,6 @@
       const dealerUp = dealerHand[0];
       const recommended = basicStrategyMove(playerHand, dealerUp);
       logEl.innerHTML = `New hand. Dealer shows <strong>${dealerUp.rank}${dealerUp.suit}</strong>. Your total is <strong>${pv.total}${pv.soft ? " (soft)" : ""}</strong>. Trainer suggests: <strong>${describeMove(recommended)}</strong>.`;
-      renderHands(false);
     }
 
     function endHand(resultText, playerMoveCode) {
@@ -521,7 +714,7 @@
       handsPlayed = 0;
       correctMoves = 0;
       setButtons("idle");
-      logEl.innerHTML = "New shoe loaded and bankroll reset to 1000 chips. Tap <strong>Deal</strong> to start training again.";
+      logEl.innerHTML = "New shoe loaded and bankroll reset to 1000 chips. Tap <strong>Deal</strong> to train again.";
       renderHands(false);
     });
 
