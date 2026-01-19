@@ -1,0 +1,466 @@
+<!-- budgeting.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Session Budgeting Tool – The Blackjack Mindset</title>
+  <style>
+    :root {
+      --bg: #05070b;
+      --bg-soft: #080b13;
+      --bg-elevated: #0e1220;
+      --accent: #1dd1a1;
+      --accent-warm: #feca57;
+      --text: #f5f7fb;
+      --muted: #a1a7bc;
+      --border-subtle: #252a39;
+      --border-strong: #343a4f;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.65);
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --max-width: 960px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #151b2f 0, #05070b 55%, #020308 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page-shell {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 24px 18px 32px;
+    }
+
+    header {
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .breadcrumb {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .breadcrumb a {
+      text-decoration: none;
+      color: var(--muted);
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 2.5vw, 2.2rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 0.94rem;
+      color: var(--muted);
+      max-width: 620px;
+      line-height: 1.7;
+    }
+
+    .tagline-pill {
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: rgba(5, 7, 14, 0.94);
+    }
+
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(29, 209, 161, 0.9);
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.1fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 840px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    section {
+      margin-bottom: 18px;
+    }
+
+    .panel {
+      background: rgba(7, 10, 20, 0.98);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 20px 18px;
+    }
+
+    h2 {
+      font-size: 0.96rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+
+    h3 {
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 14px 0 6px;
+    }
+
+    p {
+      font-size: 0.94rem;
+      line-height: 1.7;
+      margin: 0 0 10px;
+      color: var(--text);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 6px 0 0;
+    }
+
+    li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 4px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    li::before {
+      content: "•";
+      color: var(--accent);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    strong {
+      font-weight: 600;
+    }
+
+    /* Form */
+    .budget-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 840px) {
+      .budget-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .budget-form label {
+      display: block;
+      font-size: 0.84rem;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    .budget-form input {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+      background: #05070b;
+      color: var(--text);
+      padding: 7px 8px;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .budget-form input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(29, 209, 161, 0.45);
+    }
+
+    .budget-form small {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .budget-form button {
+      margin-top: 4px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      background: rgba(16, 21, 34, 0.96);
+      color: var(--text);
+      font-size: 0.86rem;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: border-color 0.16s ease, background 0.16s ease, transform 0.12s ease;
+    }
+
+    .budget-form button:hover {
+      border-color: var(--accent);
+      background: rgba(23, 30, 48, 0.98);
+      transform: translateY(-1px);
+    }
+
+    .budget-summary {
+      background: rgba(3, 5, 12, 0.98);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-strong);
+      padding: 12px 12px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .summary-row span:first-child {
+      color: var(--muted);
+    }
+
+    .summary-row span:last-child {
+      color: var(--text);
+    }
+
+    .summary-row.highlight span:last-child {
+      color: var(--accent-warm);
+    }
+
+    .summary-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* Right column panels */
+    .note-panel {
+      margin-top: 14px;
+    }
+
+    .back-link {
+      margin-top: 10px;
+      font-size: 0.86rem;
+    }
+
+    .back-link a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 20px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header>
+      <div class="breadcrumb">
+        <a href="index.html">← Back to Interactive Trainer</a>
+      </div>
+      <h1>Session Budgeting Tool</h1>
+      <p>
+        A simple calculator and short lesson to frame blackjack as a fixed-cost form of entertainment. The goal
+        is to decide what you can afford to lose before you play and to stick to it.
+      </p>
+      <div class="tagline-pill">
+        <span class="tag-dot"></span>
+        <span>Educational • Limits • Responsible Play</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- LEFT: TOOL -->
+      <section class="panel">
+        <h2>Interactive Budget Calculator</h2>
+        <p>
+          Use this tool to translate a total entertainment budget into practical session limits. These numbers do
+          not change the casino’s edge—they simply provide a structure for how much you are prepared to spend.
+        </p>
+
+        <div class="budget-grid">
+          <div class="budget-form">
+            <label for="bankroll-input">Total amount set aside for blackjack</label>
+            <input id="bankroll-input" type="number" min="0" step="1" placeholder="e.g., 200" />
+            <small>Only money that is fully separate from bills, savings, and essentials.</small>
+
+            <label for="session-count-input">Planned number of sessions</label>
+            <input id="session-count-input" type="number" min="1" step="1" placeholder="e.g., 4" />
+            <small>For example, over a trip or a month.</small>
+
+            <label for="unit-size-input">Typical bet size per hand</label>
+            <input id="unit-size-input" type="number" min="0" step="1" placeholder="e.g., 10" />
+            <small>Use a realistic average bet size, not a best-case scenario.</small>
+
+            <button type="button" onclick="calculateBudget()">Calculate Guidelines</button>
+          </div>
+
+          <div class="budget-summary" id="budget-summary">
+            <div class="summary-row">
+              <span>Suggested maximum per session</span>
+              <span id="per-session-output">–</span>
+            </div>
+            <div class="summary-row">
+              <span>Approx. hands per session</span>
+              <span id="hands-output">–</span>
+            </div>
+            <div class="summary-row highlight">
+              <span>Stop-loss reminder</span>
+              <span id="stop-loss-output">–</span>
+            </div>
+            <p class="summary-note">
+              Treat these numbers as boundaries, not targets. If you reach your session limit or stop-loss, the
+              recommendation is to stop, regardless of how the session feels.
+            </p>
+          </div>
+        </div>
+
+        <div class="back-link">
+          Prefer to work on decisions first? <a href="index.html">Return to the trainer</a>.
+        </div>
+      </section>
+
+      <!-- RIGHT: LESSON CONTENT -->
+      <div>
+        <section class="panel">
+          <h2>Why Budgeting Matters</h2>
+          <p>
+            One of the clearest markers of responsible gambling is setting limits on time and money before play and
+            treating those limits as non-negotiable. A budget turns an open-ended activity into something finite.
+          </p>
+          <ul>
+            <li>It separates gambling money from essential expenses and savings.</li>
+            <li>It reduces the pressure to “get even” after normal losses.</li>
+            <li>It makes it easier to take breaks and walk away when you planned to.</li>
+          </ul>
+          <p>
+            The aim is not to avoid all losses. The aim is to decide in advance what level of loss you are willing
+            to accept as the price of entertainment.
+          </p>
+        </section>
+
+        <section class="panel note-panel">
+          <h2>How to Use This Tool</h2>
+          <h3>1. Start with a total amount</h3>
+          <p>
+            Decide how much money you can afford to lose over a defined period (for example, a weekend trip or a
+            month). This should come from your entertainment budget, not from rent, food, or obligations.
+          </p>
+
+          <h3>2. Break it into sessions</h3>
+          <p>
+            Split that total into several sessions. This reduces the risk of spending everything in a single visit
+            and helps smooth out normal streaks of wins and losses across time.
+          </p>
+
+          <h3>3. Choose a realistic bet size</h3>
+          <p>
+            Pick a typical bet amount that you can sustain over many hands, not the maximum you might occasionally
+            place. The calculator uses this to estimate how many hands a session budget can reasonably support.
+          </p>
+
+          <h3>4. Respect the stop-loss</h3>
+          <p>
+            The “stop-loss reminder” is where you agree to stop for that session, even if you feel you are “due” to
+            recover. This is one of the simplest ways to prevent chasing losses.
+          </p>
+        </section>
+
+        <section class="panel note-panel">
+          <h2>Important Notes & Disclaimers</h2>
+          <ul>
+            <li>This tool is for <strong>educational purposes only</strong>.</li>
+            <li>It does not change the mathematical edge or guarantee any particular experience.</li>
+            <li>All amounts are examples; you are responsible for your own decisions and limits.</li>
+            <li>You must be of <strong>legal gambling age</strong> in your region to participate in any real-money play.</li>
+            <li>If gambling is not enjoyable, controlled, and affordable, you should avoid it and seek support.</li>
+          </ul>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      © 2026 The Blackjack Mindset. Educational content only. No financial advice or gambling recommendations.
+    </footer>
+  </div>
+
+  <script>
+    function calculateBudget() {
+      const bankroll = parseFloat(document.getElementById("bankroll-input").value);
+      const sessions = parseInt(document.getElementById("session-count-input").value, 10);
+      const unitSize = parseFloat(document.getElementById("unit-size-input").value);
+
+      const perSessionOutput = document.getElementById("per-session-output");
+      const handsOutput = document.getElementById("hands-output");
+      const stopLossOutput = document.getElementById("stop-loss-output");
+
+      if (!bankroll || bankroll <= 0 || !sessions || sessions <= 0 || !unitSize || unitSize <= 0) {
+        perSessionOutput.textContent = "–";
+        handsOutput.textContent = "–";
+        stopLossOutput.textContent = "–";
+        return;
+      }
+
+      const maxPerSession = bankroll / sessions;
+      const conservativeStopLoss = maxPerSession * 0.8;
+      const approxHands = maxPerSession / unitSize;
+
+      perSessionOutput.textContent = "$" + maxPerSession.toFixed(2);
+      handsOutput.textContent = approxHands.toFixed(0) + " hands (approx.)";
+      stopLossOutput.textContent = "Pause if you reach about $" + conservativeStopLoss.toFixed(2) + " in losses.";
+    }
+  </script>
+</body>
+</html>
