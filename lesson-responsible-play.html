@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsible, Disciplined Play – The Blackjack Mindset</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg: #05070b;
+      --bg-soft: #080b13;
+      --bg-elevated: #0e1220;
+      --accent: #1dd1a1;
+      --accent-soft: rgba(29, 209, 161, 0.16);
+      --accent-warm: #feca57;
+      --text: #f7f8fc;
+      --muted: #a1a7bc;
+      --border-subtle: #252a39;
+      --border-strong: #343a4f;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.65);
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --max-width: 960px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, #151b2f 0, #05070b 55%, #020308 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    a { color: inherit; }
+
+    .page-shell {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 24px 18px 32px;
+    }
+
+    header {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -6px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      opacity: 0.9;
+    }
+
+    .breadcrumb {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .breadcrumb a {
+      text-decoration: none;
+      color: var(--muted);
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 2.6vw, 2.3rem);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 0.94rem;
+      color: var(--muted);
+      max-width: 640px;
+      line-height: 1.7;
+    }
+
+    .tagline-pill {
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: rgba(5, 7, 14, 0.94);
+    }
+
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(29, 209, 161, 0.9);
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr);
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 880px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: rgba(7, 10, 20, 0.98);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 20px 18px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -40% -10%;
+      background:
+        radial-gradient(circle at top left, rgba(29, 209, 161, 0.09) 0, transparent 55%),
+        radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.08) 0, transparent 55%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .panel-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      font-size: 0.96rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+
+    p {
+      font-size: 0.94rem;
+      line-height: 1.7;
+      margin: 0 0 10px;
+      color: var(--text);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 6px 0 0;
+    }
+
+    li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 4px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    li::before {
+      content: "•";
+      color: var(--accent);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    strong { font-weight: 600; }
+
+    .callout {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      background: rgba(5, 7, 14, 0.96);
+      padding: 8px 10px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(252, 202, 87, 0.7);
+      padding: 4px 8px;
+      font-size: 0.78rem;
+      color: var(--accent-warm);
+      background: rgba(252, 202, 87, 0.08);
+      margin-bottom: 8px;
+    }
+
+    /* Activity styles */
+    .activity-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .activity-title {
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .pill-small {
+      font-size: 0.78rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 4px 8px;
+      color: var(--muted);
+      background: rgba(3, 5, 12, 0.96);
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 720px) {
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    label {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    input[type="number"], textarea {
+      border-radius: 9px;
+      border: 1px solid var(--border-strong);
+      background: rgba(5, 7, 14, 0.98);
+      color: var(--text);
+      font-size: 0.86rem;
+      padding: 7px 9px;
+      outline: none;
+    }
+
+    input[type="number"]:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+
+    textarea {
+      min-height: 70px;
+      resize: vertical;
+    }
+
+    .simulate-button {
+      margin-top: 10px;
+      width: 100%;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(29, 209, 161, 0.8);
+      background: linear-gradient(135deg, #1dd1a1, #10ac84);
+      color: #020308;
+      font-size: 0.84rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 8px 10px;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .simulate-button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 1);
+    }
+
+    .sim-output {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      background: rgba(3, 5, 12, 0.98);
+      padding: 8px 10px;
+      margin-top: 10px;
+      font-size: 0.88rem;
+    }
+
+    .output-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .output-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .output-value {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .output-good {
+      color: var(--accent);
+    }
+
+    .output-warning {
+      color: #ff7675;
+    }
+
+    .output-neutral {
+      color: #feca57;
+    }
+
+    footer {
+      margin-top: 22px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header>
+      <div class="breadcrumb">
+        <a href="full-access.html">← Back to Full Access Hub</a>
+      </div>
+      <h1>Responsible, Disciplined Play</h1>
+      <p>
+        This lesson turns blackjack into a deliberately limited form of entertainment: clear time and money bounds,
+        signs that it is time to stop, and simple rules for keeping other parts of life first.
+      </p>
+      <div class="tagline-pill">
+        <span class="tag-dot"></span>
+        <span>Limits • Signals • Support</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- LEFT COLUMN: CONCEPTS -->
+      <section>
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Time and Money Limits</h2>
+            <p>
+              Responsible play starts before the first hand: decide how much time and money you are willing to risk,
+              and treat those limits as hard boundaries, not goals to “get value from.”
+            </p>
+            <ul>
+              <li>Set a maximum session length and number of sessions per trip; use alarms or reminders so time does not drift.</li>
+              <li>Choose a total amount you can afford to lose without borrowing, impacting bills, or relying on a win.</li>
+              <li>Split that bankroll into smaller session budgets rather than risking everything in one sitting.</li>
+            </ul>
+            <p>
+              When any limit is reached—time, money, or both—the responsible move is to stop, regardless of whether
+              the last session won or lost.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Signs It Is Time to Step Away</h2>
+            <p>
+              Responsible play also means noticing when gambling is starting to push past the role of entertainment
+              into something heavier or harder to control.
+            </p>
+            <ul>
+              <li>Feeling pressure to win back losses or play longer than planned.</li>
+              <li>Hiding gambling from people close to you or feeling ashamed afterward.</li>
+              <li>Using gambling mainly to escape stress, boredom, or other problems.</li>
+            </ul>
+            <p>
+              If several of these show up often, it is important to slow down, reduce exposure, and consider talking
+              to someone about what is going on.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Keeping Life Bigger Than the Game</h2>
+            <p>
+              Blackjack is healthiest when it sits alongside work, relationships, and other hobbies instead of
+              pushing them aside. Building structure around it protects those priorities.
+            </p>
+            <ul>
+              <li>Plan sessions around other activities, not the other way around.</li>
+              <li>Gamble only with discretionary funds, not savings, debt, or essential budgets.</li>
+              <li>Let trusted people know your limits so they can support you in keeping them.</li>
+            </ul>
+            <p>
+              The activity on this page helps turn these ideas into a small, concrete plan you can review before a
+              trip or online session.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: INTERACTIVE PLAN + TAKEAWAYS -->
+      <section>
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="activity-header">
+              <div class="activity-title">Session Safety Plan</div>
+              <div class="pill-small">Define your limits</div>
+            </div>
+            <p style="margin-bottom:6px;">
+              Use this planner to outline one realistic session: how long you will play, how much you are willing to
+              risk, and what will make you walk away.
+            </p>
+
+            <div class="field-grid">
+              <div class="field-group">
+                <label for="timeLimit">Time limit (minutes)</label>
+                <input id="timeLimit" type="number" min="15" max="600" value="120" />
+              </div>
+              <div class="field-group">
+                <label for="moneyLimit">Loss limit for this session (currency units)</label>
+                <input id="moneyLimit" type="number" min="10" max="100000" value="200" />
+              </div>
+              <div class="field-group">
+                <label for="winLimit">Optional win cap (cash out target)</label>
+                <input id="winLimit" type="number" min="0" max="100000" value="0" />
+              </div>
+              <div class="field-group">
+                <label for="breakSignal">Emotional stop signal (1 word)</label>
+                <input id="breakSignal" type="text" maxlength="20" placeholder="e.g. tilted" />
+              </div>
+            </div>
+
+            <div class="field-group" style="margin-top:8px;">
+              <label for="supportNote">Who keeps you accountable? (optional)</label>
+              <textarea id="supportNote" placeholder="Friend, partner, or personal reminder you’ll check in with."></textarea>
+            </div>
+
+            <button class="simulate-button" onclick="buildPlan()">
+              Build my session rules
+            </button>
+
+            <div class="sim-output">
+              <div class="output-row">
+                <span class="output-label">Summary:</span>
+                <span class="output-value output-neutral" id="plan-summary">No plan generated yet</span>
+              </div>
+              <p id="plan-text" style="margin:4px 0 0;font-size:0.86rem;color:var(--muted);">
+                After you generate a plan, screenshot or write it down. The rule is simple: if any limit is reached,
+                the session ends.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>How to Use Your Plan</h2>
+            <p>
+              A plan only helps if it is visible and specific. Keep it in your notes app or on paper and read it
+              before you buy in.
+            </p>
+            <ul>
+              <li>Start each session by setting a timer and deciding how many buy‑ins fit inside your loss limit.</li>
+              <li>Pause when you hit your emotional signal word—even if you are ahead—and reassess away from the table.</li>
+              <li>If you reach the loss limit or time limit, treat the decision to stop as non‑negotiable.</li>
+            </ul>
+            <p>
+              Over time, following your own rules consistently matters more than the result of any single session.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>If Gambling Feels Hard to Control</h2>
+            <p>
+              If sticking to limits feels impossible, or gambling is causing financial, emotional, or relationship
+              harm, it is important to reach out for help rather than trying to handle it alone.
+            </p>
+            <ul>
+              <li>Most regions have free problem‑gambling helplines, counselling services, or self‑exclusion programs.</li>
+              <li>Talking to a professional or a trusted person can make it easier to change habits early.</li>
+              <li>Online resources and peer‑support groups can also help if local options feel hard to access.</li>
+            </ul>
+            <p>
+              Using support is a sign of strength and self‑awareness, not a failure of discipline.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Important Disclaimers</h2>
+            <ul>
+              <li>This lesson and planner are for <strong>educational purposes only</strong>.</li>
+              <li>They do not replace professional advice, mental‑health care, or financial counselling.</li>
+              <li>If gambling is causing distress or harm, seek specialized support in your region as soon as possible.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2026 The Blackjack Mindset. Educational content only. No financial advice or gambling recommendations.
+    </footer>
+  </div>
+
+  <script>
+    function buildPlan() {
+      let timeLimit = parseInt(document.getElementById("timeLimit").value, 10);
+      let moneyLimit = parseFloat(document.getElementById("moneyLimit").value);
+      let winLimit = parseFloat(document.getElementById("winLimit").value);
+      const breakSignal = document.getElementById("breakSignal").value.trim();
+      const support = document.getElementById("supportNote").value.trim();
+
+      if (isNaN(timeLimit) || timeLimit < 15) timeLimit = 15;
+      if (timeLimit > 600) timeLimit = 600;
+      if (isNaN(moneyLimit) || moneyLimit <= 0) moneyLimit = 50;
+      if (isNaN(winLimit) || winLimit < 0) winLimit = 0;
+
+      document.getElementById("timeLimit").value = timeLimit;
+      document.getElementById("moneyLimit").value = moneyLimit.toFixed(0);
+      document.getElementById("winLimit").value = winLimit.toFixed(0);
+
+      const summarySpan = document.getElementById("plan-summary");
+      summarySpan.classList.remove("output-good", "output-warning", "output-neutral");
+
+      summarySpan.textContent =
+        timeLimit + " min • loss cap " + moneyLimit.toFixed(0) +
+        (winLimit > 0 ? " • cash‑out at +" + winLimit.toFixed(0) : "");
+
+      // Simple rating: higher money vs time implies higher risk
+      const hourlyRisk = (moneyLimit / (timeLimit / 60 || 1));
+      if (hourlyRisk <= 50) {
+        summarySpan.classList.add("output-good");
+      } else if (hourlyRisk <= 150) {
+        summarySpan.classList.add("output-neutral");
+      } else {
+        summarySpan.classList.add("output-warning");
+      }
+
+      const planText = document.getElementById("plan-text");
+      let text =
+        "Your rule set for this session: stop when the timer hits " +
+        timeLimit +
+        " minutes or when total losses reach " +
+        moneyLimit.toFixed(0) +
+        ".";
+      if (winLimit > 0) {
+        text += " Cash out if you are ahead by " + winLimit.toFixed(0) + " or more.";
+      }
+      if (breakSignal) {
+        text += " If you notice yourself feeling \"" + breakSignal +
+          "\", take a full break and decide away from the table whether to continue.";
+      }
+      if (support) {
+        text += " You noted this support/accountability reminder: " + support;
+      }
+
+      planText.textContent = text;
+    }
+  </script>
+</body>
+</html>
