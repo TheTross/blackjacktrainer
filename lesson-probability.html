@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Probability & Variance – The Blackjack Mindset</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg: #05070b;
+      --bg-soft: #080b13;
+      --bg-elevated: #0e1220;
+      --accent: #1dd1a1;
+      --accent-soft: rgba(29, 209, 161, 0.16);
+      --accent-warm: #feca57;
+      --text: #f7f8fc;
+      --muted: #a1a7bc;
+      --border-subtle: #252a39;
+      --border-strong: #343a4f;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.65);
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --max-width: 960px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #151b2f 0, #05070b 55%, #020308 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    a { color: inherit; }
+
+    .page-shell {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 24px 18px 30px;
+    }
+
+    header {
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .breadcrumb {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .breadcrumb a {
+      text-decoration: none;
+      color: var(--muted);
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 2.5vw, 2.2rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 0.94rem;
+      color: var(--muted);
+      max-width: 620px;
+      line-height: 1.7;
+    }
+
+    .tagline-pill {
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: rgba(5, 7, 14, 0.94);
+    }
+
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(29, 209, 161, 0.9);
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr);
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 880px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: rgba(7, 10, 20, 0.98);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 20px 18px;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      font-size: 0.96rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+
+    h3 {
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 12px 0 6px;
+    }
+
+    p {
+      font-size: 0.94rem;
+      line-height: 1.7;
+      margin: 0 0 10px;
+      color: var(--text);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 6px 0 0;
+    }
+
+    li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 4px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    li::before {
+      content: "•";
+      color: var(--accent);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    strong { font-weight: 600; }
+
+    .callout {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      background: rgba(5, 7, 14, 0.96);
+      padding: 8px 10px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    footer {
+      margin-top: 22px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header>
+      <div class="breadcrumb">
+        <a href="full-access.html">← Back to Full Access Hub</a>
+      </div>
+      <h1>Probability & Variance</h1>
+      <p>
+        This lesson explains how often different outcomes happen in blackjack, why the house edge is small but real,
+        and why short‑term streaks can look nothing like the long‑run averages.
+      </p>
+      <div class="tagline-pill">
+        <span class="tag-dot"></span>
+        <span>Win Rate • House Edge • Variance</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- LEFT COLUMN: CONCEPTS -->
+      <section>
+        <div class="panel">
+          <h2>Big Picture Numbers</h2>
+          <p>
+            In a typical multi‑deck game with reasonable rules and solid basic strategy, the player wins a little
+            over four out of every ten hands, the dealer wins a little under five out of ten, and the rest push.
+          </p>
+          <ul>
+            <li>The exact percentages depend on rules like number of decks, whether the dealer hits soft 17, and the blackjack payout.</li>
+            <li>With good rules and basic strategy, the house edge is usually well under 1% of total money bet.</li>
+            <li>Without basic strategy, common mistakes can push that edge several times higher.</li>
+          </ul>
+          <p>
+            These numbers come from computer simulations of huge samples of hands, not from what happens in a single
+            session at a live table.
+          </p>
+        </div>
+
+        <div class="panel">
+          <h2>What “Expectation” Means</h2>
+          <p>
+            Expected value (EV) is the long‑run average result per unit bet if you could replay the same situation
+            thousands of times under the same rules.
+          </p>
+          <ul>
+            <li>For any specific combination of your hand and the dealer’s upcard, each action (hit, stand, double, split) has its own EV.</li>
+            <li>Basic strategy charts simply pick the action with the highest EV in that situation, even if that action still loses money on average.</li>
+            <li>Following basic strategy lowers the house edge as far as the rules allow, but does not flip it in your favour.</li>
+          </ul>
+          <div class="callout">
+            A decision can be correct in EV terms and still lose on this particular hand. Probability describes
+            tendencies over many hands, not guarantees for the next one.
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Variance & Streaks</h2>
+          <p>
+            Variance measures how widely actual results swing around that long‑run expectation. In blackjack, variance
+            is what produces the familiar waves of hot streaks and cold stretches.
+          </p>
+          <ul>
+            <li>Even with perfect basic strategy, you will sometimes see long runs of losing hands.</li>
+            <li>Winning streaks are just as real: you can easily have nights where you run far above the theoretical edge.</li>
+            <li>The “long run” where the math clearly shows through can mean hundreds of thousands or millions of hands, not a weekend trip.</li>
+          </ul>
+          <p>
+            Understanding variance helps separate emotion from math: a rough downswing does not mean the rules or
+            strategy suddenly stopped working.
+          </p>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: CONNECTING TO TRAINER -->
+      <section>
+        <div class="panel">
+          <h2>Connecting Numbers to the Trainer</h2>
+          <p>
+            The interactive trainer on the main page uses a fixed rule set and a shuffled deck to generate situations.
+            When it suggests an action, that suggestion is based on which choice tends to have the best EV in similar spots.
+          </p>
+          <ul>
+            <li>Each hand you see in the trainer is one random sample from the same probability model described here.</li>
+            <li>Sometimes the recommended play will win, sometimes it will lose, but over many hands it will do better than the alternatives.</li>
+            <li>Your “accuracy” in the trainer measures how often you match that recommended decision, not how much you would have won or lost in money terms.</li>
+          </ul>
+          <div class="callout">
+            When the trainer suggests a move that feels uncomfortable, pause and ask: “If I repeated this exact spot
+            thousands of times, which choice gives me the best long‑run average?”
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Practical Takeaways</h2>
+          <p>
+            Probability and variance are not there to make blackjack mysterious. They simply describe how often
+            different outcomes occur and how bumpy the ride will feel along the way.
+          </p>
+          <ul>
+            <li>Use a basic strategy chart as your default for every hand instead of “going with your gut.”</li>
+            <li>Expect both winning streaks and losing streaks and plan your bankroll so that either outcome is manageable.</li>
+            <li>Judge your decisions by whether they follow sound strategy, not by what happened on one or two hands.</li>
+          </ul>
+          <p>
+            The next lessons build on this foundation: first by looking at common mistakes, then at psychology,
+            betting systems, casino environments, and responsible limits.
+          </p>
+        </div>
+
+        <div class="panel">
+          <h2>Important Disclaimers</h2>
+          <ul>
+            <li>This lesson is for <strong>educational purposes only</strong>.</li>
+            <li>Probabilities and edges are approximate and depend on specific rules and assumptions.</li>
+            <li>Nothing here guarantees any particular outcome in real‑money play.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2026 The Blackjack Mindset. Educational content only. No financial advice or gambling recommendations.
+    </footer>
+  </div>
+</body>
+</html>
