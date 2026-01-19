@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Common Player Mistakes – The Blackjack Mindset</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg: #05070b;
+      --bg-soft: #080b13;
+      --bg-elevated: #0e1220;
+      --accent: #1dd1a1;
+      --accent-soft: rgba(29, 209, 161, 0.16);
+      --accent-warm: #feca57;
+      --text: #f7f8fc;
+      --muted: #a1a7bc;
+      --border-subtle: #252a39;
+      --border-strong: #343a4f;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.65);
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --max-width: 960px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, #151b2f 0, #05070b 55%, #020308 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    a { color: inherit; }
+
+    .page-shell {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 24px 18px 32px;
+    }
+
+    header {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -6px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      opacity: 0.9;
+    }
+
+    .breadcrumb {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .breadcrumb a {
+      text-decoration: none;
+      color: var(--muted);
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 2.6vw, 2.3rem);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 0.94rem;
+      color: var(--muted);
+      max-width: 640px;
+      line-height: 1.7;
+    }
+
+    .tagline-pill {
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: rgba(5, 7, 14, 0.94);
+    }
+
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(29, 209, 161, 0.9);
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr);
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 880px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: rgba(7, 10, 20, 0.98);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 20px 18px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -40% -10%;
+      background:
+        radial-gradient(circle at top left, rgba(29, 209, 161, 0.09) 0, transparent 55%),
+        radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.08) 0, transparent 55%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .panel-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      font-size: 0.96rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+
+    h3 {
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 12px 0 6px;
+    }
+
+    p {
+      font-size: 0.94rem;
+      line-height: 1.7;
+      margin: 0 0 10px;
+      color: var(--text);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 6px 0 0;
+    }
+
+    li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 4px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    li::before {
+      content: "•";
+      color: var(--accent);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    strong { font-weight: 600; }
+
+    .callout {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      background: rgba(5, 7, 14, 0.96);
+      padding: 8px 10px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(252, 202, 87, 0.7);
+      padding: 4px 8px;
+      font-size: 0.78rem;
+      color: var(--accent-warm);
+      background: rgba(252, 202, 87, 0.08);
+      margin-bottom: 8px;
+    }
+
+    /* Activity styles */
+    .activity-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .activity-title {
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .pill-small {
+      font-size: 0.78rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 4px 8px;
+      color: var(--muted);
+      background: rgba(3, 5, 12, 0.96);
+    }
+
+    .mistake-list {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .mistake-item {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(52, 58, 79, 0.9);
+      background: rgba(3, 5, 12, 0.98);
+      padding: 7px 8px;
+      font-size: 0.88rem;
+    }
+
+    .mistake-item input[type="checkbox"] {
+      margin-top: 3px;
+      accent-color: #1dd1a1;
+    }
+
+    .mistake-label {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .mistake-title {
+      font-weight: 500;
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+
+    .mistake-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .activity-footer {
+      margin-top: 8px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .summary-box {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      background: rgba(3, 5, 12, 0.98);
+      padding: 8px 10px;
+      margin-top: 10px;
+      font-size: 0.88rem;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .summary-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .summary-value {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .summary-focus {
+      color: var(--accent);
+    }
+
+    .summary-warning {
+      color: #ff7675;
+    }
+
+    .summary-neutral {
+      color: #feca57;
+    }
+
+    .calculate-button {
+      margin-top: 8px;
+      width: 100%;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(29, 209, 161, 0.8);
+      background: linear-gradient(135deg, #1dd1a1, #10ac84);
+      color: #020308;
+      font-size: 0.84rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 8px 10px;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .calculate-button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 1);
+    }
+
+    footer {
+      margin-top: 22px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header>
+      <div class="breadcrumb">
+        <a href="full-access.html">← Back to Full Access Hub</a>
+      </div>
+      <h1>Common Player Mistakes</h1>
+      <p>
+        This lesson highlights the habits that quietly increase the house edge over time: misplaying hands, chasing
+        losses, side bets, and ignoring the plan when emotions run high.
+      </p>
+      <div class="tagline-pill">
+        <span class="tag-dot"></span>
+        <span>Decisions • Habits • Discipline</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- LEFT COLUMN: CONCEPTS -->
+      <section>
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Strategy Mistakes at the Table</h2>
+            <p>
+              Most extra cost in blackjack comes from a short list of recurring decisions. Fixing just these has a
+              bigger impact than obsessing over tiny edge cases.
+            </p>
+            <ul>
+              <li>Standing on weak totals like 12–16 against strong dealer cards because you are afraid to bust.</li>
+              <li>Refusing to hit or double soft hands correctly, especially soft 17 and soft 18.</li>
+              <li>Splitting 10s or failing to split 8s and Aces when the situation calls for it.</li>
+              <li>Ignoring a basic strategy chart and “winging it” based on a hunch or the last few hands.</li>
+            </ul>
+            <div class="callout">
+              Think of basic strategy as the default. Deviating randomly is like handing the casino extra percentage
+              points for free.
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Money & Tilt Mistakes</h2>
+            <p>
+              The second cluster of errors has nothing to do with the cards: over‑betting, chasing, and letting one
+              session spill into the next.
+            </p>
+            <ul>
+              <li>Doubling or tripling bet size after a loss to “get back to even.”</li>
+              <li>Playing longer than planned because a session feels close to turning around.</li>
+              <li>Increasing bet size only after a long winning streak, then being surprised by a normal downswing.</li>
+              <li>Letting frustration with other players or the dealer push you into careless decisions.</li>
+            </ul>
+            <p>
+              These habits do not change the probabilities. They just expose more of your bankroll when things go
+              wrong.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Side Bets & Rule Blind Spots</h2>
+            <p>
+              Many tables offer tempting options that sound like protection or a bonus. In practice they usually come
+              with a much higher house edge than the main game.
+            </p>
+            <ul>
+              <li>Buying insurance or “even money” routinely whenever the dealer shows an Ace.</li>
+              <li>Playing 6:5 blackjack instead of seeking 3:2 payouts when you have the choice.</li>
+              <li>Jumping into side bets without knowing their long‑run cost.</li>
+              <li>Sitting down without checking basic rules like decks used, hit/stand on soft 17, or whether doubling after split is allowed.</li>
+            </ul>
+            <p>
+              Being selective about which tables and which options you play can matter more than any small tweak to
+              your hand decisions.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: INTERACTIVE ACTIVITY + TAKEAWAYS -->
+      <section>
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="activity-header">
+              <div class="activity-title">Self‑Audit Activity</div>
+              <div class="pill-small">Turn mistakes into a checklist</div>
+            </div>
+            <p style="margin-bottom:6px;">
+              Go through the list and tick anything that feels familiar from past sessions. The summary will highlight
+              where tightening up will help most.
+            </p>
+
+            <div class="mistake-list">
+              <label class="mistake-item">
+                <input type="checkbox" class="mistake-checkbox" data-category="strategy" />
+                <div class="mistake-label">
+                  <span class="mistake-title">Ignoring basic strategy</span>
+                  <span class="mistake-desc">You often guess or copy others instead of using a chart or clear rules.</span>
+                </div>
+              </label>
+
+              <label class="mistake-item">
+                <input type="checkbox" class="mistake-checkbox" data-category="strategy" />
+                <div class="mistake-label">
+                  <span class="mistake-title">Fear of busting</span>
+                  <span class="mistake-desc">You stand on 12–16 against strong dealer cards more often than the chart says.</span>
+                </div>
+              </label>
+
+              <label class="mistake-item">
+                <input type="checkbox" class="mistake-checkbox" data-category="strategy" />
+                <div class="mistake-label">
+                  <span class="mistake-title">Soft hands confusion</span>
+                  <span class="mistake-desc">You are not confident about when to hit or double soft 17 and soft 18.</span>
+                </div>
+              </label>
+
+              <label class="mistake-item">
+                <input type="checkbox" class="mistake-checkbox" data-category="strategy" />
+                <div class="mistake-label">
+                  <span class="mistake-title">Splitting errors</span>
+                  <span class="mistake-desc">You avoid splitting 8s or Aces, or sometimes split 10s because “the deck is hot.”</span>
+                </div>
+              </label>
+
+              <label class="mistake-item">
+                <input type="checkbox" class="mistake-checkbox" data-category="money" />
+                <div class="mistake-label">
+                  <span class="mistake-title">Chasing losses</span>
+                  <span class="mistake-desc">You raise bets mainly to recover recent losses quickly.</span>
+                </div>
+              </label>
+
+              <label class="mistake-item">
+                <input type="checkbox" class="mistake-checkbox" data-category="money" />
+                <div class="mistake-label">
+                  <span class="mistake-title">Session creep</span>
+                  <span class="mistake-desc">You often play longer than planned because “it almost turned around.”</span>
+                </div>
+              </label>
+
+              <label class="mistake-item">
+                <input type="checkbox" class="mistake-checkbox" data-category="money" />
+                <div class="mistake-label">
+                  <span class="mistake-title">Emotional betting</span>
+                  <span class="mistake-desc">Tilt, boredom, or showing off has pushed you into larger or random bets.</span>
+                </div>
+              </label>
+
+              <label class="mistake-item">
+                <input type="checkbox" class="mistake-checkbox" data-category="sidebets" />
+                <div class="mistake-label">
+                  <span class="mistake-title">Insurance habits</span>
+                  <span class="mistake-desc">You regularly buy insurance or even money without thinking about the math.</span>
+                </div>
+              </label>
+
+              <label class="mistake-item">
+                <input type="checkbox" class="mistake-checkbox" data-category="sidebets" />
+                <div class="mistake-label">
+                  <span class="mistake-title">Expensive tables</span>
+                  <span class="mistake-desc">You play 6:5 blackjack or rule sets you have never checked closely.</span>
+                </div>
+              </label>
+
+              <label class="mistake-item">
+                <input type="checkbox" class="mistake-checkbox" data-category="sidebets" />
+                <div class="mistake-label">
+                  <span class="mistake-title">Random side bets</span>
+                  <span class="mistake-desc">You add side bets “for fun” without caring about their long‑run cost.</span>
+                </div>
+              </label>
+            </div>
+
+            <button class="calculate-button" onclick="summarizeMistakes()">
+              Review my patterns
+            </button>
+
+            <div class="summary-box" id="summary-box">
+              <div class="summary-row">
+                <span class="summary-label">Total boxes checked:</span>
+                <span class="summary-value summary-neutral" id="summary-total">0</span>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label">Main focus area:</span>
+                <span class="summary-value summary-focus" id="summary-focus">None yet</span>
+              </div>
+              <p id="summary-text" style="margin:4px 0 0;font-size:0.86rem;color:var(--muted);">
+                Tick any statements that feel familiar, then click “Review my patterns” to see where tightening up will
+                matter most.
+              </p>
+            </div>
+
+            <p class="activity-footer">
+              Use this list before a trip to set a few specific goals, such as “no insurance” or “always check the
+              rules board before sitting down.”
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>How This Links to the Trainer</h2>
+            <p>
+              The decision trainer on the main page is your practice space for fixing strategy mistakes. Every time
+              you see a situation you mis‑play in the casino, look for it in the trainer.
+            </p>
+            <ul>
+              <li>Use the trainer to rehearse the soft hands and pair splits you tend to misplay.</li>
+              <li>Ignore your feelings about recent streaks and focus on matching the suggested action.</li>
+              <li>Track your accuracy over time; rising accuracy means fewer strategy leaks in real sessions.</li>
+            </ul>
+            <p>
+              For money and side‑bet habits, combine this lesson with the budgeting and responsible‑play modules.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Practical Takeaways</h2>
+            <p>
+              The casino does not need you to make every mistake on the list. A small cluster repeated over and over
+              is enough to shift the edge sharply in its favour.
+            </p>
+            <ul>
+              <li>Pick two or three strategy errors and commit to eliminating them first.</li>
+              <li>Decide in advance how you will handle insurance, side bets, and table selection.</li>
+              <li>Notice when emotion is driving your bets and use that as a cue to pause or leave.</li>
+            </ul>
+            <p>
+              As you reduce avoidable mistakes, the numbers from the probability lesson become a more accurate
+              description of what you should expect over time.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2>Important Disclaimers</h2>
+            <ul>
+              <li>This lesson and activity are for <strong>educational purposes only</strong>.</li>
+              <li>Improving decisions reduces avoidable loss but does not guarantee profit in any session.</li>
+              <li>Nothing here is financial advice or a promise of any particular outcome.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2026 The Blackjack Mindset. Educational content only. No financial advice or gambling recommendations.
+    </footer>
+  </div>
+
+  <script>
+    function summarizeMistakes() {
+      const checkboxes = document.querySelectorAll(".mistake-checkbox");
+      let total = 0;
+      let counts = { strategy: 0, money: 0, sidebets: 0 };
+
+      checkboxes.forEach(cb => {
+        if (cb.checked) {
+          total += 1;
+          const cat = cb.dataset.category;
+          if (counts[cat] !== undefined) counts[cat] += 1;
+        }
+      });
+
+      const totalSpan = document.getElementById("summary-total");
+      totalSpan.textContent = total;
+      totalSpan.classList.remove("summary-focus", "summary-warning", "summary-neutral");
+      if (total === 0) {
+        totalSpan.classList.add("summary-neutral");
+      } else if (total <= 3) {
+        totalSpan.classList.add("summary-focus");
+      } else {
+        totalSpan.classList.add("summary-warning");
+      }
+
+      const focusSpan = document.getElementById("summary-focus");
+      let focusText = "None yet";
+
+      const maxCategory = Object.keys(counts).reduce((a, b) =>
+        counts[a] >= counts[b] ? a : b
+      );
+
+      if (total === 0) {
+        focusText = "No patterns selected";
+      } else if (counts[maxCategory] === 0) {
+        focusText = "Spread across several areas";
+      } else if (maxCategory === "strategy") {
+        focusText = "Core strategy decisions";
+      } else if (maxCategory === "money") {
+        focusText = "Bet sizing and session control";
+      } else {
+        focusText = "Insurance, side bets, and table choice";
+      }
+
+      focusSpan.textContent = focusText;
+
+      const summaryText = document.getElementById("summary-text");
+      let explanation;
+
+      if (total === 0) {
+        explanation =
+          "If none of these sound familiar, use the trainer and other lessons to keep your habits sharp, and revisit this checklist after a few real sessions.";
+      } else if (counts.strategy >= counts.money && counts.strategy >= counts.sidebets) {
+        explanation =
+          "Your main opportunity is technical: commit to using a basic strategy chart and drill the specific hand types you checked in the trainer.";
+      } else if (counts.money >= counts.sidebets) {
+        explanation =
+          "Your main opportunity is bankroll discipline: define fixed bet sizes, session lengths, and stop‑loss points before you sit down.";
+      } else {
+        explanation =
+          "Your main opportunity is selectivity: favour better rules, skip routine insurance, and treat side bets as optional rather than automatic.";
+      }
+
+      summaryText.textContent = explanation;
+    }
+  </script>
+</body>
+</html>
