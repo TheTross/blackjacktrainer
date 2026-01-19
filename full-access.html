@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Full Access Trainer – The Blackjack Mindset</title>
+  <title>The Blackjack Mindset – Full Access Hub</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,7 +30,7 @@
       --radius-lg: 16px;
       --radius-md: 12px;
       --radius-pill: 999px;
-      --max-width: 1040px;
+      --max-width: 1080px;
     }
 
     * { box-sizing: border-box; }
@@ -39,13 +39,12 @@
       margin: 0;
       padding: 0;
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at top, #151b2f 0, #05070b 55%, #020308 100%);
+      background: radial-gradient(circle at top, #151b2f 0, #05070b 55%, #020308 100%);
       color: var(--text);
       -webkit-font-smoothing: antialiased;
     }
 
-    h1, h2, h3 {
+    h1, h2, h3, h4 {
       font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
@@ -54,14 +53,15 @@
     .page-shell {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 24px 18px 32px;
+      padding: 22px 18px 30px;
     }
 
     header {
-      margin-bottom: 18px;
       display: flex;
-      flex-direction: column;
-      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 20px;
       position: relative;
     }
 
@@ -74,67 +74,80 @@
       opacity: 0.9;
     }
 
-    .breadcrumb {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-bottom: 4px;
+    .header-left {
+      display: flex;
+      gap: 12px;
+      align-items: center;
     }
 
-    .breadcrumb a {
-      text-decoration: none;
-      color: var(--muted);
+    .logo-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      border: 1px solid rgba(37, 42, 57, 0.9);
+      background: radial-gradient(circle at top, #1dd1a1 0, #0da37b 55%, #045b44 100%);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #020308;
     }
 
-    .breadcrumb a:hover {
-      text-decoration: underline;
-    }
-
-    h1 {
-      font-size: clamp(2rem, 2.6vw, 2.3rem);
+    .title-wrap h1 {
+      font-size: clamp(1.7rem, 2.4vw, 2rem);
       letter-spacing: 0.16em;
       text-transform: uppercase;
       margin: 0;
     }
 
-    header p {
-      margin: 0;
-      font-size: 0.94rem;
+    .title-wrap p {
+      margin: 4px 0 0;
+      font-size: 0.92rem;
       color: var(--muted);
-      max-width: 660px;
-      line-height: 1.7;
+      max-width: 540px;
     }
 
-    .tagline-pill {
-      margin-top: 6px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .license-pill {
+      font-size: 0.78rem;
       border-radius: var(--radius-pill);
       border: 1px solid var(--border-subtle);
       padding: 5px 10px;
-      font-size: 0.78rem;
       color: var(--muted);
-      background: rgba(5, 7, 14, 0.94);
+      background: rgba(5, 7, 14, 0.9);
     }
 
-    .tag-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 8px rgba(29, 209, 161, 0.9);
+    .status-pill {
+      font-size: 0.78rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(29, 209, 161, 0.7);
+      padding: 5px 10px;
+      color: var(--accent);
+      background: rgba(29, 209, 161, 0.08);
     }
 
     main {
       display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.1fr);
-      gap: 18px;
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.3fr);
+      gap: 20px;
       align-items: flex-start;
     }
 
-    @media (max-width: 920px) {
+    @media (max-width: 900px) {
       main {
         grid-template-columns: 1fr;
+      }
+      .header-right {
+        align-items: flex-start;
       }
     }
 
@@ -144,7 +157,7 @@
       border: 1px solid var(--border-subtle);
       box-shadow: var(--shadow-soft);
       padding: 18px 20px 18px;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
       position: relative;
       overflow: hidden;
     }
@@ -180,221 +193,114 @@
       color: var(--text);
     }
 
-    .trainer-layout {
-      display: grid;
-      grid-template-rows: auto auto 1fr;
-      gap: 10px;
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 6px 0 0;
     }
 
-    .hand-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: 10px;
-      align-items: stretch;
+    li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 4px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
     }
 
-    @media (max-width: 720px) {
-      .hand-row {
-        grid-template-columns: 1fr;
-      }
+    li::before {
+      content: "•";
+      color: var(--accent);
+      font-size: 1rem;
+      line-height: 1.4;
     }
 
-    .hand-card-shell {
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-subtle);
-      background: linear-gradient(145deg, #060b12, #04060b);
-      padding: 10px 12px 12px;
+    .lesson-list {
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
-    .hand-label {
-      font-size: 0.8rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-    }
-
-    .card-row {
+    .lesson-link {
+      border-radius: 14px;
+      border: 1px solid var(--border-subtle);
+      padding: 10px 11px;
+      background: rgba(8, 10, 20, 0.96);
       display: flex;
-      gap: 8px;
+      justify-content: space-between;
       align-items: center;
-      min-height: 54px;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.16s ease, background 0.16s ease, transform 0.12s ease;
     }
 
-    .card {
-      width: 34px;
-      height: 48px;
-      border-radius: 8px;
-      border: 1px solid #2b3142;
-      background: radial-gradient(circle at top, #1b2334 0, #05070d 60%);
+    .lesson-link:hover {
+      border-color: var(--accent);
+      background: rgba(14, 18, 32, 0.98);
+      transform: translateY(-1px);
+    }
+
+    .lesson-main {
+      display: flex;
+      gap: 9px;
+      align-items: center;
+    }
+
+    .lesson-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 10px;
+      background: radial-gradient(circle at top, rgba(29, 209, 161, 0.2) 0, rgba(5, 7, 14, 0.96) 65%);
+      border: 1px solid rgba(52, 58, 79, 0.9);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.98rem;
-      font-weight: 600;
-      color: #f7f8fc;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+      color: var(--accent);
     }
 
-    .card-placeholder {
-      width: 34px;
-      height: 48px;
-      border-radius: 8px;
-      border: 1px dashed #2b3142;
-      background: rgba(3, 5, 12, 0.9);
+    .lesson-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
 
-    .hand-total {
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin-top: 2px;
+    .lesson-title {
+      font-size: 0.92rem;
+      font-weight: 500;
     }
 
-    .small-note {
+    .lesson-sub {
       font-size: 0.8rem;
       color: var(--muted);
     }
 
-    .controls-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .difficulty-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      align-items: center;
-      font-size: 0.8rem;
+    .lesson-arrow {
+      font-size: 0.85rem;
       color: var(--muted);
     }
 
-    .diff-pill {
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
       border-radius: var(--radius-pill);
-      border: 1px solid var(--border-subtle);
-      background: rgba(4, 8, 16, 0.96);
+      border: 1px solid rgba(252, 202, 87, 0.7);
       padding: 4px 8px;
       font-size: 0.78rem;
-      cursor: pointer;
-      color: var(--muted);
+      color: var(--accent-warm);
+      background: rgba(252, 202, 87, 0.08);
+      margin-bottom: 8px;
     }
 
-    .diff-pill.active {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(9, 20, 18, 0.98);
-    }
-
-    .deal-button, .action-button {
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(29, 209, 161, 0.8);
-      background: linear-gradient(135deg, #1dd1a1, #10ac84);
-      color: #020308;
-      font-size: 0.84rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-weight: 600;
-      padding: 7px 10px;
-      cursor: pointer;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.9);
-      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
-    }
-
-    .deal-button:hover, .action-button:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.03);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 1);
-    }
-
-    .actions-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 8px;
-      margin-top: 6px;
-    }
-
-    @media (max-width: 680px) {
-      .actions-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    .action-button {
-      width: 100%;
-      padding: 7px 6px;
-      text-align: center;
-    }
-
-    .action-button.secondary {
-      border-color: var(--border-subtle);
-      background: rgba(5, 8, 16, 0.96);
-      color: var(--text);
-      box-shadow: none;
-    }
-
-    .action-button.secondary:hover {
-      border-color: var(--accent);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.9);
-    }
-
-    .feedback-line {
-      margin-top: 8px;
+    .callout {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      background: rgba(5, 7, 14, 0.96);
+      padding: 8px 10px;
       font-size: 0.88rem;
       color: var(--muted);
-    }
-
-    .feedback-line span.result-correct {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .feedback-line span.result-wrong {
-      color: #ff7675;
-      font-weight: 600;
-    }
-
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      margin-top: 4px;
-    }
-
-    @media (max-width: 720px) {
-      .stat-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .stat-card {
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-subtle);
-      background: rgba(3, 5, 12, 0.98);
-      padding: 8px 10px;
-      font-size: 0.84rem;
-      color: var(--muted);
-    }
-
-    .stat-label {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 2px;
-    }
-
-    .stat-main {
-      font-size: 0.96rem;
-      font-weight: 600;
-    }
-
-    .stat-sub {
-      font-size: 0.8rem;
-      color: var(--muted);
+      margin-top: 6px;
     }
 
     footer {
@@ -409,141 +315,217 @@
 <body>
   <div class="page-shell">
     <header>
-      <div class="breadcrumb">
-        <span>Member Area • Trainer</span>
+      <div class="header-left">
+        <div class="logo-mark">BJ</div>
+        <div class="title-wrap">
+          <h1>Member Hub</h1>
+          <p>
+            Everything unlocked: lessons, tools, and the full trainer in one place. Move through in order or jump
+            straight to whatever matches the situations you are seeing at the table.
+          </p>
+        </div>
       </div>
-      <h1>Full Access Trainer</h1>
-      <p>
-        Practice basic strategy decisions with a focused trainer built for members. Choose the type of hands you want
-        to see, answer without rushing, and track accuracy by category instead of just a single score.
-      </p>
-      <div class="tagline-pill">
-        <span class="tag-dot"></span>
-        <span>Hard • Soft • Pairs • Mixed</span>
+      <div class="header-right">
+        <div class="status-pill">
+          Full access • Private link for you only
+        </div>
+        <div class="license-pill">
+          Single user • Educational content only
+        </div>
       </div>
     </header>
 
     <main>
-      <!-- LEFT: TRAINER -->
+      <!-- LEFT: LESSONS & TOOLS -->
       <section>
         <div class="panel">
           <div class="panel-inner">
-            <h2>Decision Drill</h2>
-            <div class="trainer-layout">
-              <div class="hand-row">
-                <div class="hand-card-shell">
-                  <div class="hand-label">Your hand</div>
-                  <div class="card-row" id="player-cards-row">
-                    <div class="card-placeholder"></div>
-                    <div class="card-placeholder"></div>
-                  </div>
-                  <div class="hand-total" id="player-hand-total">–</div>
-                  <div class="small-note" id="hand-type-label">
-                    Deal a new hand to begin.
-                  </div>
-                </div>
+            <h2>Lessons & Tools</h2>
+            <p>
+              Start with probability to understand the math, then use the trainer and budgeting tools to turn those
+              ideas into decisions and clear limits.
+            </p>
 
-                <div class="hand-card-shell">
-                  <div class="hand-label">Dealer upcard</div>
-                  <div class="card-row" id="dealer-card-row">
-                    <div class="card-placeholder"></div>
+            <div class="lesson-list">
+              <a href="lesson-probability.html" class="lesson-link">
+                <div class="lesson-main">
+                  <div class="lesson-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <rect x="4" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.6"/>
+                      <rect x="13" y="13" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.6" opacity="0.9"/>
+                      <circle cx="7.5" cy="7.5" r="1" fill="currentColor"/>
+                      <circle cx="16.5" cy="16.5" r="1" fill="currentColor"/>
+                      <circle cx="19" cy="14" r="0.9" fill="currentColor" opacity="0.7"/>
+                    </svg>
                   </div>
-                  <div class="hand-total" id="dealer-upcard-label">–</div>
-                  <div class="small-note">
-                    Assume standard multi‑deck rules with the dealer standing on soft 17.
+                  <div class="lesson-text">
+                    <span class="lesson-title">Probability & Variance</span>
+                    <span class="lesson-sub">Win rates, house edge, and why streaks happen.</span>
                   </div>
                 </div>
-              </div>
+                <span class="lesson-arrow">Open →</span>
+              </a>
 
-              <div class="controls-row">
-                <div class="difficulty-group" id="difficulty-group">
-                  <span>Focus:</span>
-                  <button class="diff-pill active" data-mode="mixed">Mixed</button>
-                  <button class="diff-pill" data-mode="hard">Hard totals</button>
-                  <button class="diff-pill" data-mode="soft">Soft hands</button>
-                  <button class="diff-pill" data-mode="pairs">Pairs</button>
+              <a href="lesson-mistakes.html" class="lesson-link">
+                <div class="lesson-main">
+                  <div class="lesson-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 4L4 20H20L12 4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                      <path d="M12 10V14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                      <circle cx="12" cy="17" r="0.9" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <div class="lesson-text">
+                    <span class="lesson-title">Common Player Mistakes</span>
+                    <span class="lesson-sub">Strategy leaks, chasing, and side‑bet traps.</span>
+                  </div>
                 </div>
-                <button class="deal-button" onclick="dealHand()">Deal new hand</button>
-              </div>
+                <span class="lesson-arrow">Open →</span>
+              </a>
 
-              <div>
-                <div class="actions-grid">
-                  <button class="action-button secondary" onclick="submitMove('H')">Hit</button>
-                  <button class="action-button secondary" onclick="submitMove('S')">Stand</button>
-                  <button class="action-button secondary" onclick="submitMove('D')">Double</button>
-                  <button class="action-button secondary" onclick="submitMove('P')">Split</button>
+              <a href="lesson-psychology.html" class="lesson-link">
+                <div class="lesson-main">
+                  <div class="lesson-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9 4C7.5 4 6.3 5.2 6.3 6.7C5.1 7 4.2 8.2 4.2 9.5C4.2 10.4 4.6 11.1 5.2 11.6C4.8 12.1 4.5 12.8 4.5 13.5C4.5 15.2 5.8 16.5 7.5 16.5H9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                      <path d="M15 4C16.5 4 17.7 5.2 17.7 6.7C18.9 7 19.8 8.2 19.8 9.5C19.8 10.4 19.4 11.1 18.8 11.6C19.2 12.1 19.5 12.8 19.5 13.5C19.5 15.2 18.2 16.5 16.5 16.5H15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                      <path d="M12 6V18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <div class="lesson-text">
+                    <span class="lesson-title">Psychology & Emotions</span>
+                    <span class="lesson-sub">Tilt, triggers, and staying level during swings.</span>
+                  </div>
                 </div>
-                <p class="small-note" style="margin-top:6px;">
-                  Focus on matching the recommended action, not on what happened the last time a similar hand came up.
-                </p>
-                <div class="feedback-line" id="feedback-line">
-                  No hand dealt yet. Click “Deal new hand” to start.
+                <span class="lesson-arrow">Open →</span>
+              </a>
+
+              <a href="lesson-betting-systems.html" class="lesson-link">
+                <div class="lesson-main">
+                  <div class="lesson-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5 17H11V13H17V7H19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div class="lesson-text">
+                    <span class="lesson-title">Why Betting Systems Fail</span>
+                    <span class="lesson-sub">Progressions, limits, and the house edge.</span>
+                  </div>
                 </div>
-              </div>
+                <span class="lesson-arrow">Open →</span>
+              </a>
+
+              <a href="lesson-casino-design.html" class="lesson-link">
+                <div class="lesson-main">
+                  <div class="lesson-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <rect x="5" y="4" width="14" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
+                      <path d="M9 9H11M13 9H15M9 13H11M13 13H15" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <div class="lesson-text">
+                    <span class="lesson-title">How Casinos Shape Decisions</span>
+                    <span class="lesson-sub">Layout, sound, and subtle nudges on the floor.</span>
+                  </div>
+                </div>
+                <span class="lesson-arrow">Open →</span>
+              </a>
+
+              <a href="lesson-responsible-play.html" class="lesson-link">
+                <div class="lesson-main">
+                  <div class="lesson-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 4L6 6V12C6 15.3 8.1 18 12 20C15.9 18 18 15.3 18 12V6L12 4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div class="lesson-text">
+                    <span class="lesson-title">Responsible, Disciplined Play</span>
+                    <span class="lesson-sub">Time, money, and emotional safety rails.</span>
+                  </div>
+                </div>
+                <span class="lesson-arrow">Open →</span>
+              </a>
+
+              <a href="budgeting.html" class="lesson-link">
+                <div class="lesson-main">
+                  <div class="lesson-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/>
+                      <rect x="8" y="7" width="8" height="2" fill="currentColor"/>
+                      <circle cx="9" cy="13" r="1" fill="currentColor"/>
+                      <circle cx="13" cy="13" r="1" fill="currentColor"/>
+                      <circle cx="9" cy="17" r="1" fill="currentColor"/>
+                      <circle cx="13" cy="17" r="1" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <div class="lesson-text">
+                    <span class="lesson-title">Session Budgeting Tool</span>
+                    <span class="lesson-sub">Turn your bankroll into concrete session plans.</span>
+                  </div>
+                </div>
+                <span class="lesson-arrow">Open →</span>
+              </a>
+
+              <a href="full-trainer.html" class="lesson-link">
+                <div class="lesson-main">
+                  <div class="lesson-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <rect x="4" y="5" width="8" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/>
+                      <rect x="10" y="3" width="8" height="13" rx="2" stroke="currentColor" stroke-width="1.6" opacity="0.9"/>
+                    </svg>
+                  </div>
+                  <div class="lesson-text">
+                    <span class="lesson-title">Full Access Trainer</span>
+                    <span class="lesson-sub">Drill hard, soft, and pair decisions with feedback.</span>
+                  </div>
+                </div>
+                <span class="lesson-arrow">Open →</span>
+              </a>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- RIGHT: STATS & TIPS -->
+      <!-- RIGHT: HOW TO USE & DISCLAIMERS -->
       <section>
         <div class="panel">
           <div class="panel-inner">
-            <h2>Session Stats</h2>
-            <p style="margin-bottom:6px;">
-              Accuracy is tracked separately for hard totals, soft hands, and pairs so you can see where to focus next.
+            <div class="badge">
+              <span>Start Here</span>
+            </div>
+            <h2>How to Use This Hub</h2>
+            <p>
+              Move through the lessons once from top to bottom to get the full picture, then bounce between modules
+              and the trainer based on what you are seeing in your own sessions.
             </p>
-            <div class="stat-grid">
-              <div class="stat-card">
-                <div class="stat-label">Overall</div>
-                <div class="stat-main" id="stat-overall">0 / 0 (–%)</div>
-                <div class="stat-sub" id="stat-overall-note">Answer a few hands to see your pattern.</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-label">Hard totals</div>
-                <div class="stat-main" id="stat-hard">0 / 0 (–%)</div>
-                <div class="stat-sub">Hands like 9, 13, 16 without Aces.</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-label">Soft hands</div>
-                <div class="stat-main" id="stat-soft">0 / 0 (–%)</div>
-                <div class="stat-sub">Hands with an Ace counting as 11.</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-label">Pairs</div>
-                <div class="stat-main" id="stat-pairs">0 / 0 (–%)</div>
-                <div class="stat-sub">Starting pairs that may be split.</div>
-              </div>
+            <ul>
+              <li>Use the probability lesson to understand long‑run tendencies, not to predict tonight’s short run.</li>
+              <li>Fix technical leaks with the trainer and mistakes module before worrying about small edge cases.</li>
+              <li>Keep the responsible‑play and budgeting tools in view so time, money, and emotion stay inside clear limits.</li>
+            </ul>
+            <div class="callout">
+              The aim is a realistic, grounded understanding of blackjack and your own behaviour—something you can
+              carry into and out of the casino without relying on charts at the table.
             </div>
           </div>
         </div>
 
         <div class="panel">
           <div class="panel-inner">
-            <h2>How to Use This Trainer</h2>
-            <p>
-              Treat this like a flash‑card machine for decisions. Aim for slow, accurate answers first; speed comes
-              naturally once the patterns are locked in.
-            </p>
+            <h2>Important Disclaimers</h2>
             <ul>
-              <li>Start on “Mixed” to get a baseline, then drill whichever category shows the lowest accuracy.</li>
-              <li>When you miss a hand, pause and think through why the correct play makes sense before dealing the next.</li>
-              <li>Use the lessons on probability, mistakes, and emotions to connect the numbers to what it feels like at the table.</li>
-            </ul>
-            <p>
-              The goal is to make correct decisions automatic so you can focus on pacing, limits, and enjoying the
-              session.
-            </p>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="panel-inner">
-            <h2>Important Notes</h2>
-            <ul>
-              <li>This trainer uses one fixed rule set; real tables may differ on decks, soft‑17 rules, or payouts.</li>
-              <li>It ignores side bets and counting and focuses only on basic strategy decisions.</li>
-              <li>All practice here is for <strong>educational purposes only</strong> and does not guarantee any outcome in real play.</li>
+              <li>All material in this hub is for <strong>educational purposes only</strong>.</li>
+              <li>No strategy, tool, or trainer here removes the house edge or guarantees profit.</li>
+              <li>Examples and numbers are simplified and may not match every rule set, casino, or jurisdiction.</li>
+              <li>You are responsible for following local laws and must be of legal gambling age for any real‑money play.</li>
             </ul>
           </div>
         </div>
@@ -554,247 +536,5 @@
       © 2026 The Blackjack Mindset. Educational content only. No financial advice or gambling recommendations.
     </footer>
   </div>
-
-  <script>
-    const ranks = [2,3,4,5,6,7,8,9,10,10,10,10,11]; // 11 = Ace
-    let currentHand = null;
-    let currentMode = "mixed";
-
-    const stats = {
-      hard: { correct: 0, total: 0 },
-      soft: { correct: 0, total: 0 },
-      pairs: { correct: 0, total: 0 },
-      overall: { correct: 0, total: 0 }
-    };
-
-    function pickMode(mode) {
-      currentMode = mode;
-      const pills = document.querySelectorAll(".diff-pill");
-      pills.forEach(p => {
-        if (p.dataset.mode === mode) p.classList.add("active");
-        else p.classList.remove("active");
-      });
-      document.getElementById("feedback-line").textContent =
-        "Focus changed to \"" + mode + "\". Deal a new hand to continue.";
-    }
-
-    document.getElementById("difficulty-group").addEventListener("click", (e) => {
-      const btn = e.target.closest(".diff-pill");
-      if (!btn) return;
-      pickMode(btn.dataset.mode);
-    });
-
-    function randomRank() {
-      return ranks[Math.floor(Math.random() * ranks.length)];
-    }
-
-    function formatCardSymbol(v) {
-      if (v === 11) return "A";
-      if (v === 10) return "10";
-      return String(v);
-    }
-
-    function renderCards(containerId, cards, placeholders) {
-      const row = document.getElementById(containerId);
-      row.innerHTML = "";
-      cards.forEach(v => {
-        const div = document.createElement("div");
-        div.className = "card";
-        div.textContent = formatCardSymbol(v);
-        row.appendChild(div);
-      });
-      for (let i = cards.length; i < placeholders; i++) {
-        const ph = document.createElement("div");
-        ph.className = "card-placeholder";
-        row.appendChild(ph);
-      }
-    }
-
-    function formatHandTotal(cards) {
-      const totalLow = cards.reduce((a,c) => a + (c === 11 ? 1 : c), 0);
-      const hasAce = cards.includes(11);
-      if (hasAce && totalLow + 10 <= 21) {
-        return (totalLow + 10) + " (soft)";
-      }
-      return totalLow.toString();
-    }
-
-    function classifyHand(cards) {
-      if (cards.length === 2 && cards[0] === cards[1]) return "pairs";
-      const totalLow = cards.reduce((a,c) => a + (c === 11 ? 1 : c), 0);
-      const hasAce = cards.includes(11);
-      if (hasAce && totalLow + 10 <= 21) return "soft";
-      return "hard";
-    }
-
-    function dealHand() {
-      let player = [];
-      let dealer = [];
-
-      function dealPair() {
-        const r = randomRank();
-        player = [r, r];
-      }
-
-      function dealSoft() {
-        const ace = 11;
-        const others = [2,3,4,5,6,7,8,9];
-        const r = others[Math.floor(Math.random() * others.length)];
-        player = [ace, r];
-      }
-
-      function dealHard() {
-        const a = randomRank();
-        const b = randomRank();
-        if (a === 11 || b === 11) {
-          const base = [a === 11 ? 1 : a, b === 11 ? 1 : b];
-          player = base;
-        } else {
-          player = [a, b];
-        }
-      }
-
-      if (currentMode === "pairs") dealPair();
-      else if (currentMode === "soft") dealSoft();
-      else if (currentMode === "hard") dealHard();
-      else {
-        const r = Math.random();
-        if (r < 0.33) dealHard();
-        else if (r < 0.66) dealSoft();
-        else dealPair();
-      }
-
-      dealer = [randomRank()];
-
-      currentHand = { player, dealerUp: dealer[0], type: classifyHand(player) };
-
-      renderCards("player-cards-row", player, 3);
-      renderCards("dealer-card-row", [dealer[0]], 1);
-
-      document.getElementById("player-hand-total").textContent = formatHandTotal(player);
-      document.getElementById("dealer-upcard-label").textContent =
-        dealer[0] === 11 ? "Ace" : String(dealer[0]);
-
-      document.getElementById("hand-type-label").textContent =
-        currentHand.type === "soft"
-          ? "Soft hand: at least one Ace counting as 11."
-          : currentHand.type === "pairs"
-          ? "Pair: consider whether splitting makes sense."
-          : "Hard total: no Ace counting as 11.";
-
-      document.getElementById("feedback-line").textContent =
-        "Choose Hit, Stand, Double, or Split. The trainer checks your decision against a basic strategy table.";
-    }
-
-    function basicStrategy(playerCards, dealerUp) {
-      const type = classifyHand(playerCards);
-      const totalLow = playerCards.reduce((a,c) => a + (c === 11 ? 1 : c), 0);
-      const hasAce = playerCards.includes(11);
-      let total = totalLow;
-      if (hasAce && totalLow + 10 <= 21) total = totalLow + 10;
-
-      const d = dealerUp === 11 ? 11 : dealerUp;
-
-      if (type === "pairs") {
-        const v = playerCards[0] === 11 ? 11 : playerCards[0];
-        if (v === 11 || v === 8) return "P";
-        if (v === 10 || v === 5) return "S";
-        if (v === 9) return (d === 7 || d === 10 || d === 11) ? "S" : "P";
-        if (v === 7) return d <= 7 ? "P" : "H";
-        if (v === 6) return d <= 6 ? "P" : "H";
-        if (v === 4) return (d === 5 || d === 6) ? "P" : "H";
-        if (v === 3 || v === 2) return d <= 7 ? "P" : "H";
-      }
-
-      if (type === "soft") {
-        if (total >= 19) return "S";
-        if (total === 18) {
-          if (d >= 9 || d === 2) return "S";
-          if (d === 3 || d === 4 || d === 5 || d === 6) return "D";
-          return "H";
-        }
-        if (total === 17 || total === 16) {
-          if (d >= 3 && d <= 6) return "D";
-          return "H";
-        }
-        if (total === 15 || total === 14) {
-          if (d >= 4 && d <= 6) return "D";
-          return "H";
-        }
-        return "H";
-      }
-
-      if (total >= 17) return "S";
-      if (total >= 13 && total <= 16) {
-        if (d >= 2 && d <= 6) return "S";
-        return "H";
-      }
-      if (total === 12) {
-        if (d >= 4 && d <= 6) return "S";
-        return "H";
-      }
-      if (total === 11) return "D";
-      if (total === 10) return d <= 9 ? "D" : "H";
-      if (total === 9) return d >= 3 && d <= 6 ? "D" : "H";
-      return "H";
-    }
-
-    function updateStats(type, correct) {
-      stats.overall.total += 1;
-      if (correct) stats.overall.correct += 1;
-
-      const bucket = stats[type];
-      bucket.total += 1;
-      if (correct) bucket.correct += 1;
-
-      function fmt(obj) {
-        if (obj.total === 0) return "0 / 0 (–%)";
-        const pct = Math.round((obj.correct / obj.total) * 100);
-        return obj.correct + " / " + obj.total + " (" + pct + "%)";
-      }
-
-      document.getElementById("stat-overall").textContent = fmt(stats.overall);
-      if (stats.overall.total === 0) {
-        document.getElementById("stat-overall-note").textContent =
-          "Answer a few hands to see your pattern.";
-      } else {
-        document.getElementById("stat-overall-note").textContent =
-          "Use missed hands as a cue to revisit the related lesson.";
-      }
-      document.getElementById("stat-hard").textContent = fmt(stats.hard);
-      document.getElementById("stat-soft").textContent = fmt(stats.soft);
-      document.getElementById("stat-pairs").textContent = fmt(stats.pairs);
-    }
-
-    function submitMove(move) {
-      if (!currentHand) {
-        document.getElementById("feedback-line").textContent =
-          "Deal a hand first, then choose an action.";
-        return;
-      }
-      const correct = basicStrategy(currentHand.player, currentHand.dealerUp);
-      const ok = move === correct;
-      updateStats(currentHand.type, ok);
-
-      const fb = document.getElementById("feedback-line");
-      fb.innerHTML =
-        "You chose <strong>" +
-        expandMove(move) +
-        "</strong>. Recommended play: <span class='" +
-        (ok ? "result-correct" : "result-wrong") +
-        "'>" + expandMove(correct) + "</span>. " +
-        (ok
-          ? "Nice. Deal another hand or switch focus to a different category."
-          : "Review why that action makes sense given the dealer’s upcard and your total, then try a few similar hands.");
-    }
-
-    function expandMove(m) {
-      if (m === "H") return "Hit";
-      if (m === "S") return "Stand";
-      if (m === "D") return "Double";
-      if (m === "P") return "Split";
-      return m;
-    }
-  </script>
 </body>
 </html>
