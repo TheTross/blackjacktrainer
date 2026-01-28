@@ -21,8 +21,10 @@
       --accent: #1dd1a1;
       --accent-soft: rgba(29, 209, 161, 0.16);
       --accent-warm: #feca57;
-      --text: #f7f8fc;
-      --muted: #a1a7bc;
+
+      --text: #e4e7f5;
+      --muted: #9ca3c7;
+
       --border-subtle: #252a39;
       --border-strong: #343a4f;
       --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.65);
@@ -54,21 +56,21 @@
     .page-shell {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 24px 18px 32px;
+      padding: 32px 20px 40px;
     }
 
     header {
-      margin-bottom: 20px;
+      margin-bottom: 28px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       position: relative;
     }
 
     header::after {
       content: "";
       position: absolute;
-      inset: auto -40px -6px;
+      inset: auto -40px -8px;
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
       opacity: 0.9;
@@ -94,27 +96,28 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
       margin: 0;
+      color: #f5f7ff;
     }
 
     header p {
       margin: 0;
-      font-size: 0.94rem;
+      font-size: 0.98rem;
       color: var(--muted);
       max-width: 640px;
-      line-height: 1.7;
+      line-height: 1.8;
     }
 
     .tagline-pill {
-      margin-top: 6px;
+      margin-top: 8px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       border-radius: var(--radius-pill);
       border: 1px solid var(--border-subtle);
-      padding: 5px 10px;
-      font-size: 0.78rem;
+      padding: 6px 11px;
+      font-size: 0.8rem;
       color: var(--muted);
-      background: rgba(5, 7, 14, 0.94);
+      background: rgba(5, 7, 14, 0.96);
     }
 
     .tag-dot {
@@ -128,7 +131,7 @@
     main {
       display: grid;
       grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr);
-      gap: 18px;
+      gap: 22px;
       align-items: flex-start;
     }
 
@@ -143,8 +146,8 @@
       border-radius: var(--radius-xl);
       border: 1px solid var(--border-subtle);
       box-shadow: var(--shadow-soft);
-      padding: 18px 20px 18px;
-      margin-bottom: 14px;
+      padding: 20px 22px 20px;
+      margin-bottom: 18px;
       position: relative;
       overflow: hidden;
     }
@@ -154,8 +157,8 @@
       position: absolute;
       inset: -40% -10%;
       background:
-        radial-gradient(circle at top left, rgba(29, 209, 161, 0.09) 0, transparent 55%),
-        radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.08) 0, transparent 55%);
+        radial-gradient(circle at top left, rgba(29, 209, 161, 0.08) 0, transparent 55%),
+        radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.07) 0, transparent 55%);
       opacity: 0.8;
       pointer-events: none;
     }
@@ -166,41 +169,42 @@
     }
 
     h2 {
-      font-size: 0.96rem;
+      font-size: 0.98rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--muted);
-      margin: 0 0 10px;
+      margin: 0 0 12px;
     }
 
     h3 {
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
-      margin: 12px 0 6px;
+      margin: 14px 0 8px;
     }
 
     p {
-      font-size: 0.94rem;
-      line-height: 1.7;
-      margin: 0 0 10px;
+      font-size: 0.98rem;
+      line-height: 1.8;
+      margin: 0 0 12px;
       color: var(--text);
     }
 
     ul {
       list-style: none;
       padding: 0;
-      margin: 6px 0 0;
+      margin: 6px 0 4px;
     }
 
     li {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin: 4px 0;
+      font-size: 0.94rem;
+      color: #d1d5ec;
+      margin: 4px 0 2px;
       display: flex;
       align-items: flex-start;
       gap: 6px;
+      line-height: 1.7;
     }
 
     li::before {
@@ -216,10 +220,11 @@
       border-radius: var(--radius-md);
       border: 1px solid var(--border-strong);
       background: rgba(5, 7, 14, 0.96);
-      padding: 8px 10px;
-      font-size: 0.88rem;
+      padding: 10px 11px;
+      font-size: 0.9rem;
       color: var(--muted);
-      margin-top: 6px;
+      margin-top: 8px;
+      line-height: 1.8;
     }
 
     .badge {
@@ -241,7 +246,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 10px;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .activity-title {
@@ -252,10 +257,10 @@
     }
 
     .pill-small {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       border-radius: var(--radius-pill);
       border: 1px solid var(--border-subtle);
-      padding: 4px 8px;
+      padding: 4px 9px;
       color: var(--muted);
       background: rgba(3, 5, 12, 0.96);
     }
@@ -361,12 +366,23 @@
       color: #ff7675;
     }
 
+    /* hero image */
+    .design-image {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 16px;
+      display: block;
+      margin: 0 0 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
     footer {
-      margin-top: 22px;
-      font-size: 0.78rem;
+      margin-top: 26px;
+      font-size: 0.8rem;
       color: var(--muted);
       border-top: 1px solid var(--border-subtle);
-      padding-top: 10px;
+      padding-top: 12px;
+      line-height: 1.7;
     }
   </style>
 </head>
@@ -392,6 +408,11 @@
       <section>
         <div class="panel">
           <div class="panel-inner">
+
+            <img src="images/design.png"
+                 alt="How casino design influences player decisions illustration"
+                 class="design-image" />
+
             <h2>Layout and Sense of Time</h2>
             <p>
               Casino floors are usually designed like mazes, with few straight paths or clear sightlines to exits,
@@ -630,7 +651,6 @@
         return;
       }
 
-      // Determine dominant category
       const keys = Object.keys(counts);
       let bestKey = keys[0];
       keys.forEach(k => {
