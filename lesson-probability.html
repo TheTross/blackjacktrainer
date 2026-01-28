@@ -21,11 +21,15 @@
       --accent: #1dd1a1;
       --accent-soft: rgba(29, 209, 161, 0.16);
       --accent-warm: #feca57;
-      --text: #f7f8fc;
-      --muted: #a1a7bc;
-      --border-subtle: #252a39;
+
+      /* softened text colors */
+      --text: #e4e7f5;        /* main body text */
+      --muted: #9ca3c7;       /* secondary text */
+      --text-strong: #f5f7ff; /* for key emphasis if needed */
+
+      --border-subtle: #262b3a;
       --border-strong: #343a4f;
-      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.65);
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.7);
       --radius-xl: 22px;
       --radius-lg: 16px;
       --radius-md: 12px;
@@ -54,24 +58,24 @@
     .page-shell {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 24px 18px 32px;
+      padding: 32px 20px 40px; /* more breathing room */
     }
 
     header {
-      margin-bottom: 20px;
+      margin-bottom: 28px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       position: relative;
     }
 
     header::after {
       content: "";
       position: absolute;
-      inset: auto -40px -6px;
+      inset: auto -40px -8px;
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
-      opacity: 0.9;
+      opacity: 0.8;
     }
 
     .breadcrumb {
@@ -94,27 +98,28 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
       margin: 0;
+      color: var(--text-strong);
     }
 
     header p {
       margin: 0;
-      font-size: 0.94rem;
+      font-size: 0.98rem;
       color: var(--muted);
       max-width: 640px;
-      line-height: 1.7;
+      line-height: 1.8;
     }
 
     .tagline-pill {
-      margin-top: 6px;
+      margin-top: 8px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       border-radius: var(--radius-pill);
       border: 1px solid var(--border-subtle);
-      padding: 5px 10px;
-      font-size: 0.78rem;
+      padding: 6px 11px;
+      font-size: 0.8rem;
       color: var(--muted);
-      background: rgba(5, 7, 14, 0.94);
+      background: rgba(5, 7, 14, 0.96);
     }
 
     .tag-dot {
@@ -128,7 +133,7 @@
     main {
       display: grid;
       grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr);
-      gap: 18px;
+      gap: 22px; /* a bit more column gap */
       align-items: flex-start;
     }
 
@@ -143,8 +148,8 @@
       border-radius: var(--radius-xl);
       border: 1px solid var(--border-subtle);
       box-shadow: var(--shadow-soft);
-      padding: 18px 20px 18px;
-      margin-bottom: 14px;
+      padding: 20px 22px 20px; /* more inner padding */
+      margin-bottom: 18px;     /* more separation between panels */
       position: relative;
       overflow: hidden;
     }
@@ -154,8 +159,8 @@
       position: absolute;
       inset: -40% -10%;
       background:
-        radial-gradient(circle at top left, rgba(29, 209, 161, 0.09) 0, transparent 55%),
-        radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.08) 0, transparent 55%);
+        radial-gradient(circle at top left, rgba(29, 209, 161, 0.08) 0, transparent 55%),
+        radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.07) 0, transparent 55%);
       opacity: 0.8;
       pointer-events: none;
     }
@@ -166,41 +171,42 @@
     }
 
     h2 {
-      font-size: 0.96rem;
+      font-size: 0.98rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--muted);
-      margin: 0 0 10px;
+      margin: 0 0 12px;
     }
 
     h3 {
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
-      margin: 12px 0 6px;
+      margin: 14px 0 8px;
     }
 
     p {
-      font-size: 0.94rem;
-      line-height: 1.7;
-      margin: 0 0 10px;
+      font-size: 0.98rem;      /* slightly larger */
+      line-height: 1.8;
+      margin: 0 0 12px;
       color: var(--text);
     }
 
     ul {
       list-style: none;
       padding: 0;
-      margin: 6px 0 0;
+      margin: 6px 0 4px;
     }
 
     li {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin: 4px 0;
+      font-size: 0.94rem;
+      color: #d1d5ec;         /* a hair brighter than muted for readability */
+      margin: 4px 0 2px;
       display: flex;
       align-items: flex-start;
       gap: 6px;
+      line-height: 1.7;
     }
 
     li::before {
@@ -216,10 +222,11 @@
       border-radius: var(--radius-md);
       border: 1px solid var(--border-strong);
       background: rgba(5, 7, 14, 0.96);
-      padding: 8px 10px;
-      font-size: 0.88rem;
+      padding: 10px 11px;
+      font-size: 0.9rem;
       color: var(--muted);
-      margin-top: 6px;
+      margin-top: 8px;
+      line-height: 1.8;
     }
 
     .badge {
@@ -235,13 +242,23 @@
       margin-bottom: 8px;
     }
 
+    /* NEW: probability image styling */
+    .probab-image {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 16px;
+      display: block;
+      margin: 0 0 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
     /* Activity styles */
     .activity-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 10px;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .activity-title {
@@ -252,10 +269,10 @@
     }
 
     .pill-small {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       border-radius: var(--radius-pill);
       border: 1px solid var(--border-subtle);
-      padding: 4px 8px;
+      padding: 4px 9px;
       color: var(--muted);
       background: rgba(3, 5, 12, 0.96);
     }
@@ -263,8 +280,8 @@
     .activity-grid {
       display: grid;
       grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
-      gap: 10px;
-      margin-top: 4px;
+      gap: 12px;
+      margin-top: 6px;
     }
 
     @media (max-width: 720px) {
@@ -280,7 +297,7 @@
     }
 
     label {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--muted);
     }
 
@@ -289,7 +306,7 @@
       border: 1px solid var(--border-strong);
       background: rgba(5, 7, 14, 0.98);
       color: var(--text);
-      font-size: 0.86rem;
+      font-size: 0.88rem;
       padding: 7px 9px;
       outline: none;
     }
@@ -299,17 +316,17 @@
     }
 
     .simulate-button {
-      margin-top: 10px;
+      margin-top: 12px;
       width: 100%;
       border-radius: var(--radius-pill);
       border: 1px solid rgba(29, 209, 161, 0.8);
       background: linear-gradient(135deg, #1dd1a1, #10ac84);
       color: #020308;
-      font-size: 0.84rem;
+      font-size: 0.86rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       font-weight: 600;
-      padding: 8px 10px;
+      padding: 9px 11px;
       cursor: pointer;
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9);
       transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
@@ -325,9 +342,9 @@
       border-radius: var(--radius-md);
       border: 1px solid var(--border-strong);
       background: rgba(3, 5, 12, 0.98);
-      padding: 8px 10px;
-      margin-top: 10px;
-      font-size: 0.88rem;
+      padding: 9px 11px;
+      margin-top: 12px;
+      font-size: 0.9rem;
     }
 
     .output-row {
@@ -338,12 +355,12 @@
     }
 
     .output-label {
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       color: var(--muted);
     }
 
     .output-value {
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-weight: 600;
     }
 
@@ -360,11 +377,12 @@
     }
 
     footer {
-      margin-top: 22px;
-      font-size: 0.78rem;
+      margin-top: 26px;
+      font-size: 0.8rem;
       color: var(--muted);
       border-top: 1px solid var(--border-subtle);
-      padding-top: 10px;
+      padding-top: 12px;
+      line-height: 1.7;
     }
   </style>
 </head>
@@ -390,6 +408,9 @@
       <section>
         <div class="panel">
           <div class="panel-inner">
+            <!-- probability image -->
+            <img src="probab.jpg" alt="Blackjack win, push, and loss probabilities visual" class="probab-image" />
+
             <h2>Big Picture Numbers</h2>
             <p>
               In a typical multi‑deck game with solid basic strategy, you win a little over four hands out of ten,
@@ -455,7 +476,7 @@
               <div class="activity-title">Mini Simulation Activity</div>
               <div class="pill-small">Feel the variance</div>
             </div>
-            <p style="margin-bottom:6px;">
+            <p style="margin-bottom:8px;">
               Use this simplified simulator to see how the same small edge can produce very different short‑term
               results. Each “hand” is just a +1 unit win, −1 unit loss, or 0 push.
             </p>
@@ -471,7 +492,7 @@
                   </select>
                 </div>
 
-                <div class="field-group" style="margin-top:6px;">
+                <div class="field-group" style="margin-top:8px;">
                   <label for="numHands">Number of hands in this session</label>
                   <input
                     id="numHands"
@@ -485,7 +506,7 @@
               </div>
 
               <div>
-                <p style="font-size:0.85rem;color:var(--muted);margin-top:0;">
+                <p style="font-size:0.86rem;color:var(--muted);margin-top:0;">
                   Assumptions for this toy model:
                 </p>
                 <ul style="margin-top:2px;">
@@ -512,7 +533,7 @@
               <div class="output-row">
                 <span class="output-label">Comment:</span>
               </div>
-              <p id="sim-comment" style="margin:4px 0 0;font-size:0.86rem;color:var(--muted);">
+              <p id="sim-comment" style="margin:4px 0 0;font-size:0.88rem;color:var(--muted);">
                 Choose a strategy quality, set a number of hands, and click “Run simulation” to see one possible path.
               </p>
             </div>
@@ -577,15 +598,12 @@
 
   <script>
     function getProbabilities(quality) {
-      // Very rough toy settings: win / loss / push probabilities and EV tilt.
-      // All three sum to 1; "edge" is baked into win vs loss balance.
       if (quality === "good") {
         return { win: 0.44, loss: 0.47, push: 0.09 };
       }
       if (quality === "average") {
         return { win: 0.42, loss: 0.50, push: 0.08 };
       }
-      // poor
       return { win: 0.40, loss: 0.53, push: 0.07 };
     }
 
