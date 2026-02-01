@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blackjack Session Log – The Blackjack Mindset</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg: #05070b;
+      --bg-soft: #080b13;
+      --bg-elevated: #0e1220;
+      --accent: #1dd1a1;
+      --accent-soft: rgba(29, 209, 161, 0.16);
+      --accent-warm: #feca57;
+      --text: #f7f8fc;
+      --muted: #a1a7bc;
+      --border-subtle: #252a39;
+      --border-strong: #343a4f;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.65);
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --sidebar-width: 230px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #151b2f 0, #05070b 55%, #020308 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: Poppins, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Shell layout */
+    .app-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+      background:
+        radial-gradient(circle at top left, rgba(29, 209, 161, 0.08) 0, transparent 45%),
+        radial-gradient(circle at bottom right, rgba(46, 134, 222, 0.08) 0, transparent 55%);
+    }
+
+    @media (max-width: 900px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Sidebar */
+    .sidebar {
+      border-right: 1px solid var(--border-subtle);
+      background: linear-gradient(180deg, #05070b 0%, #090d17 40%, #05070b 100%);
+      padding: 18px 18px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .sidebar-header-wrap {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      border: 1px solid rgba(37, 42, 57, 0.9);
+      background: radial-gradient(circle at top, #1dd1a1 0, #0da37b 55%, #045b44 100%);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #020308;
+    }
+
+    .sidebar-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .sidebar-subtitle {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .sidebar-section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .sidebar-nav-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-item {
+      border-radius: 9px;
+      padding: 7px 9px;
+      font-size: 0.86rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      border: 1px solid transparent;
+      background: transparent;
+      transition:
+        background 0.16s ease,
+        border-color 0.16s ease,
+        color 0.16s ease,
+        transform 0.12s ease;
+    }
+
+    .nav-item-left {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .nav-item span.label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-icon {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      opacity: 0.9;
+      font-size: 0.9rem;
+    }
+
+    .nav-item .chevron {
+      font-size: 0.75rem;
+      opacity: 0.6;
+    }
+
+    .nav-item:hover {
+      background: rgba(22, 28, 46, 0.96);
+      border-color: var(--border-subtle);
+      color: var(--text);
+      transform: translateY(-0.5px);
+    }
+
+    .nav-item.primary {
+      background: rgba(29, 209, 161, 0.09);
+      border-color: rgba(29, 209, 161, 0.7);
+      color: var(--accent);
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 0.76rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        flex-direction: row;
+        align-items: center;
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+        gap: 14px;
+        overflow-x: auto;
+      }
+      .sidebar-nav-wrap {
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+      }
+      .sidebar-nav {
+        flex-direction: column;
+      }
+      .sidebar-footer {
+        display: none;
+      }
+    }
+
+    /* Main area */
+    .main-area {
+      padding: 20px 24px 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .page-heading {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .page-heading h1 {
+      font-size: clamp(1.7rem, 2.3vw, 2rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .page-heading p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+      max-width: 540px;
+      line-height: 1.6;
+    }
+
+    .pill-note {
+      font-size: 0.78rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 5px 9px;
+      color: var(--muted);
+      background: rgba(5, 7, 14, 0.9);
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 900px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    section {
+      margin-bottom: 18px;
+    }
+
+    .panel {
+      background: rgba(7, 10, 20, 0.98);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 20px 18px;
+    }
+
+    .panel h3 {
+      font-size: 0.96rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+
+    .panel h4 {
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 16px 0 6px;
+    }
+
+    .panel p {
+      font-size: 0.94rem;
+      line-height: 1.7;
+      margin: 0 0 10px;
+      color: var(--text);
+    }
+
+    .panel ul {
+      list-style: none;
+      padding: 0;
+      margin: 6px 0 0;
+    }
+
+    .panel li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 4px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .panel li::before {
+      content: "•";
+      color: var(--accent);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    /* Session form styles */
+    .session-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 700px) {
+      .session-meta-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 480px) {
+      .session-meta-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .field label {
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      background: rgba(4, 7, 16, 0.9);
+      border-radius: 9px;
+      border: 1px solid var(--border-subtle);
+      padding: 7px 9px;
+      font-size: 0.88rem;
+      color: var(--text);
+      outline: none;
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(29, 209, 161, 0.35);
+    }
+
+    .log-table-wrap {
+      margin-top: 8px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      background: radial-gradient(circle at top, #151b2f 0, #05070b 60%);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+
+    thead {
+      background: linear-gradient(90deg, rgba(29, 209, 161, 0.08), rgba(46, 134, 222, 0.12));
+    }
+
+    th,
+    td {
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(37, 42, 57, 0.9);
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    th {
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(4, 7, 16, 0.85);
+    }
+
+    tbody tr:nth-child(odd) {
+      background: rgba(3, 6, 14, 0.95);
+    }
+
+    tbody tr:hover {
+      background: rgba(11, 19, 35, 0.95);
+    }
+
+    .notes-col {
+      white-space: normal;
+      max-width: 240px;
+    }
+
+    .tfoot-summary {
+      background: rgba(4, 8, 18, 0.9);
+    }
+
+    .tfoot-summary td {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .summary-label {
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .summary-value {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .tag-pill {
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 4px 8px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: rgba(5, 7, 14, 0.9);
+    }
+
+    .tag-pill.highlight {
+      border-color: var(--accent-soft);
+      background: rgba(29, 209, 161, 0.04);
+      color: var(--accent);
+    }
+
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .btn {
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      background: rgba(10, 12, 20, 0.96);
+      color: var(--text);
+      font-size: 0.82rem;
+      padding: 7px 12px;
+      cursor: pointer;
+      transition:
+        border-color 0.16s ease,
+        background 0.16s ease,
+        transform 0.12s ease;
+    }
+
+    .btn.primary {
+      border-color: rgba(29, 209, 161, 0.8);
+      background: linear-gradient(135deg, #1dd1a1, #10ac84);
+      color: #020308;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .btn:hover {
+      border-color: var(--accent);
+      background: rgba(16, 21, 36, 0.98);
+      transform: translateY(-1px);
+    }
+
+    .btn.primary:hover {
+      background: linear-gradient(135deg, #30e3b6, #13b588);
+    }
+
+    footer {
+      margin-top: 26px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 10px;
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+      .sidebar {
+        display: none;
+      }
+      .app-shell {
+        grid-template-columns: 1fr;
+        background: #ffffff;
+      }
+      .panel {
+        box-shadow: none;
+        border-radius: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header-wrap">
+        <div class="logo-mark">BJ</div>
+        <div>
+          <div class="sidebar-title">The Blackjack Mindset</div>
+          <div class="sidebar-subtitle">
+            Session logging template for clearer decisions and controlled play.
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-nav-wrap">
+        <div>
+          <div class="sidebar-section-label">Interactive</div>
+          <div class="sidebar-nav">
+            <button class="nav-item" onclick="location.href='index.html'">
+              <div class="nav-item-left">
+                <span class="nav-icon">🂡</span>
+                <span class="label">Decision Trainer</span>
+              </div>
+              <span class="chevron">›</span>
+            </button>
+
+            <button class="nav-item" onclick="window.open('https://stopthescroll0.gumroad.com/l/iuyow','_blank')">
+              <div class="nav-item-left">
+                <span class="nav-icon">💰</span>
+                <span class="label">Session budgeting tool</span>
+              </div>
+              <span class="chevron">›</span>
+            </button>
+
+            <button class="nav-item primary" onclick="location.href='session.html'">
+              <div class="nav-item-left">
+                <span class="nav-icon">📓</span>
+                <span class="label">Session log template</span>
+              </div>
+              <span class="chevron">›</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        Educational content only. No financial advice or promises of outcomes.
+      </div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <div class="main-area">
+      <div class="top-bar">
+        <div class="page-heading">
+          <h1>Session Log Template</h1>
+          <p>
+            Capture key numbers and mindset notes for each blackjack session so
+            you can review patterns instead of relying on memory.
+          </p>
+        </div>
+        <div class="pill-note">
+          Tip: Print this page or export it as PDF after each trip.
+        </div>
+      </div>
+
+      <div class="content-grid">
+        <!-- LEFT: SESSION FORM + TABLE -->
+        <section class="panel">
+          <h3>Session Overview</h3>
+          <p>
+            Use this log for one full visit (or online block of time). Be honest with results and emotions; the goal is
+            disciplined tracking, not perfection.
+          </p>
+
+          <div class="session-meta-grid">
+            <div class="field">
+              <label for="session-date">Date</label>
+              <input type="date" id="session-date" />
+            </div>
+            <div class="field">
+              <label for="location">Casino / App</label>
+              <input type="text" id="location" placeholder="Example: Vegas – MGM, or Online – Stake" />
+            </div>
+            <div class="field">
+              <label for="table-type">Table type</label>
+              <input type="text" id="table-type" placeholder="Example: 6D, $25 min, H17" />
+            </div>
+          </div>
+
+          <div class="session-meta-grid">
+            <div class="field">
+              <label for="bankroll-start">Starting bankroll</label>
+              <input type="number" id="bankroll-start" placeholder="Example: 500" />
+            </div>
+            <div class="field">
+              <label for="bankroll-end">Ending bankroll</label>
+              <input type="number" id="bankroll-end" placeholder="Example: 620" />
+            </div>
+            <div class="field">
+              <label for="session-length">Session length</label>
+              <input type="text" id="session-length" placeholder="Example: 2h 15m" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="session-goal">Pre-session goal</label>
+            <input type="text" id="session-goal" placeholder="Example: Play 2 hours, stick to bet spread, leave at +/- 4 units" />
+          </div>
+
+          <h4>Hand‑Level Snapshot</h4>
+          <p>
+            You do not need to log every hand. Capture key inflection points: bigger bets, swings, emotional spikes, or deviations from your usual strategy.
+          </p>
+
+          <div class="log-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Time</th>
+                  <th>Bet</th>
+                  <th>Result</th>
+                  <th>Running total</th>
+                  <th class="notes-col">Notes (decision + emotion)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- A few empty baseline rows the user can overwrite -->
+                <tr>
+                  <td>1</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="notes-col"></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="notes-col"></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="notes-col"></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="notes-col"></td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="notes-col"></td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="notes-col"></td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="notes-col"></td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="notes-col"></td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="notes-col"></td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="notes-col"></td>
+                </tr>
+              </tbody>
+              <tfoot class="tfoot-summary">
+                <tr>
+                  <td colspan="2" class="summary-label">Net result</td>
+                  <td colspan="4" class="summary-value">
+                    (Ending bankroll − Starting bankroll) = ______
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <div class="controls-row">
+            <button class="btn primary" onclick="window.print()">Print / Save as PDF</button>
+            <button class="btn" onclick="window.location.reload()">Clear page</button>
+          </div>
+        </section>
+
+        <!-- RIGHT: MINDSET PROMPTS -->
+        <section class="panel">
+          <h3>Mindset & Review Prompts</h3>
+          <p>
+            The value of this log comes from the short review after each session. Use these prompts to capture patterns in behavior, not just wins and losses.
+          </p>
+
+          <h4>Before you played</h4>
+          <div class="field">
+            <label for="pre-state">Energy / mood check-in</label>
+            <textarea id="pre-state" placeholder="Example: Tired but focused; not chasing losses; okay if I leave down 3 units."></textarea>
+          </div>
+
+          <div class="tag-row">
+            <div class="tag-pill">Clear time limit</div>
+            <div class="tag-pill highlight">Pre-set loss limit</div>
+            <div class="tag-pill">No alcohol or distractions</div>
+          </div>
+
+          <h4>During the session</h4>
+          <div class="field">
+            <label for="during-notes">Moments where emotions spiked</label>
+            <textarea id="during-notes" placeholder="Example: Increased bet size right after a loss, felt urgency to get back to even."></textarea>
+          </div>
+
+          <h4>Strategy discipline</h4>
+          <div class="field">
+            <label for="strategy-notes">Did you follow your strategy?</label>
+            <textarea id="strategy-notes" placeholder="Example: 2–3 hands where I ignored basic strategy; doubled vs dealer 10 without a clear reason."></textarea>
+          </div>
+
+          <h4>Post-session reflection</h4>
+          <div class="field">
+            <label for="post-reflection">What would you repeat or change?</label>
+            <textarea id="post-reflection" placeholder="Example: Good job sticking to stop-loss. Next time leave earlier when I feel fatigue."></textarea>
+          </div>
+
+          <div class="tag-row">
+            <div class="tag-pill highlight">Played within bankroll</div>
+            <div class="tag-pill">Chased losses</div>
+            <div class="tag-pill">Extended session beyond plan</div>
+            <div class="tag-pill">Felt calm and focused</div>
+          </div>
+        </section>
+      </div>
+
+      <footer>
+        2026 The Blackjack Mindset. Educational content only. No financial advice or gambling recommendations.
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
